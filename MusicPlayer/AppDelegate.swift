@@ -29,11 +29,57 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.setFrameAutosaveName("Main Window")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
+        
+        DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 2) {
+            
+            self.appInit()
+        }
+        
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
+    
+    
+    
+    
+    private func appInit(){
+        
+        
+        let mList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
+        mList.map { i in
+            print(i.name)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // MARK: - Core Data stack
 
