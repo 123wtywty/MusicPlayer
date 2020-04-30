@@ -10,6 +10,7 @@ import Foundation
 
 fileprivate protocol IMusicListManager {
     var sortFunc : (Music, Music) -> Bool { get set }
+    var listName : String { get set }
     
     init(musicList: [Music])
     
@@ -42,6 +43,8 @@ class MusicListManager: IMusicListManager, ObservableObject{
             }
         }
     }
+    
+    var listName: String = ""
     
     private var currentMusic : Music{
         willSet{

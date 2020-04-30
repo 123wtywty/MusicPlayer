@@ -20,7 +20,9 @@ struct ContentView: View {
                 
                 PathsView()
             }
-            MusicListView()
+//            MusicListView()
+            MusicListOverView()
+
         }
     }
 }

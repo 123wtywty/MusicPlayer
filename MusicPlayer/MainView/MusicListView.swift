@@ -14,7 +14,7 @@ import SwiftUI
 
 struct MusicListView : NSViewControllerRepresentable{
     
-    @ObservedObject var data = AppManager.default.musicListManager
+    @ObservedObject var data = AppManager.default.viewingMusicListManager
     
     func makeNSViewController(context: Context) -> NSViewController {
         return ListView.shared
@@ -22,7 +22,7 @@ struct MusicListView : NSViewControllerRepresentable{
     
     func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
         let view = nsViewController as? ListView
-        view?.setData(data: self.data.getMusicList())
+        view?.setData(data: self.data.musicList)
     }
 }
 

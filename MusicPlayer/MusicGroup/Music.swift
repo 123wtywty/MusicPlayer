@@ -55,9 +55,17 @@ class Music: IMusic, Equatable, Hashable{
     
     var url: URL
     
-    var playCount: Int
+    var playCount: Int{
+        didSet{
+            self.wrapper.update()
+        }
+    }
     
-    var isFavorite: Bool
+    var isFavorite: Bool{
+        didSet{
+            self.wrapper.update()
+        }
+    }
     
     var coverCache: NSImage?
     var cover: NSImage {

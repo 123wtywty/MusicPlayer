@@ -19,7 +19,10 @@ class AppManager{
         
         self.musicPlayer = MusicPlayer(player: mainPlayer)
         self.musicManager = MusicManager()
+        
         self.musicListManager = MusicListManager(musicList: [])
+        self.viewingMusicListManager = ViewingMusicListManager()
+        
         self.musicMaker = MusicMaker()
         self.appData = AppData()
         
@@ -29,6 +32,7 @@ class AppManager{
     var musicPlayer : MusicPlayer
     var musicManager : MusicManager
     var musicListManager : MusicListManager
+    var viewingMusicListManager : ViewingMusicListManager
     var musicMaker : MusicMaker
     var appData : AppData
     
