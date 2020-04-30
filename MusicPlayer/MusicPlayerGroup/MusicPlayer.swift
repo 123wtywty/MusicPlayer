@@ -9,28 +9,45 @@
 import Foundation
 import AVKit
 import NotificationCenter
+import Cocoa
+
 
 fileprivate protocol IMusicPlayer {
     init(player: AVPlayer)
+    
     var player: AVPlayer { get set }
+    var musicPlayingStateDidChangeHandle : [String: () -> ()] { get set }
 
     func playMusic(name: String)
     func playMusic(music: Music)
     
     func playNextMusic()
-    
     func playRandomMusic()
     
     
 }
 
 
-class MusicPlayer: IMusicPlayer{
+class MusicPlayer: NSObject, IMusicPlayer{
     
+    var musicPlayingStateDidChangeHandle : [String: () -> ()] = [:]
+    private var obPool : [NSKeyValueObservation] = []
+    @objc dynamic var player: AVPlayer
     
     required init(player: AVPlayer) {
         self.player = player
+        super.init()
+        
+        self.player.volume = 0.4
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self, queue: .main) { _ in self.musicPlayToEnd() }
+        
+        self.obPool.append(
+            observe(\.player.timeControlStatus) { _,_  in
+                for handle in self.musicPlayingStateDidChangeHandle.values{
+                    handle()
+                }
+            }
+        )
         
     }
     
@@ -38,7 +55,6 @@ class MusicPlayer: IMusicPlayer{
         NotificationCenter.default.removeObserver(self)
     }
     
-    var player: AVPlayer
     
     private func play(music: Music){
         AppManager.default.musicListManager.setCurrentMusic(music: music)

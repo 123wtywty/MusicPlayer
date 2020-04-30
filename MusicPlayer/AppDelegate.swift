@@ -30,10 +30,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)
         
-        DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 2) {
             
-            self.appInit()
-        }
+        self.appInit()
+        
         
         
     }

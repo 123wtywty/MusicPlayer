@@ -10,7 +10,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack{
+        HStack{
+            VStack{
+                PlayerUIView()
+                    .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+                    .cornerRadius(8)
+                    .padding()
+                
+                
+                PathsView()
+            }
             MusicListView()
         }
     }

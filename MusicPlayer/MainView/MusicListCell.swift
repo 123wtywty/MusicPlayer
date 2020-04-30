@@ -74,15 +74,8 @@ struct MusicListCell: View {
                         .colorScheme(.light)
                 }
                 
-                
-                
-            }
-                
-            .onHover(perform: { (isHover) in
-                self.onHover = isHover
-            })
-                
-                .overlay(
+                // background
+                HStack{
                     AppManager.default.musicListManager.getCurrentMusic() == self.music ?
                         LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.15)]), startPoint: .top, endPoint: .bottom)
                             .opacity(0.5)
@@ -92,23 +85,10 @@ struct MusicListCell: View {
                         LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.01)]), startPoint: .top, endPoint: .bottom)
                             .opacity(0.5)
                             .cornerRadius(8)
-                    
-            )
-                
-                .onTapGesture {
-                    if self.cellId >= 1{
-                        self.onTap.toggle()
-                    }else{
-                        AppManager.default.musicPlayer.playMusic(music: self.music)
-                    }
-                    print("\(self.music.name) tap, cellId: \(self.cellId), tap: \(self.onTap)")
-            }
+                }
                 
                 
-                
-            .padding(0)
-                
-            .overlay(
+                // play next
                 HStack{
                     Spacer()
                     VStack{
@@ -129,9 +109,28 @@ struct MusicListCell: View {
                     }
                 }
                 
-            )
-                .cornerRadius(9)
-                .frame(width: .none, height: .none)
+                
+            }
+                
+            .onHover(perform: { (isHover) in
+                self.onHover = isHover
+            })
+                
+                
+                .onTapGesture {
+                    if self.cellId >= 1{
+                        self.onTap.toggle()
+                    }else{
+                        AppManager.default.musicPlayer.playMusic(music: self.music)
+                    }
+                    print("\(self.music.name) tap, cellId: \(self.cellId), tap: \(self.onTap)")
+            }
+                
+                
+                
+            .padding(0)
+            .cornerRadius(9)
+            .frame(width: .none, height: .none)
         
         
         

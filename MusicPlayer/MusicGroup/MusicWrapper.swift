@@ -29,7 +29,7 @@ class MusicWrapper: IMusicWrapper, ObservableObject, Identifiable{
     
     func update() {
         DispatchQueue.main.async {
-            objectWillChange.send()
+            self.objectWillChange.send()
             
         }
     }

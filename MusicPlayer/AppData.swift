@@ -11,6 +11,22 @@ import SwiftUI
 
 class AppData: ObservableObject{
     
-    var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
+    @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
+    
+    @Published var selectingPath : [String] = []
+    @Published var blockedPath : [String] = []
+    
+    var avaliblePath : [String]{
+        get{
+            var path : [String] = []
+            for i in self.selectingPath{
+                if !self.blockedPath.contains(i){
+                    path.append(i)
+                }
+            }
+            
+            return path
+        }
+    }
     
 }
