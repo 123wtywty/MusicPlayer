@@ -17,7 +17,7 @@ fileprivate protocol IMusicPlayer {
     
     var player: AVPlayer { get set }
     var musicPlayingStateDidChangeHandle : [String: () -> ()] { get set }
-
+    
     func playMusic(name: String)
     func playMusic(music: Music)
     
@@ -31,7 +31,7 @@ fileprivate protocol IMusicPlayer {
 class MusicPlayer: NSObject, IMusicPlayer{
     
     var musicPlayingStateDidChangeHandle : [String: () -> ()] = [:]
-    private var obPool : [NSKeyValueObservation] = []
+    private var obPool : [String : Any] = [:]
     @objc dynamic var player: AVPlayer
     
     required init(player: AVPlayer) {
@@ -41,13 +41,24 @@ class MusicPlayer: NSObject, IMusicPlayer{
         self.player.volume = 0.4
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self, queue: .main) { _ in self.musicPlayToEnd() }
         
-        self.obPool.append(
-            observe(\.player.timeControlStatus) { _,_  in
-                for handle in self.musicPlayingStateDidChangeHandle.values{
-                    handle()
-                }
+        self.obPool["observe player.timeControlStatus"] = observe(\.player.timeControlStatus) { _,_  in
+            for handle in self.musicPlayingStateDidChangeHandle.values{
+                handle()
             }
-        )
+        }
+        
+        
+        
+        self.obPool["timer"] = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+//            print()
+//            print(self.player.playToEnd)
+//            print(self.player.currentTime().seconds)
+//            print(self.player.currentItem?.duration.seconds)
+            if self.player.playToEnd{
+                self.musicPlayToEnd()
+            }
+        }
+        
         
     }
     
@@ -59,6 +70,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
     private func play(music: Music){
         AppManager.default.musicListManager.setCurrentMusic(music: music)
         self.player.replaceCurrentItem(with: AVPlayerItem(asset: AVAsset(url: music.url)))
+        self.player.play()
     }
     
     func playMusic(name: String) {
@@ -83,6 +95,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
     
     
     private func musicPlayToEnd(){
+        print(#function)
         AppManager.default.musicListManager.currentMusicFinishPlay()
         
         switch AppManager.default.appData.repeatShuffleStatus{
@@ -95,5 +108,5 @@ class MusicPlayer: NSObject, IMusicPlayer{
         }
     }
     
-
+    
 }

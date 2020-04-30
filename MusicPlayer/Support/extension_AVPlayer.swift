@@ -15,5 +15,12 @@ extension AVPlayer {
 //        self.timeControlStatus == .playing
         self.timeControlStatus != .paused
     }
+    
+    @objc dynamic var playToEnd: Bool {
+        guard let totalTime = self.currentItem?.duration else {
+            return false
+        }
+        return self.currentTime().seconds >= totalTime.seconds
+    }
 }
 

@@ -10,7 +10,9 @@ import Foundation
 import SwiftUI
 
 class AppData: ObservableObject{
-        
+    
+    @Published var playingList : String = ""
+    
     @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
     
     @Published var selectingPath : [String] = []

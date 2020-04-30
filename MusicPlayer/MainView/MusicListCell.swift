@@ -121,7 +121,8 @@ struct MusicListCell: View {
                     if self.cellId >= 1{
                         self.onTap.toggle()
                     }else{
-                        AppManager.default.musicListManager.setMusicList(newList: AppManager.default.viewingMusicListManager.musicList)
+                        AppManager.default.viewingMusicListManager.playThisList()
+                        
                         AppManager.default.musicPlayer.playMusic(music: self.music)
                     }
                     print("\(self.music.name) tap, cellId: \(self.cellId), tap: \(self.onTap)")

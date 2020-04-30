@@ -47,12 +47,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func appInit(){
         
         
-        let mList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
-        mList.map { i in
-            print(i.name)
-        }
+//        let mList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
+//
+//        AppManager.default.musicListManager.setMusicList(newList: mList)
         
-        AppManager.default.musicListManager.setMusicList(newList: mList)
+        AppManager.default.appData.selectingPath.append("/Users/gary/music1/日语")
+        let list = ViewableMusicListManager()
+        list.musicList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
+        list.listName = "日语"
+        list.playThisList()
+        
     }
     
     

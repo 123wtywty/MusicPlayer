@@ -17,6 +17,7 @@ struct MusicListOverView: View {
     var body: some View{
         
         HStack{
+            
             if !self.showMusicList{
                 VStack{
                     
@@ -27,13 +28,14 @@ struct MusicListOverView: View {
                                     .font(.subheadline)
                                     .foregroundColor(.black)
                             }.onTapGesture {
-                                var allMusic : [Music] = []
+                                let list = ViewableMusicListManager()
+                                list.listName = "All Music"
                                 for path in AppManager.default.appData.avaliblePath{
-                                    allMusic.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                                    list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
                                 }
                                 
-                                allMusic.sort{ $0.name > $1.name }
-                                AppManager.default.viewingMusicListManager.musicList = allMusic
+                                list.musicList.sort{ $0.name > $1.name }
+                                AppManager.default.viewingMusicListManager = list
                                 self.showMusicList = true
                                 
                             }
@@ -43,16 +45,17 @@ struct MusicListOverView: View {
                                     .font(.subheadline)
                                     .foregroundColor(.black)
                             }.onTapGesture {
-                                var allMusic : [Music] = []
+                                let list = ViewableMusicListManager()
+                                list.listName = "Favorite Music"
                                 for path in AppManager.default.appData.avaliblePath{
-                                    allMusic.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                                    list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
                                 }
-                                allMusic = allMusic.filter {music -> Bool in
+                                list.musicList = list.musicList.filter {music -> Bool in
                                     music.isFavorite
                                 }
                                 
-                                allMusic.sort{ $0.name > $1.name }
-                                AppManager.default.viewingMusicListManager.musicList = allMusic
+                                list.musicList.sort{ $0.name > $1.name }
+                                AppManager.default.viewingMusicListManager = list
                                 self.showMusicList = true
                             }
                             
@@ -70,9 +73,11 @@ struct MusicListOverView: View {
                                 }
                                     
                                 .onTapGesture {
-                                    var allMusic : [Music] = AppManager.default.getMusicFromFolder(path: path)
-                                    allMusic.sort{ $0.name > $1.name }
-                                    AppManager.default.viewingMusicListManager.musicList = allMusic
+                                    let list = ViewableMusicListManager()
+                                    list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
+                                    list.musicList = AppManager.default.getMusicFromFolder(path: path)
+                                    list.musicList.sort{ $0.name > $1.name }
+                                    AppManager.default.viewingMusicListManager = list
                                     
                                     self.showMusicList = true
                                     
@@ -90,6 +95,22 @@ struct MusicListOverView: View {
             else{
                 VStack{
                     
+                    
+                    HStack{
+                        Text("􀆉 back")
+                            .padding([.leading, .top])
+                            .onTapGesture {
+                                self.showMusicList = false
+                        }
+                        Spacer()
+                        Text(AppManager.default.viewingMusicListManager.listName)
+                            .font(.subheadline)
+                            .background(AppManager.default.viewingMusicListManager.listName == AppManager.default.appData.playingList ?
+                                Color.blue.opacity(0.15).cornerRadius(5)
+                                : Color.white.cornerRadius(5))
+                            .padding([.top, .trailing])
+                        Spacer()
+                    }
                     
                     
                     MusicListView()

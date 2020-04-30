@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ViewingMusicListManager: ObservableObject{
+class ViewableMusicListManager: ObservableObject{
     
     var listName: String = ""
     var musicList : [Music] = []{
@@ -21,6 +21,14 @@ class ViewingMusicListManager: ObservableObject{
                 
             }
         }
+    }
+
+    
+    
+    func playThisList(){
+        
+        AppManager.default.appData.playingList = self.listName
+        AppManager.default.musicListManager.setMusicList(newList: self.musicList)
     }
     
 }
