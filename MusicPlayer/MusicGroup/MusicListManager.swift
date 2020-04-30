@@ -35,10 +35,19 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     private var musicList : [Music]{
         didSet{
-            objectWillChange.send()
+            print("need update ui")
+            DispatchQueue.main.async {
+                self.objectWillChange.send()
+                
+            }
         }
     }
+    
     private var currentMusic : Music{
+        willSet{
+            self.currentMusic.wrapper.update()
+        }
+        
         didSet{
             self.currentMusic.wrapper.update()
         }
@@ -57,13 +66,14 @@ class MusicListManager: IMusicListManager, ObservableObject{
             self.musicList = musicList
         }
         
-        for i in self.musicList{
-            self.recorder.addMusic(name: i.name)
-        }
         
         self.currentMusic = Music.placeHolder
         self.currentMusic = self.getRandomMusic()
         
+        
+        for i in self.musicList{
+            self.recorder.addMusic(name: i.name)
+        }
     }
     
     func getCurrentMusic() -> Music{
@@ -141,6 +151,7 @@ class MusicListManager: IMusicListManager, ObservableObject{
             self.recorder.addMusic(name: i.name)
         }
         
+        self.musicList = newList
         
         if !self.musicList.contains(self.currentMusic){
             AppManager.default.musicPlayer.playRandomMusic()

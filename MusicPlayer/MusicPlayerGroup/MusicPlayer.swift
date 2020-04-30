@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import AVFoundation
+import AVKit
 import NotificationCenter
 
 fileprivate protocol IMusicPlayer {
@@ -31,6 +31,11 @@ class MusicPlayer: IMusicPlayer{
     required init(player: AVPlayer) {
         self.player = player
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self, queue: .main) { _ in self.musicPlayToEnd() }
+        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     var player: AVPlayer

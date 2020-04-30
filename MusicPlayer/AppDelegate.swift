@@ -52,6 +52,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mList.map { i in
             print(i.name)
         }
+        
+        AppManager.default.musicListManager.setMusicList(newList: mList)
     }
     
     
