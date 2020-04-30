@@ -15,14 +15,18 @@ fileprivate protocol IMusic {
     var url : URL { get }
     var playCount : Int { get set}
     var isFavorite : Bool { get set }
-    var cover : NSImage? { get set }
+    var cover : NSImage { get }
     var type : MusicType { get }
 
     var wrapper : MusicWrapper { get }
 
 }
 
-class Music: IMusic, Equatable{
+
+fileprivate let loadingImage = NSImage(named: NSImage.Name("loading"))!
+
+
+class Music: IMusic, Equatable, Hashable{
     static func == (lhs: Music, rhs: Music) -> Bool {
         lhs.name == rhs.name && lhs.url == rhs.url
     }
@@ -32,7 +36,7 @@ class Music: IMusic, Equatable{
     required init(name: String, url: URL, cover: NSImage?) {
         self.name = name
         self.url = url
-        self.cover = cover
+        self.coverCache = cover
         
         self.playCount = 0
         self.isFavorite = false
@@ -55,7 +59,16 @@ class Music: IMusic, Equatable{
     
     var isFavorite: Bool
     
-    var cover: NSImage?
+    var coverCache: NSImage?
+    var cover: NSImage {
+        get{
+            if let img = self.coverCache{
+                return img
+            }
+            
+            return loadingImage
+        }
+    }
     
     var type: MusicType{
         get{
@@ -77,5 +90,10 @@ class Music: IMusic, Equatable{
     
     var wrapper: MusicWrapper
     
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name)
+        hasher.combine(self.url)
+    }
     
 }

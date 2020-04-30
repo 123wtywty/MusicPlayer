@@ -70,6 +70,9 @@ class MusicPlayedRecorder {
         let amount = isFavorite ? 0.7 : 1
         self.totalPlayedTime += amount
         
+        self.recentPlayed.removeFirst()
+        self.recentPlayed.append(name)
+        
         if self.musicExist(name: name){
             self.musicPlayedDic[name]! += amount
         }else{
