@@ -93,6 +93,18 @@ class MusicPlayer: NSObject, IMusicPlayer{
         self.play(music: music)
     }
     
+    func playMusicAccordingToSetting(){
+        switch AppManager.default.appData.repeatShuffleStatus {
+        case .shuffle:
+            self.playRandomMusic()
+        case .repeat:
+            self.playNextMusic()
+        case .repeat_1:
+            self.playMusic(music: AppManager.default.musicListManager.getCurrentMusic())
+
+        }
+    }
+    
     
     private func musicPlayToEnd(){
         print(#function)
