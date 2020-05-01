@@ -15,21 +15,32 @@ import SwiftUI
 struct MusicListView : NSViewControllerRepresentable{
     
     @ObservedObject var data = AppManager.default.viewingMusicListManager
-    
     func makeNSViewController(context: Context) -> NSViewController {
-        return ListView.shared
+        return ListView()
     }
     
     func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
-        let view = nsViewController as? ListView
-        view?.setData(data: self.data.musicList)
+        
+        if data.needUpdate{
+            let view = nsViewController as? ListView
+            view?.setData(data: self.data.musicList)
+            data.needUpdate = false
+        }
+        
+        if let index = data.needJumpTo{
+            let view = nsViewController as? ListView
+            view?.scrollToRow(number: index)
+            self.data.needJumpTo = nil
+        }
+        
+        
     }
 }
 
 
 
 fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
-    static let shared = ListView()
+    //    static let shared = ListView()
     
     var data : [Music] = []
     
@@ -40,8 +51,8 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     private var obPool : [NSKeyValueObservation] = []
     
-    var rowHeight = 57
-
+    var rowHeight = 73
+    
     
     var initialized = false
     @objc dynamic let scrollView = NSScrollView()
@@ -56,26 +67,28 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     override func viewDidLayout() {
         
-//        print(#function)
         if !initialized {
             initialized = true
             print("need init")
             setupView()
             setupTableView()
+            
+            self.scrollView.hasHorizontalScroller = false
+            self.scrollView.hasVerticalScroller = false
         }
     }
     
     
     func setupView() {
         self.view.translatesAutoresizingMaskIntoConstraints = false
-
+        
     }
     
     func setupTableView() {
         
-        self.tableView.rowHeight = 60
+        self.tableView.rowHeight = CGFloat(self.rowHeight)
         self.tableView.backgroundColor = .white
-//        self.tableView.gridStyleMask = .solidHorizontalGridLineMask
+        //        self.tableView.gridStyleMask = .solidHorizontalGridLineMask
         
         self.view.addSubview(scrollView)
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +109,7 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
         
         
         let col = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(rawValue: "col"))
-//        col.minWidth = 200
+        //        col.minWidth = 200
         tableView.addTableColumn(col)
         
         scrollView.documentView = tableView
@@ -104,7 +117,7 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
         scrollView.hasVerticalScroller = true
         
         
-//        tableView.addObserver(self, forKeyPath: #keyPath(NSTabView.frame), options: .new, context: nil)
+        //        tableView.addObserver(self, forKeyPath: #keyPath(NSTabView.frame), options: .new, context: nil)
         self.obPool.append(observe(\.tableView.frame, changeHandler: { _, _ in
             self.tableView.reloadData()
         }))
@@ -143,19 +156,19 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     func scrollToRow(number: Int){
         self.tableView.scrollRowToVisible(number)
-//        let rowRect = tableView.rect(ofRow: number)
-//        var scrollOrigin = rowRect.origin
-//        let clipView = tableView.superview as? NSClipView
-//
-//        let tableHalfHeight = NSHeight(clipView!.frame)*0.5
-//        let rowRectHalfHeight = NSHeight(rowRect)*0.5
-//
-//        scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
-//        let scrollView = clipView!.superview as? NSScrollView
-//        if(scrollView!.responds(to: #selector(NSScrollView.flashScrollers))){
-//            scrollView!.flashScrollers()
-//        }
-//        clipView!.animator().setBoundsOrigin(scrollOrigin)
+        //        let rowRect = tableView.rect(ofRow: number)
+        //        var scrollOrigin = rowRect.origin
+        //        let clipView = tableView.superview as? NSClipView
+        //
+        //        let tableHalfHeight = NSHeight(clipView!.frame)*0.5
+        //        let rowRectHalfHeight = NSHeight(rowRect)*0.5
+        //
+        //        scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
+        //        let scrollView = clipView!.superview as? NSScrollView
+        //        if(scrollView!.responds(to: #selector(NSScrollView.flashScrollers))){
+        //            scrollView!.flashScrollers()
+        //        }
+        //        clipView!.animator().setBoundsOrigin(scrollOrigin)
     }
     
 }

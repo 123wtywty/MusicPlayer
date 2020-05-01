@@ -18,7 +18,7 @@ struct PathsView: View{
             
             List(self.data.selectingPath, id:\.self){ path in
                 PathsViewCell(path: path, isAvailable: !AppManager.default.appData.blockedPath.contains(path))
-               
+                
             }
             .animation(.easeInOut)
             .colorMultiply(Color.init(.sRGB, white: 1 - 0.03, opacity: 1))

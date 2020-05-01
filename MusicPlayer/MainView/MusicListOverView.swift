@@ -21,6 +21,8 @@ struct MusicListOverView: View {
             if !self.showMusicList{
                 VStack{
                     
+                    
+                    
                     List{
                         Section(header: Text("defaultList")){
                             VStack{
@@ -70,17 +72,17 @@ struct MusicListOverView: View {
                                     Text("\(URL(fileURLWithPath: path).lastPathComponent)")
                                         .font(.subheadline)
                                         .foregroundColor(.black)
-                                }
+                                }.modifier(RowModifier(selected: "\(URL(fileURLWithPath: path).lastPathComponent)" == AppManager.default.appData.playingList))
                                     
-                                .onTapGesture {
-                                    let list = ViewableMusicListManager()
-                                    list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
-                                    list.musicList = AppManager.default.getMusicFromFolder(path: path)
-                                    list.musicList.sort{ $0.name > $1.name }
-                                    AppManager.default.viewingMusicListManager = list
-                                    
-                                    self.showMusicList = true
-                                    
+                                    .onTapGesture {
+                                        let list = ViewableMusicListManager()
+                                        list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
+                                        list.musicList = AppManager.default.getMusicFromFolder(path: path)
+                                        list.musicList.sort{ $0.name > $1.name }
+                                        AppManager.default.viewingMusicListManager = list
+                                        
+                                        self.showMusicList = true
+                                        
                                 }
                                 
                                 
@@ -89,6 +91,7 @@ struct MusicListOverView: View {
                         }
                         
                     }
+                    .animation(.default)
                     
                 }
             }
@@ -100,7 +103,10 @@ struct MusicListOverView: View {
                         Text("􀆉 back")
                             .padding([.leading, .top])
                             .onTapGesture {
-                                self.showMusicList = false
+                                withAnimation{
+                                    self.showMusicList = false
+                                }
+                                
                         }
                         Spacer()
                         Text(AppManager.default.viewingMusicListManager.listName)
@@ -111,13 +117,68 @@ struct MusicListOverView: View {
                             .padding([.top, .trailing])
                         Spacer()
                     }
+                    HStack{
+                        Spacer()
+                        Button(action:{
+                            AppManager.default.viewingMusicListManager.playThisList()
+                        }){
+                            Text("play this list")
+                        }
+                    }
                     
-                    
-                    MusicListView()
+                    ZStack(alignment: .bottomTrailing){
+                        MusicListView()
+                        ScrollToRowButton()
+                        
+                    }
                 }
+                .animation(.default)
             }
             
             
+        }
+    }
+}
+
+
+fileprivate struct RowModifier: ViewModifier {
+    var selected : Bool
+    func body(content: Content) -> some View{
+        
+        HStack{
+            content
+                .padding()
+                
+                .background(self.selected ? Color.blue.opacity(0.15) : Color.white)
+                .cornerRadius(3)
+            
+        }
+        
+    }
+    
+    
+}
+
+
+
+fileprivate struct ScrollToRowButton: View{
+    @State var isOnHover = false
+    
+    var body: some View{
+        Text("􀐩")
+            .frame(width: 40, height: 40)
+            .padding()
+            .font(.system(size: 30))
+            .foregroundColor(.blue)
+            .opacity(self.isOnHover ? 0.7 : 0.1)
+            .animation(.easeInOut(duration: 0.5))
+            .onHover { (isHover) in
+                self.isOnHover = isHover
+                
+        }
+        .onTapGesture {
+            print(#function)
+            AppManager.default.viewingMusicListManager.jumpToCurrentMusic()
         }
     }
 }

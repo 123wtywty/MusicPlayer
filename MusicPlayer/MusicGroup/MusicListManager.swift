@@ -172,6 +172,7 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     func currentMusicFinishPlay(){
         self.recorder.musicAddPlayTime(name: self.currentMusic.name, isFavorite: self.currentMusic.isFavorite)
+        self.currentMusic.playCount += 1
     }
     
     

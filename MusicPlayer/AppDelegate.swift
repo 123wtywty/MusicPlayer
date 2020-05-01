@@ -6,6 +6,7 @@
 //  Copyright © 2020 Gary Wu. All rights reserved.
 //
 
+import Foundation
 import Cocoa
 import SwiftUI
 
@@ -52,6 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        AppManager.default.musicListManager.setMusicList(newList: mList)
         
         AppManager.default.appData.selectingPath.append("/Users/gary/music1/日语")
+        AppManager.default.appData.selectingPath.append("/Users/gary/music1/古风")
         let list = ViewableMusicListManager()
         list.musicList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
         list.listName = "日语"
