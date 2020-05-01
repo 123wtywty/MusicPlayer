@@ -29,14 +29,17 @@ struct MusicListOverView: View {
                                 Text("All Music")
                                     .font(.subheadline)
                                     .foregroundColor(.black)
-                            }.onTapGesture {
+                            }.modifier(RowModifier(selected: "All Music" == AppManager.default.appData.playingList))
+                                
+                            .onTapGesture {
                                 let list = ViewableMusicListManager()
                                 list.listName = "All Music"
                                 for path in AppManager.default.appData.avaliblePath{
+                                    print(path)
                                     list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
                                 }
                                 
-                                list.musicList.sort{ $0.name > $1.name }
+                                list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
                                 AppManager.default.viewingMusicListManager = list
                                 self.showMusicList = true
                                 
@@ -46,7 +49,8 @@ struct MusicListOverView: View {
                                 Text("Favorite Music")
                                     .font(.subheadline)
                                     .foregroundColor(.black)
-                            }.onTapGesture {
+                            }.modifier(RowModifier(selected: "Favorite Music" == AppManager.default.appData.playingList))
+                            .onTapGesture {
                                 let list = ViewableMusicListManager()
                                 list.listName = "Favorite Music"
                                 for path in AppManager.default.appData.avaliblePath{
@@ -56,7 +60,7 @@ struct MusicListOverView: View {
                                     music.isFavorite
                                 }
                                 
-                                list.musicList.sort{ $0.name > $1.name }
+                                list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
                                 AppManager.default.viewingMusicListManager = list
                                 self.showMusicList = true
                             }
@@ -78,7 +82,7 @@ struct MusicListOverView: View {
                                         let list = ViewableMusicListManager()
                                         list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
                                         list.musicList = AppManager.default.getMusicFromFolder(path: path)
-                                        list.musicList.sort{ $0.name > $1.name }
+                                        list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
                                         AppManager.default.viewingMusicListManager = list
                                         
                                         self.showMusicList = true
@@ -177,7 +181,6 @@ fileprivate struct ScrollToRowButton: View{
                 
         }
         .onTapGesture {
-            print(#function)
             AppManager.default.viewingMusicListManager.jumpToCurrentMusic()
         }
     }

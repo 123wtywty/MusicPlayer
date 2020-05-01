@@ -15,7 +15,6 @@ class ViewableMusicListManager: ObservableObject{
     var needUpdate : Bool = true
     var musicList : [Music] = []{
         didSet{
-//            self.musicList.sort{ $0.name > $1.name }
             self.needUpdate = true
             DispatchQueue.main.async {
                 self.objectWillChange.send()
@@ -35,7 +34,8 @@ class ViewableMusicListManager: ObservableObject{
     @Published var needJumpTo : Int? = nil
     func jumpToCurrentMusic(name: String? = nil){
 
-        if !(AppManager.default.appData.playingList == self.listName){ return }
+//        if !(AppManager.default.appData.playingList == self.listName){ return }
+        
         var musicName = ""
         if name != nil{
             musicName = name!
@@ -43,6 +43,8 @@ class ViewableMusicListManager: ObservableObject{
         else{
             musicName = AppManager.default.musicListManager.getCurrentMusic().name
         }
+        
+//        print(musicName)
         
         guard let index = self.musicList.firstIndex(where: { $0.name == musicName }) else { return }
         self.needJumpTo = index

@@ -59,7 +59,7 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     private var recorder = MusicPlayedRecorder()
     
-    var sortFunc : (Music, Music) -> Bool = { $0.name > $1.name }
+    var sortFunc : (Music, Music) -> Bool = { $0.name < $1.name }
     
     required init(musicList: [Music]) {
         if musicList.isEmpty{

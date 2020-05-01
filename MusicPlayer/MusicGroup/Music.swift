@@ -61,9 +61,12 @@ class Music: IMusic, Equatable, Hashable{
         }
     }
     
-    var isFavorite: Bool{
+    var isFavorite: Bool
+        {
         didSet{
+            print("isFavorite did change")
             self.wrapper.update()
+            StatusBarView.shared.update_like_StatusItem()
         }
     }
     

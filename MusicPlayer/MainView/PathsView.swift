@@ -24,19 +24,7 @@ struct PathsView: View{
             .colorMultiply(Color.init(.sRGB, white: 1 - 0.03, opacity: 1))
             .cornerRadius(10)
             
-            HStack{
-                Spacer()
-                Button(action:{
-                    let panel = OpenPanelCustomize()
-                    panel.openPanelCompletionHandler { path in
-                        self.data.selectingPath.append(path)
-                    }
-                    panel.start()
-                    
-                }){
-                    Text("add path")
-                }
-            }
+
             
         }
         .padding()

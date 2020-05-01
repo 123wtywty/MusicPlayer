@@ -93,4 +93,22 @@ extension ContentView{
         }
         
     }
+    
+    
+        func AddPathButton()  -> some View {
+            Button(action:{
+                let panel = OpenPanelCustomize()
+                panel.openPanelCompletionHandler { path in
+                    
+                    AppManager.default.appData.selectingPath.append(path)
+                }
+                panel.start()
+                
+            }){
+                Text("add path")
+            }
+            
+        }
+    
+    
 }

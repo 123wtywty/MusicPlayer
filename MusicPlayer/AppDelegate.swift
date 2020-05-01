@@ -13,23 +13,24 @@ import SwiftUI
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    var window: NSWindow!
+//    var window: NSWindow!
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, persistentContainer.viewContext)
-
-        // Create the window and set the content view. 
-        window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            backing: .buffered, defer: false)
-        window.center()
-        window.setFrameAutosaveName("Main Window")
-        window.contentView = NSHostingView(rootView: contentView)
-        window.makeKeyAndOrderFront(nil)
+        
+//        let contentView = ContentView().environment(\.managedObjectContext, persistentContainer.viewContext)
+//
+//        // Create the window and set the content view.
+//        window = NSWindow(
+//            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
+//            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+//            backing: .buffered, defer: false)
+//        window.center()
+//        window.setFrameAutosaveName("Main Window")
+//        window.contentView = NSHostingView(rootView: contentView)
+//        window.makeKeyAndOrderFront(nil)
         
             
         self.appInit()
@@ -47,10 +48,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func appInit(){
         
+        NSApp.setActivationPolicy(.accessory)
         
 //        let mList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
 //
 //        AppManager.default.musicListManager.setMusicList(newList: mList)
+        
+        StatusBarView.shared.makeView()
         
         AppManager.default.appData.selectingPath.append("/Users/gary/music1/日语")
         AppManager.default.appData.selectingPath.append("/Users/gary/music1/古风")
@@ -58,6 +62,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         list.musicList = AppManager.default.getMusicFromFolder(path: "/Users/gary/music1/日语")
         list.listName = "日语"
         list.playThisList()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            StatusBarView.shared.openMainWindow()
+            
+        }
         
     }
     

@@ -8,30 +8,96 @@
 
 import SwiftUI
 
+let defaultWidth = CGFloat(640)
+let defaultHeight = CGFloat(530)
+
 struct ContentView: View {
+    
+    @ObservedObject var data = AppManager.default.appData
     var body: some View {
-        HStack{
+        
+        return GeometryReader{ g in
+
+            HStack{
+                
+                    
             VStack{
-                PlayerUIView()
-                    .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
-                    .cornerRadius(8)
+                
+                VStack(alignment: .center, spacing: 20){
+//                    Text("\(g.size.width), \(g.size.height)")
+                    PlayerUIView()
+                        .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+                        .cornerRadius(8)
+                        .padding()
+                    
+                    Text(AppManager.default.musicListManager.getCurrentMusic().name)
+                        .frame(width: 400, height: .none)
+                        .padding()
+                    
+                    VStack(alignment: .center, spacing: 20){
+                        HStack(spacing: 20){
+                            
+                            self.PlayButton()
+                            
+                            self.PauseButton()
+                            
+                            
+                            
+                        }
+                        HStack(spacing: 20){
+                            self.ChangeRepeatShuffleStatusButton()
+                            
+                            self.NextButton()
+                            
+                            self.QuitButton()
+                        }
+                        HStack(spacing: 20){
+                            self.DownloaderOpenButton()
+                            self.AddPathButton()
+                            
+                        }
+
+                    }
+                    
+                }.frame(width: 400, height: .none)
                     .padding()
                 
+                Spacer()
                 
+                if g.size.height > 500{
+                    PathsView()
+                }
                 
-                
-                PathsView()
             }
-//            MusicListView()
-            MusicListOverView()
+                
+                
+            .frame(width: 430, height: g.size.height)
+                    
 
+                    
+                
+                
+            
+            VStack{
+
+                
+                MusicListOverView()
+                    .animation(.default)
+                    .cornerRadius(8)
+                    .frame(width: (defaultWidth - 430) + (g.size.width - defaultWidth), height: .none)
+                    
+                
+                
+                
+                
+            }
+            .frame(width: (defaultWidth - 430) + (g.size.width - defaultWidth),
+                   height: g.size.height)
+                
+                .animation(nil)
         }
-    }
-}
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        .animation(nil)
+        
+        }
     }
 }
