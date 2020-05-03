@@ -68,6 +68,11 @@ class MusicPlayer: NSObject, IMusicPlayer{
     
     
     private func play(music: Music){
+        if !FileManager.default.fileExists(atPath: music.url.path) {
+            self.playMusicAccordingToSetting()
+            return
+        }
+        
         AppManager.default.musicListManager.setCurrentMusic(music: music)
         self.player.replaceCurrentItem(with: AVPlayerItem(asset: AVAsset(url: music.url)))
         self.player.play()

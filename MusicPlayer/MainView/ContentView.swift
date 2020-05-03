@@ -30,7 +30,7 @@ struct ContentView: View {
                         .cornerRadius(8)
                         .padding()
                     
-                    Text(AppManager.default.musicListManager.getCurrentMusic().name)
+                    Text(self.data.playingMusicName)
                         .frame(width: 400, height: .none)
                         .padding()
                     

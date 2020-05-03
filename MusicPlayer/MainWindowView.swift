@@ -94,7 +94,7 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
             
 //            frame.size = CGSize(width: sizeWant.width, height: sizeWant.height)
             
-            self.window?.setFrame(sizeWant, display: true, animate: true)
+            self.window?.setFrame(sizeWant, display: false, animate: false)
         }
     }
 

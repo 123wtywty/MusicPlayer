@@ -46,13 +46,10 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     var listName: String = ""
     
-    private var currentMusic : Music{
-        willSet{
-            self.currentMusic.wrapper.update()
-        }
-        
+    private var currentMusic : Music{        
         didSet{
             self.currentMusic.wrapper.update()
+            AppManager.default.appData.playingMusicName = self.currentMusic.name
         }
     }
     
