@@ -78,7 +78,7 @@ extension ContentView{
             Text("Next")
             
         }
-
+        
     }
     
     
@@ -86,7 +86,7 @@ extension ContentView{
     func QuitButton()  -> some View {
         
         Button( action: {
-            NSApplication.shared.terminate(nil)
+            AppManager.default.terminate()
         }
         ){
             Text("Quit")
@@ -94,21 +94,32 @@ extension ContentView{
         
     }
     
-    
-        func AddPathButton()  -> some View {
-            Button(action:{
-                let panel = OpenPanelCustomize()
-                panel.openPanelCompletionHandler { path in
-                    
-                    AppManager.default.appData.selectingPath.append(path)
-                }
-                panel.start()
-                
-            }){
-                Text("add path")
-            }
-            
+    func restartButton()  -> some View {
+        
+        Button( action: {
+            AppManager.default.restart()
         }
+        ){
+            Text("Restart")
+        }
+        
+    }
+    
+    
+    func AddPathButton()  -> some View {
+        Button(action:{
+            let panel = OpenPanelCustomize()
+            panel.openPanelCompletionHandler { path in
+                
+                AppManager.default.appData.selectingPath.append(path)
+            }
+            panel.start()
+            
+        }){
+            Text("add path")
+        }
+        
+    }
     
     
 }

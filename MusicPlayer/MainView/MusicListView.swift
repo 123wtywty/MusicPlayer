@@ -74,7 +74,7 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
             setupTableView()
             
             self.scrollView.hasHorizontalScroller = false
-            self.scrollView.hasVerticalScroller = false
+//            self.scrollView.hasVerticalScroller = false
         }
     }
     

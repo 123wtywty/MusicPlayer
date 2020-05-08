@@ -82,7 +82,6 @@ struct MusicListOverView: View {
                                         let list = ViewableMusicListManager()
                                         list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
                                         list.musicList = AppManager.default.getMusicFromFolder(path: path)
-                                        list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
                                         AppManager.default.viewingMusicListManager = list
                                         
                                         self.showMusicList = true

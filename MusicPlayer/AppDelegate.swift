@@ -32,7 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        window.contentView = NSHostingView(rootView: contentView)
 //        window.makeKeyAndOrderFront(nil)
         
-            
+        print(UserDefaults.standard.value(forKey: "lastTimeData"))
+//        UserDefaults.standard.removeObject(forKey: "playingMusicName")
         self.appInit()
         
         
@@ -40,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        // Insert code here to tear down your application        
     }
     
     

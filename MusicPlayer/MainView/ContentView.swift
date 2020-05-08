@@ -41,15 +41,16 @@ struct ContentView: View {
                             
                             self.PauseButton()
                             
+                            self.NextButton()
                             
                             
                         }
                         HStack(spacing: 20){
                             self.ChangeRepeatShuffleStatusButton()
                             
-                            self.NextButton()
-                            
                             self.QuitButton()
+                            
+                            self.restartButton()
                         }
                         HStack(spacing: 20){
                             self.DownloaderOpenButton()

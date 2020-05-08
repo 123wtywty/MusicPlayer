@@ -8,7 +8,7 @@
 
 import Foundation
 import AVFoundation
-
+import Cocoa
 
 class AppManager{
     
@@ -36,7 +36,42 @@ class AppManager{
     var musicMaker : MusicMaker
     var appData : AppData
     
+    private func savedataToUserDefaults(){
+        var dataNeedSave : [String : Any] = [:]
+        dataNeedSave["playingMusicName"] = AppManager.default.appData.playingMusicName
+        dataNeedSave["selectingPath"] = AppManager.default.appData.selectingPath
+        dataNeedSave["blockedPath"] = AppManager.default.appData.blockedPath
+        
+        if let data = try? JSONSerialization.data(withJSONObject: dataNeedSave, options: []){
+            UserDefaults.standard.set(String(data: data, encoding: String.Encoding.utf8), forKey: "lastTimeData")
+        }
+        
+    }
     
+    func restart(){
+        
+        self.savedataToUserDefaults()
+
+        
+        let task = Process()
+        task.currentDirectoryPath = "/Users/gary"
+        task.launchPath = "/usr/bin/open"
+        task.arguments = ["-n", "-b", "com.GW.MusicPlayer"]
+        task.launch()
+        task.waitUntilExit()
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            
+            NSApplication.shared.terminate(nil)
+//        }
+    }
+    
+    func terminate(){
+        
+        self.savedataToUserDefaults()
+        
+        NSApplication.shared.terminate(nil)
+    }
     
     func getMusicFromFolder(path: String) -> [Music] {
         let fileManager = FileManager.default
@@ -68,19 +103,15 @@ class AppManager{
             let completePath = "\(path)/\(musicRawName)"
             let i = musicRawName.lastIndex(of: "-") ?? musicRawName.lastIndex(of: ".") ?? musicRawName.endIndex
             
-            let completeUrl = URL(fileURLWithPath: completePath)
-            //            let completeUrl = URL(string: completePath)
-            
+            let completeUrl = URL(fileURLWithPath: completePath)            
             let m = AppManager.default.musicMaker.make(name: String(musicRawName[..<i]), url: completeUrl, cover: nil)
-            
-            //            print(completePath)
-            //            print(completeUrl)
+
             musicList.append(m)
             
             
         }
         if musicList.isEmpty { return [Music.placeHolder] }
-        return musicList
+        return musicList.sorted(by: AppManager.default.musicListManager.sortFunc)
     }
 
     
