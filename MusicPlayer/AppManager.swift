@@ -38,9 +38,11 @@ class AppManager{
     
     private func savedataToUserDefaults(){
         var dataNeedSave : [String : Any] = [:]
-        dataNeedSave["playingMusicName"] = AppManager.default.appData.playingMusicName
-        dataNeedSave["selectingPath"] = AppManager.default.appData.selectingPath
-        dataNeedSave["blockedPath"] = AppManager.default.appData.blockedPath
+        dataNeedSave["selectingPath"] = self.appData.selectingPath
+        dataNeedSave["blockedPath"] = self.appData.blockedPath
+        
+        dataNeedSave["playingMusicName"] = self.appData.playingMusicName
+        dataNeedSave["playingList"] = self.appData.playingList
         
         if let data = try? JSONSerialization.data(withJSONObject: dataNeedSave, options: []){
             UserDefaults.standard.set(String(data: data, encoding: String.Encoding.utf8), forKey: "lastTimeData")
@@ -62,7 +64,7 @@ class AppManager{
         
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            NSApplication.shared.terminate(nil)
+        self.terminate()
 //        }
     }
     
@@ -77,7 +79,11 @@ class AppManager{
         let fileManager = FileManager.default
         var musicListString : [String] = []
         
-        if !fileManager.fileExists(atPath: path) { return [Music.placeHolder] }
+        if !fileManager.fileExists(atPath: path) {
+            print("path not exists: \(path)")
+            return [Music.placeHolder]
+            
+        }
         
         do {
             musicListString = try fileManager.contentsOfDirectory(atPath: "\(path)")

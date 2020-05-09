@@ -11,7 +11,7 @@ import Foundation
 
 class ViewableMusicListManager: ObservableObject{
     
-    static func makeFrom(listName: String) -> ViewableMusicListManager?{
+    static func makeFrom(listName: String) -> ViewableMusicListManager{
         if listName == "All Music"{
             let list = ViewableMusicListManager()
             list.listName = "All Music"
@@ -34,15 +34,19 @@ class ViewableMusicListManager: ObservableObject{
         }else{
                         
             let list = ViewableMusicListManager()
-            list.listName = "\(URL(fileURLWithPath: listName).lastPathComponent)"
-            list.musicList = AppManager.default.getMusicFromFolder(path: listName)
+            list.listName = "\(listName)"
+            let path = AppManager.default.appData.selectingPath.first { str -> Bool in
+                URL(fileURLWithPath: str).lastPathComponent == listName
+            } ?? ""
+            print("path: \(path)")
+            list.musicList = AppManager.default.getMusicFromFolder(path: path)
             
             return list
             
         }
         
         
-        return nil
+//        return nil
     }
     
     var listName: String = ""
@@ -60,7 +64,7 @@ class ViewableMusicListManager: ObservableObject{
     
     
     func playThisList(){
-        
+        print("play : \(self.listName)")
         AppManager.default.appData.playingList = self.listName
         AppManager.default.musicListManager.setMusicList(newList: self.musicList)
     }

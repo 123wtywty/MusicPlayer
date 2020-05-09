@@ -36,7 +36,6 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     private var musicList : [Music]{
         didSet{
-            print("need update ui")
             DispatchQueue.main.async {
                 self.objectWillChange.send()
                 
