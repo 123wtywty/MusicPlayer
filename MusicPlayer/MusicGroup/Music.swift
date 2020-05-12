@@ -57,6 +57,7 @@ class Music: IMusic, Equatable, Hashable{
     
     var playCount: Int{
         didSet{
+            self.save()
             self.wrapper.update()
         }
     }
@@ -67,6 +68,8 @@ class Music: IMusic, Equatable, Hashable{
             print("isFavorite did change")
             self.wrapper.update()
             StatusBarView.shared.update_like_StatusItem()
+            
+            self.save()
         }
     }
     
@@ -105,6 +108,18 @@ class Music: IMusic, Equatable, Hashable{
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.name)
         hasher.combine(self.url)
+    }
+    
+    func save(){
+        MusicDataManager.shared.addMusicData(data: MusicDataStruct(name: self.name, isFavorite: self.isFavorite, playCount: Double(self.playCount)))
+    }
+    
+    func update(data: MusicDataStruct?){
+        guard let d = data else {
+            return
+        }
+        self.isFavorite = d.isFavorite
+        self.playCount = Int(d.playCount)
     }
     
 }

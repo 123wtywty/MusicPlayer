@@ -57,7 +57,7 @@ class StatusBarView{
     }
     
     public func update_like_StatusItem(){
-        print(#function, AppManager.default.musicListManager.getCurrentMusic().isFavorite)
+        print(#function, AppManager.default.musicListManager.getCurrentMusic().isFavorite, AppManager.default.musicListManager.getCurrentMusic().name)
         DispatchQueue.main.async {
             self.like_StatusItem.button!.title = AppManager.default.musicListManager.getCurrentMusic().isFavorite ? "􀊵" : "􀊴"
             

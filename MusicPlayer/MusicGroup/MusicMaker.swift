@@ -28,10 +28,13 @@ class MusicMaker: IMusicMaker{
     
     func make(name: String, url: URL, cover: NSImage?) -> Music {
         if let m = self.cachedMusic[name]{
+            m.update(data: MusicDataManager.shared.getDataFor(musicName: name))
             return m
         }
         else{
-            self.cachedMusic[name] = Music(name: name, url: url, cover: cover)
+            let m = Music(name: name, url: url, cover: cover)
+            m.update(data: MusicDataManager.shared.getDataFor(musicName: name))
+            self.cachedMusic[name] = m
             return self.cachedMusic[name]!
         }
     }
