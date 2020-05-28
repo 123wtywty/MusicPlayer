@@ -45,8 +45,11 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     var listName: String = ""
     
-    private var currentMusic : Music{        
+    private var currentMusic : Music!{
         didSet{
+            
+            oldValue.wrapper.update()
+            
             self.currentMusic.wrapper.update()
             AppManager.default.appData.playingMusicName = self.currentMusic.name
             StatusBarView.shared.update_like_StatusItem()
@@ -67,7 +70,7 @@ class MusicListManager: IMusicListManager, ObservableObject{
         }
         
         
-        self.currentMusic = Music.placeHolder
+//        self.currentMusic = Music.placeHolder
         self.currentMusic = self.getRandomMusic()
         
         

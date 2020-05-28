@@ -33,6 +33,7 @@ class Music: IMusic, Equatable, Hashable{
     
     static public let placeHolder = Music(name: "placeHolder", url: Bundle.main.url(forResource: "placeHolder", withExtension: "mp4")!, cover: nil)
     
+    var finishInit = false
     required init(name: String, url: URL, cover: NSImage?) {
         self.name = name
         self.url = url
@@ -44,6 +45,7 @@ class Music: IMusic, Equatable, Hashable{
         self.wrapper = MusicWrapper(id: self.name + self.url.path)
         self.wrapper.music = self
         
+        self.finishInit = true
     }
     
     deinit {
@@ -57,6 +59,7 @@ class Music: IMusic, Equatable, Hashable{
     
     var playCount: Int{
         didSet{
+            if !self.finishInit { return }
             self.save()
             self.wrapper.update()
         }
@@ -65,7 +68,8 @@ class Music: IMusic, Equatable, Hashable{
     var isFavorite: Bool
         {
         didSet{
-            print("isFavorite did change")
+            if !self.finishInit { return }
+            print("isFavorite change, \(self.name)")
             self.wrapper.update()
             StatusBarView.shared.update_like_StatusItem()
             
@@ -111,6 +115,8 @@ class Music: IMusic, Equatable, Hashable{
     }
     
     func save(){
+        if !self.finishInit { return }
+        
         MusicDataManager.shared.addMusicData(data: MusicDataStruct(name: self.name, isFavorite: self.isFavorite, playCount: Double(self.playCount)))
     }
     
@@ -118,8 +124,17 @@ class Music: IMusic, Equatable, Hashable{
         guard let d = data else {
             return
         }
-        self.isFavorite = d.isFavorite
-        self.playCount = Int(d.playCount)
+        
+        self.finishInit = false
+        
+        if self.isFavorite != d.isFavorite{
+            self.isFavorite = d.isFavorite
+        }
+        if self.playCount != Int(d.playCount){
+            self.playCount = Int(d.playCount)
+        }
+        self.finishInit = true
+        
     }
     
 }

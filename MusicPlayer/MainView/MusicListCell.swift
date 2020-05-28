@@ -20,7 +20,6 @@ struct MusicListCell: View {
     
     var cellId = -1
     @State var onTap = false
-    @State var onHover = false
     
     var body: some View {
         
@@ -86,35 +85,9 @@ struct MusicListCell: View {
                         
                         
                     }
-                    
-                    
-                    // play next
-                    HStack{
-                        Spacer()
-                        VStack{
-                            if self.onHover && !(self.cellId >= 1){
-                                Button(action:{
-                                    //                                MusicList.shared.playList.append(self.music)
-                                }){
-                                    Text("play next")
-                                }
-                                .colorScheme(.light)
-                                
-                            }
-                            else{
-                                Text("").hidden()
-                            }
-                            Spacer()
-                            
-                        }
-                    }
-                    
-                    
+
                 }
-                    
-                .onHover(perform: { (isHover) in
-                    self.onHover = isHover
-                })
+
                     
                     
                     .onTapGesture {

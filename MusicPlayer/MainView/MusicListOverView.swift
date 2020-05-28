@@ -12,11 +12,12 @@ import SwiftUI
 struct MusicListOverView: View {
     
     @ObservedObject var paths = AppManager.default.appData
-    @State var showMusicList = false
+    @State private var showMusicList = false
     
     var body: some View{
-        
-        HStack{
+
+            GeometryReader{ geo in
+                
             
             if !self.showMusicList{
                 VStack{
@@ -127,6 +128,7 @@ struct MusicListOverView: View {
                         }){
                             Text("play this list")
                         }
+                        .padding(.trailing)
                     }
                     
                     ZStack(alignment: .bottomTrailing){
