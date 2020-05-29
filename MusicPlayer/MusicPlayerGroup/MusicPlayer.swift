@@ -39,7 +39,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
         super.init()
         
         self.player.volume = 0.4
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self, queue: .main) { _ in self.musicPlayToEnd() }
+//        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self, queue: .main) { _ in self.musicPlayToEnd() }
         
         self.obPool["observe player.timeControlStatus"] = observe(\.player.timeControlStatus) { _,_  in
             for handle in self.musicPlayingStateDidChangeHandle.values{
@@ -51,9 +51,8 @@ class MusicPlayer: NSObject, IMusicPlayer{
         
         self.obPool["timer"] = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
 //            print()
-//            print(self.player.playToEnd)
-//            print(self.player.currentTime().seconds)
-//            print(self.player.currentItem?.duration.seconds)
+//            print(self.player.playToEnd, self.player.currentTime().seconds, self.player.currentItem?.duration.seconds)
+
             if self.player.playToEnd{
                 self.musicPlayToEnd()
             }
@@ -68,6 +67,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
     
     
     private func play(music: Music){
+        print(music.url.path)
         if !FileManager.default.fileExists(atPath: music.url.path) {
             self.playMusicAccordingToSetting()
             return
@@ -114,6 +114,8 @@ class MusicPlayer: NSObject, IMusicPlayer{
     private func musicPlayToEnd(){
         print(#function)
         AppManager.default.musicListManager.currentMusicFinishPlay()
+        
+        if AppManager.default.musicListManager.getCurrentMusic().name == "placeHolder" { return }
         
         switch AppManager.default.appData.repeatShuffleStatus{
         case .shuffle:

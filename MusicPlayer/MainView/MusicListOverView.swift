@@ -69,6 +69,29 @@ struct MusicListOverView: View {
                             
                         }
                         
+                        Section(header: Text("QQ musicList")){
+                            
+                            ForEach(["best2", "Best", "like", "我喜欢", "纯音"], id:\.self){ listName in
+                                VStack{
+                                    Text(listName)
+                                        .font(.subheadline)
+                                        .foregroundColor(.black)
+                                }.modifier(RowModifier(selected: listName == AppManager.default.appData.playingList))
+                                    .onTapGesture {
+                                        let list = ViewableMusicListManager()
+                                        list.listName = listName
+                                        list.musicList = GetMusicFromQQMusicList(filePath: "/Users/gary/Music/MyMusic/qq music list/\(listName)List.txt")
+                                        AppManager.default.viewingMusicListManager = list
+                                        
+                                        
+                                        self.showMusicList = true
+                                }
+                            }
+
+                            
+                            
+                        }
+                        
                         Section(header: Text("folder")) {
                             ForEach(AppManager.default.appData.avaliblePath, id: \.self){ path in
                                 
