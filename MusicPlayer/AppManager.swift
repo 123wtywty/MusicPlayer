@@ -26,6 +26,12 @@ class AppManager{
         self.musicMaker = MusicMaker()
         self.appData = AppData()
         
+        self.musicListOverViewData = MusicListOverViewData()
+        self.setUpMusicListOverViewData()
+    }
+    
+    private func setUpMusicListOverViewData(){
+        
     }
     
     
@@ -35,6 +41,7 @@ class AppManager{
     var viewingMusicListManager : ViewableMusicListManager
     var musicMaker : MusicMaker
     var appData : AppData
+    var musicListOverViewData : MusicListOverViewData
     
     private func savedataToUserDefaults(){
         var dataNeedSave : [String : Any] = [:]
