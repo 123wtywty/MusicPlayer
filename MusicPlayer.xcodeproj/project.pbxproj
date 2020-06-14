@@ -44,6 +44,7 @@
 		4E98C878245A26040042857D /* MusicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C877245A26040042857D /* MusicType.swift */; };
 		4E98C87A245A28E80042857D /* Repeat_Shuffle_Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C879245A28E80042857D /* Repeat_Shuffle_Status.swift */; };
 		4E98C87C245A2E890042857D /* GetMusicFromFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C87B245A2E890042857D /* GetMusicFromFolder.swift */; };
+		4EFEF1632495B97D00C7B176 /* TODO.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4EFEF1622495B97D00C7B176 /* TODO.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,7 @@
 		4E98C877245A26040042857D /* MusicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicType.swift; sourceTree = "<group>"; };
 		4E98C879245A28E80042857D /* Repeat_Shuffle_Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repeat_Shuffle_Status.swift; sourceTree = "<group>"; };
 		4E98C87B245A2E890042857D /* GetMusicFromFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMusicFromFolder.swift; sourceTree = "<group>"; };
+		4EFEF1622495B97D00C7B176 /* TODO.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 		4E202A1F2458F6DD001377CA /* MusicPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				4EFEF1622495B97D00C7B176 /* TODO.rtf */,
 				4E202A202458F6DD001377CA /* AppDelegate.swift */,
 				4E98C873245A24170042857D /* AppManager.swift */,
 				4E7F8D62245A4E28006B7143 /* AppData.swift */,
@@ -268,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFEF1632495B97D00C7B176 /* TODO.rtf in Resources */,
 				4E202A2E2458F6DE001377CA /* Main.storyboard in Resources */,
 				4E7F8D5C245A326D006B7143 /* placeHolder.mp4 in Resources */,
 				4E202A2B2458F6DE001377CA /* Preview Assets.xcassets in Resources */,
