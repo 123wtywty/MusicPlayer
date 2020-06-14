@@ -28,17 +28,20 @@ struct MusicListCell: View {
                 ZStack{
                     
                     HStack{
-                        Image(nsImage: self.music.cover)
-                            .resizable()
-                            .frame(width: 100, height: 57) // old: 65, 57 = 100 * 9 /16
-                            .cornerRadius(7)
+//                        Image(nsImage: self.music.cover)
+//                            .resizable()
+//                            .frame(width: 100, height: 57) // old: 65, 57 = 100 * 9 /16
+//                            .cornerRadius(7)
+//
+//                            .hidden()
                         
                         GeometryReader{ g in
                             
                             HStack{
                                 
                                 Text(self.music.name)
-                                    .frame(minWidth: 80, idealWidth: .none, maxWidth: .none, minHeight: 57, idealHeight: 57, maxHeight: 57)
+//                                    .frame(minWidth: 80, idealWidth: .none, maxWidth: .none, minHeight: 57, idealHeight: 57, maxHeight: .none)
+                                    
                                     .foregroundColor(.black)
                                 
                                 Spacer()
@@ -65,6 +68,7 @@ struct MusicListCell: View {
                                 
                             }
                         }
+                        .frame(minWidth: 100, idealWidth: .none, maxWidth: .none, minHeight: 57, idealHeight: 57, maxHeight: .none)
                         
                         
                         Spacer()

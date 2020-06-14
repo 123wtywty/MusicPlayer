@@ -30,7 +30,9 @@ class AppManager{
         self.setUpMusicListOverViewData()
     }
     
-    private func setUpMusicListOverViewData(){
+    func setUpMusicListOverViewData(){
+        self.musicListOverViewData = MusicListOverViewData()
+        
         let defaultList = MusicBlock(name: "defaultList")
         let All_Music = SingleMusicList(name: "All Music") { () -> ViewableMusicListManager in
             let list = ViewableMusicListManager()

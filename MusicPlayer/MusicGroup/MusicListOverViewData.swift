@@ -23,10 +23,13 @@ class MusicListOverViewData{
         self.subBlock.append(block)
     }
     
+    
 }
 
 
-class MusicBlock{
+class MusicBlock: Identifiable{
+    var id = UUID()
+    
     var name: String
     var subList : [SingleMusicList] = []
     
@@ -40,7 +43,8 @@ class MusicBlock{
     
 }
 
-class SingleMusicList{
+class SingleMusicList: Identifiable{
+    var id = UUID()
     
     var name: String = ""
     var getMusicList: ()->ViewableMusicListManager

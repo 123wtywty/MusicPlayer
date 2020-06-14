@@ -15,110 +15,129 @@ struct MusicListOverView: View {
     @State private var showMusicList = false
     
     var body: some View{
-
-            GeometryReader{ geo in
-                
+        
+        GeometryReader{ geo in
+            
             
             if !self.showMusicList{
                 VStack{
                     
-                    
-                    
                     List{
-                        Section(header: Text("defaultList")){
-                            VStack{
-                                Text("All Music")
-                                    .font(.subheadline)
-                                    .foregroundColor(.black)
-                            }.modifier(RowModifier(selected: "All Music" == AppManager.default.appData.playingList))
-                                
-                            .onTapGesture {
-                                let list = ViewableMusicListManager()
-                                list.listName = "All Music"
-                                for path in AppManager.default.appData.avaliblePath{
-                                    print(path)
-                                    list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                        ForEach(AppManager.default.musicListOverViewData.subBlock){ block in
+                            Section(header: Text(block.name)){
+                                ForEach(block.subList){ list in
+                                    VStack{
+                                        Text(list.name)
+                                            .font(.subheadline)
+                                            .foregroundColor(.black)
+                                    }.modifier(RowModifier(selected: list.name == AppManager.default.appData.playingList))
+                                        .onTapGesture {
+                                            
+                                            AppManager.default.viewingMusicListManager = list.getMusicList()
+                                            
+                                            self.showMusicList = true
+                                    }
                                 }
-                                
-                                list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
-                                AppManager.default.viewingMusicListManager = list
-                                self.showMusicList = true
-                                
-                            }
-                            
-                            VStack{
-                                Text("Favorite Music")
-                                    .font(.subheadline)
-                                    .foregroundColor(.black)
-                            }.modifier(RowModifier(selected: "Favorite Music" == AppManager.default.appData.playingList))
-                            .onTapGesture {
-                                let list = ViewableMusicListManager()
-                                list.listName = "Favorite Music"
-                                for path in AppManager.default.appData.avaliblePath{
-                                    list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
-                                }
-                                list.musicList = list.musicList.filter {music -> Bool in
-                                    music.isFavorite
-                                }
-                                
-                                list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
-                                AppManager.default.viewingMusicListManager = list
-                                self.showMusicList = true
-                            }
-                            
-                            
-                        }
-                        
-                        Section(header: Text("QQ musicList")){
-                            
-                            ForEach(["best2", "Best", "like", "我喜欢", "纯音"], id:\.self){ listName in
-                                VStack{
-                                    Text(listName)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black)
-                                }.modifier(RowModifier(selected: listName == AppManager.default.appData.playingList))
-                                    .onTapGesture {
-                                        let list = ViewableMusicListManager()
-                                        list.listName = listName
-                                        list.musicList = GetMusicFromQQMusicList(filePath: "/Users/gary/Music/MyMusic/qq music list/\(listName)List.txt")
-                                        AppManager.default.viewingMusicListManager = list
-                                        
-                                        
-                                        self.showMusicList = true
-                                }
-                            }
-
-                            
-                            
-                        }
-                        
-                        Section(header: Text("folder")) {
-                            ForEach(AppManager.default.appData.avaliblePath, id: \.self){ path in
-                                
-                                
-                                VStack{
-                                    Text("\(URL(fileURLWithPath: path).lastPathComponent)")
-                                        .font(.subheadline)
-                                        .foregroundColor(.black)
-                                }.modifier(RowModifier(selected: "\(URL(fileURLWithPath: path).lastPathComponent)" == AppManager.default.appData.playingList))
-                                    
-                                    .onTapGesture {
-                                        let list = ViewableMusicListManager()
-                                        list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
-                                        list.musicList = AppManager.default.getMusicFromFolder(path: path)
-                                        AppManager.default.viewingMusicListManager = list
-                                        
-                                        self.showMusicList = true
-                                        
-                                }
-                                
-                                
-                                
                             }
                         }
                         
                     }
-                    .animation(.default)
+                        
+                        //                    List{
+                        //                        Section(header: Text("defaultList")){
+                        //                            VStack{
+                        //                                Text("All Music")
+                        //                                    .font(.subheadline)
+                        //                                    .foregroundColor(.black)
+                        //                            }.modifier(RowModifier(selected: "All Music" == AppManager.default.appData.playingList))
+                        //
+                        //                            .onTapGesture {
+                        //                                let list = ViewableMusicListManager()
+                        //                                list.listName = "All Music"
+                        //                                for path in AppManager.default.appData.avaliblePath{
+                        //                                    print(path)
+                        //                                    list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                        //                                }
+                        //
+                        //                                list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
+                        //                                AppManager.default.viewingMusicListManager = list
+                        //                                self.showMusicList = true
+                        //
+                        //                            }
+                        //
+                        //                            VStack{
+                        //                                Text("Favorite Music")
+                        //                                    .font(.subheadline)
+                        //                                    .foregroundColor(.black)
+                        //                            }.modifier(RowModifier(selected: "Favorite Music" == AppManager.default.appData.playingList))
+                        //                            .onTapGesture {
+                        //                                let list = ViewableMusicListManager()
+                        //                                list.listName = "Favorite Music"
+                        //                                for path in AppManager.default.appData.avaliblePath{
+                        //                                    list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                        //                                }
+                        //                                list.musicList = list.musicList.filter {music -> Bool in
+                        //                                    music.isFavorite
+                        //                                }
+                        //
+                        //                                list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
+                        //                                AppManager.default.viewingMusicListManager = list
+                        //                                self.showMusicList = true
+                        //                            }
+                        //
+                        //
+                        //                        }
+                        //
+                        //                        Section(header: Text("QQ musicList")){
+                        //
+                        //                            ForEach(["best2", "Best", "like", "我喜欢", "纯音"], id:\.self){ listName in
+                        //                                VStack{
+                        //                                    Text(listName)
+                        //                                        .font(.subheadline)
+                        //                                        .foregroundColor(.black)
+                        //                                }.modifier(RowModifier(selected: listName == AppManager.default.appData.playingList))
+                        //                                    .onTapGesture {
+                        //                                        let list = ViewableMusicListManager()
+                        //                                        list.listName = listName
+                        //                                        list.musicList = GetMusicFromQQMusicList(filePath: "/Users/gary/Music/MyMusic/qq music list/\(listName)List.txt")
+                        //                                        AppManager.default.viewingMusicListManager = list
+                        //
+                        //
+                        //                                        self.showMusicList = true
+                        //                                }
+                        //                            }
+                        //
+                        //
+                        //
+                        //                        }
+                        //
+                        //                        Section(header: Text("folder")) {
+                        //                            ForEach(AppManager.default.appData.avaliblePath, id: \.self){ path in
+                        //
+                        //
+                        //                                VStack{
+                        //                                    Text("\(URL(fileURLWithPath: path).lastPathComponent)")
+                        //                                        .font(.subheadline)
+                        //                                        .foregroundColor(.black)
+                        //                                }.modifier(RowModifier(selected: "\(URL(fileURLWithPath: path).lastPathComponent)" == AppManager.default.appData.playingList))
+                        //
+                        //                                    .onTapGesture {
+                        //                                        let list = ViewableMusicListManager()
+                        //                                        list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
+                        //                                        list.musicList = AppManager.default.getMusicFromFolder(path: path)
+                        //                                        AppManager.default.viewingMusicListManager = list
+                        //
+                        //                                        self.showMusicList = true
+                        //
+                        //                                }
+                        //
+                        //
+                        //
+                        //                            }
+                        //                        }
+                        //
+                        //                    }
+                        .animation(.default)
                     
                 }
             }

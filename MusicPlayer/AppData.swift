@@ -16,8 +16,21 @@ class AppData: ObservableObject{
     
     @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
     
-    @Published var selectingPath : [String] = []
-    @Published var blockedPath : [String] = []
+    var selectingPath : [String] = []{
+        didSet{
+            AppManager.default.setUpMusicListOverViewData()
+            self.objectWillChange.send()
+            
+        }
+    }
+    
+    var blockedPath : [String] = []{
+        didSet{
+            AppManager.default.setUpMusicListOverViewData()
+            self.objectWillChange.send()
+            
+        }
+    }
     
     var avaliblePath : [String]{
         get{
