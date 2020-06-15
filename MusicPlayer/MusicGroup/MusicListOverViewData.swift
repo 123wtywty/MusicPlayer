@@ -23,6 +23,9 @@ class MusicListOverViewData{
         self.subBlock.append(block)
     }
     
+    func getAllSingleMusicList() -> [SingleMusicList]{
+        self.subBlock.flatMap{$0.subList}
+    }
     
 }
 
@@ -43,7 +46,11 @@ class MusicBlock: Identifiable{
     
 }
 
-class SingleMusicList: Identifiable{
+class SingleMusicList: Identifiable, Equatable{
+    static func == (lhs: SingleMusicList, rhs: SingleMusicList) -> Bool {
+        lhs.name == rhs.name
+    }
+    
     var id = UUID()
     
     var name: String = ""

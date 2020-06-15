@@ -45,4 +45,10 @@ class AppData: ObservableObject{
         }
     }
     
+    var combineList : [SingleMusicList] = []{
+        didSet{
+            self.objectWillChange.send()
+        }
+    }
+    
 }

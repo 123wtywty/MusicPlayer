@@ -12,17 +12,26 @@ import SwiftUI
 struct MusicListOverView: View {
     
     @ObservedObject var paths = AppManager.default.appData
-    @State private var showMusicList = false
+    @State private var showState = 0
     
     var body: some View{
         
         GeometryReader{ geo in
             
             
-            if !self.showMusicList{
+            if self.showState == 0{
                 VStack{
                     
                     List{
+//                        VStack{
+//                            Text("Combine List")
+//                                .font(.subheadline)
+//                                .foregroundColor(.black)
+//                        }.modifier(RowModifier(selected: "Combine List" == AppManager.default.appData.playingList))
+//                            .onTapGesture {
+//                                self.showState = 2
+//                        }
+                        
                         ForEach(AppManager.default.musicListOverViewData.subBlock){ block in
                             Section(header: Text(block.name)){
                                 ForEach(block.subList){ list in
@@ -35,7 +44,7 @@ struct MusicListOverView: View {
                                             
                                             AppManager.default.viewingMusicListManager = list.getMusicList()
                                             
-                                            self.showMusicList = true
+                                            self.showState = 1
                                     }
                                 }
                             }
@@ -47,7 +56,7 @@ struct MusicListOverView: View {
                     
                 }
             }
-            else{
+            else if self.showState == 1{
                 VStack{
                     
                     
@@ -56,7 +65,7 @@ struct MusicListOverView: View {
                             .padding([.leading, .top])
                             .onTapGesture {
                                 withAnimation{
-                                    self.showMusicList = false
+                                    self.showState = 0
                                 }
                                 
                         }
@@ -86,6 +95,58 @@ struct MusicListOverView: View {
                     }
                 }
                 .animation(.default)
+            }
+            
+            else if self.showState == 2{
+                VStack{
+                    HStack{
+                        Text("􀆉 back")
+                            .padding([.leading, .top])
+                            .onTapGesture {
+                                withAnimation{
+                                    self.showState = 0
+                                }
+                                
+                        }
+                        
+                        Text("Combine list").padding()
+                        
+                    }
+                    
+                    Button(action:{
+                        let list = ViewableMusicListManager()
+                        list.listName = "Combine list"
+                        for musicList in AppManager.default.appData.combineList{
+                            list.musicList += musicList.getMusicList().musicList
+                        }
+                        list.playThisList()
+                    }){
+                        Text("play this list")
+                    }
+                    
+                    List(AppManager.default.musicListOverViewData.getAllSingleMusicList()){ musicList in
+                        HStack{
+                        Text(musicList.name)
+                            Spacer()
+                            
+                            Button(action:{
+                                if !AppManager.default.appData.combineList.contains(musicList){
+                                    AppManager.default.appData.combineList.append(musicList)
+                                }else{
+                                    AppManager.default.appData.combineList.removeAll{ $0 == musicList }
+                                }
+                            }){
+                                if !AppManager.default.appData.combineList.contains(musicList){
+                                    Text("add")
+                                }else{
+                                    Text("remove")
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                }
             }
             
             
