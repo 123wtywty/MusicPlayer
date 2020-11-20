@@ -101,13 +101,15 @@ class AppManager{
     var appData : AppData
     var musicListOverViewData : MusicListOverViewData
     
-    private func savedataToUserDefaults(){
+    func savedataToUserDefaults(){
         var dataNeedSave : [String : Any] = [:]
         dataNeedSave["selectingPath"] = self.appData.selectingPath
         dataNeedSave["blockedPath"] = self.appData.blockedPath
         
         dataNeedSave["playingMusicName"] = self.appData.playingMusicName
         dataNeedSave["playingList"] = self.appData.playingList
+        
+        dataNeedSave["repeatShuffleStatus"] = self.appData.repeatShuffleStatus.rawValue
         
         if let data = try? JSONSerialization.data(withJSONObject: dataNeedSave, options: []){
             UserDefaults.standard.set(String(data: data, encoding: String.Encoding.utf8), forKey: "lastTimeData")
@@ -172,10 +174,9 @@ class AppManager{
         for musicRawName in musicListString {
             
             let completePath = "\(path)/\(musicRawName)"
-            let i = musicRawName.lastIndex(of: "-") ?? musicRawName.lastIndex(of: ".") ?? musicRawName.endIndex
             
             let completeUrl = URL(fileURLWithPath: completePath)            
-            let m = AppManager.default.musicMaker.make(name: String(musicRawName[..<i]), url: completeUrl, cover: nil)
+            let m = AppManager.default.musicMaker.make(name: String(musicRawName), url: completeUrl, cover: nil)
 
             musicList.append(m)
             

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Repeat_Shuffle_Status {
+enum Repeat_Shuffle_Status: String {
     case shuffle
     case `repeat`
     case `repeat_1`

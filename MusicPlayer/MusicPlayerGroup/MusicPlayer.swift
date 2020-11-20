@@ -125,6 +125,8 @@ class MusicPlayer: NSObject, IMusicPlayer{
         case .repeat_1:
             self.playMusic(music: AppManager.default.musicListManager.getCurrentMusic())
         }
+        
+        AppManager.default.savedataToUserDefaults()
     }
     
     

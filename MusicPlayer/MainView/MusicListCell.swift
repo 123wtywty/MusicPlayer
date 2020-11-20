@@ -21,6 +21,16 @@ struct MusicListCell: View {
     var cellId = -1
     @State var onTap = false
     
+
+    
+    var displayeName : some StringProtocol{
+        get{
+            let i = self.music.name.lastIndex(of: "-") ?? self.music.name.lastIndex(of: ".") ?? self.music.name.endIndex
+            let displayeName = self.music.name[..<i]
+            return displayeName
+        }
+    }
+    
     var body: some View {
         
         return
@@ -39,7 +49,7 @@ struct MusicListCell: View {
                             
                             HStack{
                                 
-                                Text(self.music.name)
+                                Text(self.displayeName)
 //                                    .frame(minWidth: 80, idealWidth: .none, maxWidth: .none, minHeight: 57, idealHeight: 57, maxHeight: .none)
                                     
                                     .foregroundColor(.black)

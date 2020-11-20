@@ -10,14 +10,6 @@ import Foundation
 import SwiftUI
 
 extension ContentView{
-    func DownloaderOpenButton()  -> some View {
-        Button(action: {
-            //            DownloadMainWindow.shared.showWindow(nil)
-            NSApp.activate(ignoringOtherApps: true)
-        }){
-            Text("open DownLoader")
-        }
-    }
     
     func PlayButton()  -> some View {
         

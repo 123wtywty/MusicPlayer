@@ -61,10 +61,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let selectingPath = data["selectingPath"] as? [String],
             let blockedPath = data["blockedPath"] as? [String],
             let playingMusicName = data["playingMusicName"] as? String,
-            let playingList = data["playingList"] as? String
+            let playingList = data["playingList"] as? String,
+            let repeatShuffleStatus = (data["repeatShuffleStatus"] as? String) ?? ("" as? String)
         {
             
-            print(selectingPath, blockedPath, playingMusicName, playingList)
+            print(selectingPath, blockedPath, playingMusicName, playingList, repeatShuffleStatus)
             
             AppManager.default.appData.selectingPath = selectingPath
             
@@ -75,17 +76,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let list = ViewableMusicListManager.makeFrom(listName: playingList)
             list.playThisList()
             
+            AppManager.default.appData.repeatShuffleStatus = Repeat_Shuffle_Status(rawValue: repeatShuffleStatus) ?? Repeat_Shuffle_Status.shuffle
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                AppManager.default.musicPlayer.playMusic(name: playingMusicName)
-            }
+            AppManager.default.musicPlayer.playMusic(name: playingMusicName)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//
+//            }
         }
         
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             StatusBarView.shared.openMainWindow()
-            
+
         }
         
     }

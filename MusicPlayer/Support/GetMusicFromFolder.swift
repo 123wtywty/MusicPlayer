@@ -34,12 +34,12 @@ func GetMusicFromFolder(path: String) -> [Music] {
     for musicRawName in musicListString {
         
         let completePath = "\(path)/\(musicRawName)"
-        let i = musicRawName.lastIndex(of: "-") ?? musicRawName.lastIndex(of: ".") ?? musicRawName.endIndex
+
         
         let completeUrl = URL(fileURLWithPath: completePath)
         //            let completeUrl = URL(string: completePath)
         
-        let m = AppManager.default.musicMaker.make(name: String(musicRawName[..<i]), url: completeUrl, cover: nil)
+        let m = AppManager.default.musicMaker.make(name: musicRawName, url: completeUrl, cover: nil)
         
         //            print(completePath)
         //            print(completeUrl)
