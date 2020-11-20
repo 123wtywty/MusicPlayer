@@ -31,13 +31,6 @@ class ViewableMusicListManager: ObservableObject{
             }
             
             return list
-        }else if ["best2", "Best", "like", "我喜欢", "纯音"].contains(listName){
-            
-            let list = ViewableMusicListManager()
-            list.listName = listName
-            list.musicList = GetMusicFromQQMusicList(filePath: "/Users/gary/Music/MyMusic/qq music list/\(listName)List.txt")
-            return list
-            
         }else{
                         
             let list = ViewableMusicListManager()

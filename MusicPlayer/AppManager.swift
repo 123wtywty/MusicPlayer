@@ -63,20 +63,6 @@ class AppManager{
         defaultList.addSubList(list: Favorite_Music)
         self.musicListOverViewData.addSubBlock(block: defaultList)
         
-        let QQ_musicList = MusicBlock(name: "QQ musicList")
-        
-        for listName in ["best2", "Best", "like", "我喜欢", "纯音"]{
-            let tempList = SingleMusicList(name: listName) { () -> ViewableMusicListManager in
-                let list = ViewableMusicListManager()
-                list.listName = listName
-                list.musicList = GetMusicFromQQMusicList(filePath: "/Users/gary/Music/MyMusic/qq music list/\(listName)List.txt")
-                
-                return list
-            }
-            QQ_musicList.addSubList(list: tempList)
-        }
-        self.musicListOverViewData.addSubBlock(block: QQ_musicList)
-        
         let folder = MusicBlock(name: "folder")
         
         for path in self.appData.avaliblePath{
