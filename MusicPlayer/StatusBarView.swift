@@ -33,11 +33,6 @@ class StatusBarView{
         self.like_StatusItem.button!.title = AppManager.default.musicListManager.getCurrentMusic().isFavorite ? "􀊵" : "􀊴"
         
         
-//        AppManager.default.musicListManager.getCurrentMusic().$isFavorite.sink { isFavorite in
-//            self.like_StatusItem.button!.title = isFavorite ? "􀊵" : "􀊴"
-//        }
-        
-        
         AppManager.default.musicPlayer.musicPlayingStateDidChangeHandle["play_pause_StatusItem.button"] = { [weak self] in
             self?.play_pause_StatusItem.button?.title = !AppManager.default.musicPlayer.player.isPlaying ? "􀊕" : "􀊗"
         }

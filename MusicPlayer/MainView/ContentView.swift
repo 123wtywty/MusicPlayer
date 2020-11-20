@@ -55,10 +55,11 @@ struct ContentView: View {
                         }
                         HStack(spacing: 20){
                             self.ChangeRepeatShuffleStatusButton()
+                                                        
+                            self.restartButton()
                             
                             self.QuitButton()
-                            
-                            self.restartButton()
+
                         }
                         HStack(spacing: 20){
                             self.AddPathButton()
