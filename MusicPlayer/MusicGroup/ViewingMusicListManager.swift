@@ -49,9 +49,10 @@ class ViewableMusicListManager: ObservableObject{
 //        return nil
     }
     
-    var listName: String = ""
+    var listName : String = ""
     var needUpdate : Bool = true
-    var musicList : [Music] = []{
+    
+    var filterString : String = ""{
         didSet{
             self.needUpdate = true
             DispatchQueue.main.async {
@@ -60,6 +61,35 @@ class ViewableMusicListManager: ObservableObject{
             }
         }
     }
+    
+    var _musicList : [Music] = []{
+        didSet{
+            self.needUpdate = true
+            DispatchQueue.main.async {
+                self.objectWillChange.send()
+                
+            }
+        }
+    }
+    private var tempMusicList : [Music] = []
+    
+    var musicList : [Music]{
+        get{
+            if self.filterString == ""{
+                return self._musicList
+            }else{
+                if self.needUpdate{
+                    self.tempMusicList = self._musicList.filter {$0.pinyin.contains(filterString)}
+                }
+                return self.tempMusicList
+
+            }
+        }
+        set{
+            self._musicList = newValue
+        }
+    }
+    
 
     
     

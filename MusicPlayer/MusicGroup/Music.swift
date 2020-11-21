@@ -12,6 +12,7 @@ import Cocoa
 fileprivate protocol IMusic {
     init(name: String, url: URL, cover: NSImage?)
     var name : String { get }
+    var pinyin : String { get }
     var url : URL { get }
     var playCount : Int { get set}
     var isFavorite : Bool { get set }
@@ -36,6 +37,7 @@ class Music: IMusic, Equatable, Hashable{
     var finishInit = false
     required init(name: String, url: URL, cover: NSImage?) {
         self.name = name
+        self.pinyin = name.transformToPinyinWithoutBlank().lowercased()
         self.url = url
         self.coverCache = cover
         
@@ -54,7 +56,7 @@ class Music: IMusic, Equatable, Hashable{
     
     
     var name: String
-    
+    var pinyin : String
     var url: URL
     
     var playCount: Int{

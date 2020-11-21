@@ -13,6 +13,7 @@ struct MusicListOverView: View {
     
     @ObservedObject var paths = AppManager.default.appData
     @State private var showState = 0
+    @State private var filterString : String = ""
     
     var body: some View{
         
@@ -23,14 +24,6 @@ struct MusicListOverView: View {
                 VStack{
                     
                     List{
-//                        VStack{
-//                            Text("Combine List")
-//                                .font(.subheadline)
-//                                .foregroundColor(.black)
-//                        }.modifier(RowModifier(selected: "Combine List" == AppManager.default.appData.playingList))
-//                            .onTapGesture {
-//                                self.showState = 2
-//                        }
                         
                         ForEach(AppManager.default.musicListOverViewData.subBlock){ block in
                             Section(header: Text(block.name)){
@@ -40,19 +33,19 @@ struct MusicListOverView: View {
                                             .font(.subheadline)
                                             .foregroundColor(.black)
                                     }.modifier(RowModifier(selected: list.name == AppManager.default.appData.playingList))
-                                        .onTapGesture {
-                                            
-                                            AppManager.default.viewingMusicListManager = list.getMusicList()
-                                            
-                                            self.showState = 1
+                                    .onTapGesture {
+                                        
+                                        AppManager.default.viewingMusicListManager = list.getMusicList()
+                                        
+                                        self.showState = 1
                                     }
                                 }
                             }
                         }
                         
                     }
-
-                        .animation(nil)
+                    
+                    .animation(nil)
                     
                 }
             }
@@ -68,24 +61,43 @@ struct MusicListOverView: View {
                                     self.showState = 0
                                 }
                                 
-                        }
+                            }
                         Spacer()
                         Text(AppManager.default.viewingMusicListManager.listName)
                             .font(.subheadline)
                             .background(AppManager.default.viewingMusicListManager.listName == AppManager.default.appData.playingList ?
-                                Color.blue.opacity(0.15).cornerRadius(5)
-                                : Color.white.cornerRadius(5))
+                                            Color.blue.opacity(0.15).cornerRadius(5)
+                                            : Color.white.cornerRadius(5))
                             .padding([.top, .trailing])
                         Spacer()
                     }
                     HStack{
-                        Spacer()
                         Button(action:{
                             AppManager.default.viewingMusicListManager.playThisList()
                         }){
                             Text("play this list")
                         }
+                        .padding(.trailing, 1.0)
+                        
+                        Spacer()
+                        
+                        TextField("", text: Binding<String>(get: {
+                                self.filterString
+                            }, set: {
+                                self.filterString = $0
+                                AppManager.default.viewingMusicListManager.filterString = self.filterString.transformToPinyinWithoutBlank().lowercased()
+                                
+                            }))
                         .padding(.trailing)
+                        
+                        //                        TextField("", text: self.$filterString)
+                        //
+                        //                        Button(action:{
+                        //                            AppManager.default.viewingMusicListManager.filterString = self.filterString
+                        //
+                        //                        }){
+                        //                            Text("search")
+                        //                        }
                     }
                     
                     ZStack(alignment: .bottomTrailing){
@@ -107,7 +119,7 @@ struct MusicListOverView: View {
                                     self.showState = 0
                                 }
                                 
-                        }
+                            }
                         
                         Text("Combine list").padding()
                         
@@ -126,7 +138,7 @@ struct MusicListOverView: View {
                     
                     List(AppManager.default.musicListOverViewData.getAllSingleMusicList()){ musicList in
                         HStack{
-                        Text(musicList.name)
+                            Text(musicList.name)
                             Spacer()
                             
                             Button(action:{
@@ -189,9 +201,9 @@ fileprivate struct ScrollToRowButton: View{
             .onHover { (isHover) in
                 self.isOnHover = isHover
                 
-        }
-        .onTapGesture {
-            AppManager.default.viewingMusicListManager.jumpToCurrentMusic()
-        }
+            }
+            .onTapGesture {
+                AppManager.default.viewingMusicListManager.jumpToCurrentMusic()
+            }
     }
 }

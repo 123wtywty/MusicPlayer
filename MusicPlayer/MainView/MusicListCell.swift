@@ -53,6 +53,7 @@ struct MusicListCell: View {
 //                                    .frame(minWidth: 80, idealWidth: .none, maxWidth: .none, minHeight: 57, idealHeight: 57, maxHeight: .none)
                                     
                                     .foregroundColor(.black)
+                                    .padding(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                                 
                                 Spacer()
                                 if g.size.width > 150{

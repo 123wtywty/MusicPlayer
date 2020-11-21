@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		079C6EB22569C54400BA494D /* extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C6EB12569C54400BA494D /* extension_String.swift */; };
 		4E202A212458F6DD001377CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A202458F6DD001377CA /* AppDelegate.swift */; };
 		4E202A232458F6DD001377CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A222458F6DD001377CA /* ContentView.swift */; };
 		4E202A262458F6DD001377CA /* MusicPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A242458F6DD001377CA /* MusicPlayer.xcdatamodeld */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		079C6EB12569C54400BA494D /* extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_String.swift; sourceTree = "<group>"; };
 		4E202A1D2458F6DD001377CA /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E202A202458F6DD001377CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E202A222458F6DD001377CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				4E98C877245A26040042857D /* MusicType.swift */,
 				4E98C879245A28E80042857D /* Repeat_Shuffle_Status.swift */,
 				4E7F8D89245B7141006B7143 /* extension_AVPlayer.swift */,
+				079C6EB12569C54400BA494D /* extension_String.swift */,
 				4E7F8D93245B7585006B7143 /* OpenPanelCustomize.swift */,
 				4E580A7D245BDCFE00E48783 /* AutoCloseWindow.swift */,
 			);
@@ -288,6 +291,7 @@
 			files = (
 				4E202A232458F6DD001377CA /* ContentView.swift in Sources */,
 				4E98C872245A1F820042857D /* MusicListManager.swift in Sources */,
+				079C6EB22569C54400BA494D /* extension_String.swift in Sources */,
 				4E98C876245A248C0042857D /* MusicMaker.swift in Sources */,
 				4E580A7C245BDCC400E48783 /* MainWindowView.swift in Sources */,
 				4E580A78245BD61C00E48783 /* Buttons.swift in Sources */,

@@ -109,7 +109,7 @@ class AppManager{
 
         
         let task = Process()
-        task.currentDirectoryPath = "/Users/gary"
+        task.currentDirectoryPath = "/Users/garywu"
         task.launchPath = "/usr/bin/open"
         task.arguments = ["-n", "-b", "com.GW.MusicPlayer"]
         task.launch()
