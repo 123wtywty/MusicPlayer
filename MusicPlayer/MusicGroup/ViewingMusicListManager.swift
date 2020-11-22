@@ -62,7 +62,7 @@ class ViewableMusicListManager: ObservableObject{
         }
     }
     
-    var _musicList : [Music] = []{
+    private var _musicList : [Music] = []{
         didSet{
             self.needUpdate = true
             DispatchQueue.main.async {
@@ -79,7 +79,10 @@ class ViewableMusicListManager: ObservableObject{
                 return self._musicList
             }else{
                 if self.needUpdate{
-                    self.tempMusicList = self._musicList.filter {$0.pinyin.contains(filterString)}
+                    self.tempMusicList =
+                        self._musicList.filter
+                        {$0.simplifiedchinese.REContains(str: filterString.replacingOccurrences(of: " ", with: ""))}
+                    
                 }
                 return self.tempMusicList
 

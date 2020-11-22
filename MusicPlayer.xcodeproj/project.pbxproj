@@ -169,9 +169,9 @@
 				4E202A222458F6DD001377CA /* ContentView.swift */,
 				4E7F8D85245B68E8006B7143 /* MusicListView.swift */,
 				4E7F8D87245B6997006B7143 /* MusicListCell.swift */,
+				4E7F8D95245B770E006B7143 /* MusicListOverView.swift */,
 				4E7F8D8F245B73BE006B7143 /* PathsView.swift */,
 				4E7F8D91245B7447006B7143 /* PathsViewCell.swift */,
-				4E7F8D95245B770E006B7143 /* MusicListOverView.swift */,
 				4E580A77245BD61C00E48783 /* Buttons.swift */,
 			);
 			path = MainView;

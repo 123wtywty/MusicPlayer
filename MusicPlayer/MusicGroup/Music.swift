@@ -38,6 +38,7 @@ class Music: IMusic, Equatable, Hashable{
     required init(name: String, url: URL, cover: NSImage?) {
         self.name = name
         self.pinyin = name.transformToPinyinWithoutBlank().lowercased()
+        self.simplifiedchinese = name.simplifiedchinese
         self.url = url
         self.coverCache = cover
         
@@ -57,6 +58,7 @@ class Music: IMusic, Equatable, Hashable{
     
     var name: String
     var pinyin : String
+    var simplifiedchinese : String
     var url: URL
     
     var playCount: Int{

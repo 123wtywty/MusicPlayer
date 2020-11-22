@@ -82,12 +82,16 @@ struct MusicListOverView: View {
                         Spacer()
                         
                         TextField("", text: Binding<String>(get: {
-                                self.filterString
-                            }, set: {
-                                self.filterString = $0
-                                AppManager.default.viewingMusicListManager.filterString = self.filterString.transformToPinyinWithoutBlank().lowercased()
-                                
-                            }))
+                            self.filterString
+                        }, set: {
+                            self.filterString = $0
+                            AppManager.default.viewingMusicListManager.filterString = self.filterString
+                        }),
+                        onCommit: {
+                            self.filterString = ""
+                            AppManager.default.viewingMusicListManager.filterString = ""
+                        }
+                        )
                         .padding(.trailing)
                         
                         //                        TextField("", text: self.$filterString)
