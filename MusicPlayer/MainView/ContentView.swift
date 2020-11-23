@@ -19,7 +19,7 @@ struct ContentView: View {
         get{
             let i = self.data.playingMusicName.lastIndex(of: "-") ?? self.data.playingMusicName.lastIndex(of: ".") ?? self.data.playingMusicName.endIndex
             let displayeName = self.data.playingMusicName[..<i]
-            return displayeName
+            return displayeName.simplifiedchinese
         }
     }
     

@@ -27,7 +27,7 @@ struct MusicListCell: View {
         get{
             let i = self.music.name.lastIndex(of: "-") ?? self.music.name.lastIndex(of: ".") ?? self.music.name.endIndex
             let displayeName = self.music.name[..<i]
-            return displayeName
+            return displayeName.simplifiedchinese
         }
     }
     
