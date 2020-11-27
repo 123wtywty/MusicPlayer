@@ -12,8 +12,8 @@ import Cocoa
 fileprivate protocol IMusicMaker {
     
     func musicExist(name : String) -> Bool
-    func make(name: String, url: URL, cover : NSImage?) -> Music
-    func make(name: String, urlString: String, cover : NSImage?) -> Music
+    func make(name: String, url: URL) -> Music
+    func make(name: String, urlString: String) -> Music
     
 }
 
@@ -26,21 +26,21 @@ class MusicMaker: IMusicMaker{
     }
     
     
-    func make(name: String, url: URL, cover: NSImage?) -> Music {
+    func make(name: String, url: URL) -> Music {
         if let m = self.cachedMusic[name]{
             m.update(data: MusicDataManager.shared.getDataFor(musicName: name))
             return m
         }
         else{
-            let m = Music(name: name, url: url, cover: cover)
+            let m = Music(name: name, url: url)
             m.update(data: MusicDataManager.shared.getDataFor(musicName: name))
             self.cachedMusic[name] = m
             return self.cachedMusic[name]!
         }
     }
     
-    func make(name: String, urlString: String, cover: NSImage?) -> Music {
-        self.make(name: name, url: URL(fileURLWithPath: urlString), cover: cover)
+    func make(name: String, urlString: String) -> Music {
+        self.make(name: name, url: URL(fileURLWithPath: urlString))
     }
     
     

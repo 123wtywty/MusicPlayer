@@ -15,14 +15,6 @@ struct ContentView: View {
     
     @ObservedObject var data = AppManager.default.appData
     
-    var displayeMusicName : some StringProtocol{
-        get{
-            let i = self.data.playingMusicName.lastIndex(of: "-") ?? self.data.playingMusicName.lastIndex(of: ".") ?? self.data.playingMusicName.endIndex
-            let displayeName = self.data.playingMusicName[..<i]
-            return displayeName.simplifiedchinese
-        }
-    }
-    
     var body: some View {
         
         return GeometryReader{ g in
@@ -38,7 +30,7 @@ struct ContentView: View {
                         .cornerRadius(8)
                         .padding()
                     
-                    Text(displayeMusicName)
+                    Text(self.data.playingMusic.displayeMusicName)
                         .frame(width: 400, height: .none)
                         .padding()
                     

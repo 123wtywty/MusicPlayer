@@ -86,22 +86,10 @@ struct MusicListOverView: View {
                         }, set: {
                             self.filterString = $0
                             AppManager.default.viewingMusicListManager.filterString = self.filterString
-                        }),
-                        onCommit: {
-                            self.filterString = ""
-                            AppManager.default.viewingMusicListManager.filterString = ""
-                        }
+                        })
                         )
                         .padding(.trailing)
-                        
-                        //                        TextField("", text: self.$filterString)
-                        //
-                        //                        Button(action:{
-                        //                            AppManager.default.viewingMusicListManager.filterString = self.filterString
-                        //
-                        //                        }){
-                        //                            Text("search")
-                        //                        }
+
                     }
                     
                     ZStack(alignment: .bottomTrailing){
@@ -113,57 +101,6 @@ struct MusicListOverView: View {
                 .animation(.default)
             }
             
-            else if self.showState == 2{
-                VStack{
-                    HStack{
-                        Text("􀆉 back")
-                            .padding([.leading, .top])
-                            .onTapGesture {
-                                withAnimation{
-                                    self.showState = 0
-                                }
-                                
-                            }
-                        
-                        Text("Combine list").padding()
-                        
-                    }
-                    
-                    Button(action:{
-                        let list = ViewableMusicListManager()
-                        list.listName = "Combine list"
-                        for musicList in AppManager.default.appData.combineList{
-                            list.musicList += musicList.getMusicList().musicList
-                        }
-                        list.playThisList()
-                    }){
-                        Text("play this list")
-                    }
-                    
-                    List(AppManager.default.musicListOverViewData.getAllSingleMusicList()){ musicList in
-                        HStack{
-                            Text(musicList.name)
-                            Spacer()
-                            
-                            Button(action:{
-                                if !AppManager.default.appData.combineList.contains(musicList){
-                                    AppManager.default.appData.combineList.append(musicList)
-                                }else{
-                                    AppManager.default.appData.combineList.removeAll{ $0 == musicList }
-                                }
-                            }){
-                                if !AppManager.default.appData.combineList.contains(musicList){
-                                    Text("add")
-                                }else{
-                                    Text("remove")
-                                }
-                                
-                            }
-                            
-                        }
-                    }
-                }
-            }
             
             
         }

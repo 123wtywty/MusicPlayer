@@ -51,7 +51,7 @@ class MusicListManager: IMusicListManager, ObservableObject{
             oldValue.wrapper.update()
             
             self.currentMusic.wrapper.update()
-            AppManager.default.appData.playingMusicName = self.currentMusic.name
+            AppManager.default.appData.playingMusic = self.currentMusic
             StatusBarView.shared.update_like_StatusItem()
         }
     }

@@ -10,13 +10,13 @@ import Foundation
 import Cocoa
 
 fileprivate protocol IMusic {
-    init(name: String, url: URL, cover: NSImage?)
+    init(name: String, url: URL)
     var name : String { get }
+    var displayeMusicName: String { get }
     var pinyin : String { get }
     var url : URL { get }
     var playCount : Int { get set}
     var isFavorite : Bool { get set }
-    var cover : NSImage { get }
     var type : MusicType { get }
 
     var wrapper : MusicWrapper { get }
@@ -32,15 +32,15 @@ class Music: IMusic, Equatable, Hashable{
         lhs.name == rhs.name && lhs.url == rhs.url
     }
     
-    static public let placeHolder = Music(name: "placeHolder", url: Bundle.main.url(forResource: "placeHolder", withExtension: "mp4")!, cover: nil)
+    static public let placeHolder = Music(name: "placeHolder", url: Bundle.main.url(forResource: "placeHolder", withExtension: "mp4")!)
     
     var finishInit = false
-    required init(name: String, url: URL, cover: NSImage?) {
+    required init(name: String, url: URL) {
         self.name = name
+        self.displayeMusicName = name
         self.pinyin = name.transformToPinyinWithoutBlank().lowercased()
         self.simplifiedchinese = name.simplifiedchinese
         self.url = url
-        self.coverCache = cover
         
         self.playCount = 0
         self.isFavorite = false
@@ -57,6 +57,7 @@ class Music: IMusic, Equatable, Hashable{
     
     
     var name: String
+    var displayeMusicName: String
     var pinyin : String
     var simplifiedchinese : String
     var url: URL
@@ -78,17 +79,6 @@ class Music: IMusic, Equatable, Hashable{
             StatusBarView.shared.update_like_StatusItem()
             
             self.save()
-        }
-    }
-    
-    var coverCache: NSImage?
-    var cover: NSImage {
-        get{
-            if let img = self.coverCache{
-                return img
-            }
-            
-            return loadingImage
         }
     }
     

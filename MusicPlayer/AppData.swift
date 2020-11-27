@@ -12,7 +12,7 @@ import SwiftUI
 class AppData: ObservableObject{
     
     @Published var playingList : String = ""
-    @Published var playingMusicName : String = ""
+    @Published var playingMusic : Music = Music.placeHolder
     
     @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
     
@@ -45,10 +45,6 @@ class AppData: ObservableObject{
         }
     }
     
-    var combineList : [SingleMusicList] = []{
-        didSet{
-            self.objectWillChange.send()
-        }
-    }
+
     
 }

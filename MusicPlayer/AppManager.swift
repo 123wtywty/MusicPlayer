@@ -92,7 +92,7 @@ class AppManager{
         dataNeedSave["selectingPath"] = self.appData.selectingPath
         dataNeedSave["blockedPath"] = self.appData.blockedPath
         
-        dataNeedSave["playingMusicName"] = self.appData.playingMusicName
+        dataNeedSave["playingMusicName"] = self.appData.playingMusic.name
         dataNeedSave["playingList"] = self.appData.playingList
         
         dataNeedSave["repeatShuffleStatus"] = self.appData.repeatShuffleStatus.rawValue
@@ -105,11 +105,12 @@ class AppManager{
     
     func restart(){
         
-        self.savedataToUserDefaults()
+//        self.savedataToUserDefaults()
 
         
         let task = Process()
-        task.currentDirectoryPath = "/Users/garywu"
+        task.currentDirectoryPath = NSHomeDirectory()
+        
         task.launchPath = "/usr/bin/open"
         task.arguments = ["-n", "-b", "com.GW.MusicPlayer"]
         task.launch()
@@ -162,7 +163,7 @@ class AppManager{
             let completePath = "\(path)/\(musicRawName)"
             
             let completeUrl = URL(fileURLWithPath: completePath)            
-            let m = AppManager.default.musicMaker.make(name: String(musicRawName), url: completeUrl, cover: nil)
+            let m = AppManager.default.musicMaker.make(name: String(musicRawName), url: completeUrl)
 
             musicList.append(m)
             

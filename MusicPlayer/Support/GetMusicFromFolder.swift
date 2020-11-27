@@ -39,7 +39,7 @@ func GetMusicFromFolder(path: String) -> [Music] {
         let completeUrl = URL(fileURLWithPath: completePath)
         //            let completeUrl = URL(string: completePath)
         
-        let m = AppManager.default.musicMaker.make(name: musicRawName, url: completeUrl, cover: nil)
+        let m = AppManager.default.musicMaker.make(name: musicRawName, url: completeUrl)
         
         //            print(completePath)
         //            print(completeUrl)

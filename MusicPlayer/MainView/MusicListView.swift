@@ -21,10 +21,10 @@ struct MusicListView : NSViewControllerRepresentable{
     
     func updateNSViewController(_ nsViewController: NSViewController, context: Context) {
         
-        if data.needUpdate{
+        if data.needUpdateList{
             let view = nsViewController as? ListView
             view?.setData(data: self.data.musicList)
-            data.needUpdate = false
+            data.needUpdateList = false
         }
         
         if let index = data.needJumpTo{

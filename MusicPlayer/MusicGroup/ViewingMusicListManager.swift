@@ -15,6 +15,7 @@ class ViewableMusicListManager: ObservableObject{
         if listName == "All Music"{
             let list = ViewableMusicListManager()
             list.listName = "All Music"
+            list.isSpecialList = true
             for path in AppManager.default.appData.avaliblePath{
                 list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
             }
@@ -23,6 +24,7 @@ class ViewableMusicListManager: ObservableObject{
         }else if listName == "Favorite Music"{
             let list = ViewableMusicListManager()
             list.listName = "Favorite Music"
+            list.isSpecialList = true
             for path in AppManager.default.appData.avaliblePath{
                 list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
             }
@@ -39,6 +41,8 @@ class ViewableMusicListManager: ObservableObject{
                 URL(fileURLWithPath: str).lastPathComponent == listName
             } ?? ""
             print("path: \(path)")
+            list.folderPath = path
+            
             list.musicList = AppManager.default.getMusicFromFolder(path: path)
             
             return list
@@ -50,37 +54,42 @@ class ViewableMusicListManager: ObservableObject{
     }
     
     var listName : String = ""
-    var needUpdate : Bool = true
+    var folderPath : String? = nil
+    var isSpecialList : Bool = false
+    
+    var needUpdateList : Bool = true
     
     var filterString : String = ""{
         didSet{
-            self.needUpdate = true
-            DispatchQueue.main.async {
-                self.objectWillChange.send()
-                
-            }
+            self.update()
         }
     }
     
-    private var _musicList : [Music] = []{
+    private var originalMusicList : [Music] = []{
         didSet{
-            self.needUpdate = true
-            DispatchQueue.main.async {
-                self.objectWillChange.send()
-                
-            }
+            self.update()
         }
     }
+    
+    
+    private func update(){
+        self.needUpdateList = true
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+            
+        }
+    }
+    
     private var tempMusicList : [Music] = []
     
     var musicList : [Music]{
         get{
             if self.filterString == ""{
-                return self._musicList
+                return self.originalMusicList
             }else{
-                if self.needUpdate{
+                if self.needUpdateList{
                     self.tempMusicList =
-                        self._musicList.filter
+                        self.originalMusicList.filter
                         {$0.simplifiedchinese.REContains(str: filterString.replacingOccurrences(of: " ", with: ""))}
                     
                 }
@@ -89,7 +98,7 @@ class ViewableMusicListManager: ObservableObject{
             }
         }
         set{
-            self._musicList = newValue
+            self.originalMusicList = newValue
         }
     }
     
@@ -103,23 +112,23 @@ class ViewableMusicListManager: ObservableObject{
     }
     
     @Published var needJumpTo : Int? = nil
-    func jumpToCurrentMusic(name: String? = nil){
-
-//        if !(AppManager.default.appData.playingList == self.listName){ return }
+    
+    
+    func jumpToMusic(name: String){
         
-        var musicName = ""
-        if name != nil{
-            musicName = name!
-        }
-        else{
-            musicName = AppManager.default.musicListManager.getCurrentMusic().name
-        }
-        
-//        print(musicName)
-        
-        guard let index = self.musicList.firstIndex(where: { $0.name == musicName }) else { return }
+        guard let index = self.musicList.firstIndex(where: { $0.name == name }) else { return }
         self.needJumpTo = index
         
     }
+    
+    
+    func jumpToCurrentMusic(){
+
+        self.jumpToMusic(name: AppManager.default.musicListManager.getCurrentMusic().name)
+        
+        
+    }
+    
+    
     
 }
