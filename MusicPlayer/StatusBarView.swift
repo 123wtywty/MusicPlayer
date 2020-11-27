@@ -25,7 +25,7 @@ class StatusBarView{
         musicIcon.size = NSSize(width: 16, height: 16)
         
         
-        self.play_pause_StatusItem.button!.action = #selector(playPause )
+        self.play_pause_StatusItem.button!.action = #selector(playPause)
         self.play_pause_StatusItem.button?.title = "􀊕"
         
         

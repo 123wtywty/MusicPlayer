@@ -18,7 +18,11 @@ struct ContentView: View {
     var body: some View {
         
         return GeometryReader{ g in
-
+            if g.size.width <= 401 && g.size.height <= 226{
+            PlayerUIView()
+                .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+                .cornerRadius(8)
+            }else{
             HStack{
                 
                     
@@ -29,6 +33,7 @@ struct ContentView: View {
                         .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
                         .cornerRadius(8)
                         .padding()
+                    
                     
                     Text(self.data.playingMusic.displayeMusicName)
                         .frame(width: 400, height: .none)
@@ -101,6 +106,8 @@ struct ContentView: View {
                 .animation(nil)
         }
         .animation(nil)
+            }
+            
         
         }
     }

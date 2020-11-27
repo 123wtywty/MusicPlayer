@@ -13,12 +13,12 @@ import SwiftUI
 class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, AutoCloseWindow {
     
     static var shared = MainWindowViewWindowController()
-    var defaultSize : NSRect?
+    private var defaultSize : NSRect?
+    private var stayOnTop = false
     
     private convenience init() {
         
         let window = NSWindow(contentViewController: NSHostingController(rootView: ContentView()))
-        
         
         window.setContentSize(NSSize(width:640, height: 493))
         
@@ -26,11 +26,9 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
         window.minSize = NSSize(width: 640, height: 480)
         window.contentMinSize = NSSize(width: 640, height: 480)
         
-        
-//        window.styleMask.remove(.resizable)
-        window.styleMask.remove(.miniaturizable)
+
         let zoomButton = window.standardWindowButton(.zoomButton)
-        
+        let minButton = window.standardWindowButton(.miniaturizeButton)
 
         
         self.init(window: window)
@@ -39,23 +37,17 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
         let x = (NSScreen.main?.visibleFrame.origin.x ?? CGFloat(0.0)) + (NSScreen.main?.visibleFrame.size.width)! - window.frame.width - 10
         let y = (NSScreen.main?.visibleFrame.origin.y)! + (NSScreen.main?.visibleFrame.height)! - window.frame.height
         self.window?.setFrameOrigin(NSPoint(x: x, y: y))
-        
-//        window.level = .floating
-        
+                
         window.titlebarAppearsTransparent = true
         window.titleVisibility = .hidden
-//        window.standardWindowButton(.zoomButton)?.isHidden = true
-        window.standardWindowButton(.miniaturizeButton)?.isHidden = true
 
         
-        
         zoomButton?.target = self
-        zoomButton?.action = #selector(ZoomButtonAction)
+        zoomButton?.action = #selector(zoomButtonAction)
         
-        
-//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (_) in
-//            print("timer : \(self.window?.frame.origin), \(self.window?.frame.size)")
-//        }
+        minButton?.target = self
+        minButton?.action = #selector(minButtonAction)
+
         
         self.defaultSize = window.frame
         
@@ -67,35 +59,66 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
     
     override func showWindow(_ sender: Any?) {
         super.showWindow(sender)
+        if self.stayOnTop{
+            print("stayontop")
+            self.window?.level = .floating
+        }
+        
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    @objc private func ZoomButtonAction(){
-        print(#function)
-
+    @objc private func zoomButtonAction(){
+        self.stayOnTop = false
+        self.window?.level = .normal
+        
+        if !(self.window?.frame.equalTo(self.defaultSize!) ?? false){
+            self.window?.setFrame(self.defaultSize!, display: true, animate: true)
+        }
+        else{
+            self.becomeLargeWindow()
+        }
+    }
+    
+    @objc private func minButtonAction(){
+        self.stayOnTop = true
+        self.window?.level = .floating
+        
+        self.becomeSmallWindow()
+    }
+    
+    
+    
+    private func becomeLargeWindow(){
         guard let frame = self.window?.frame else {
             return
         }
+        print("resize")
+        print("\(frame.origin), \(frame.size)")
+        var sizeWant = NSRect(x: 0, y: 0, width: 800, height: 800)
+        sizeWant.origin.x = frame.origin.x + frame.size.width - sizeWant.width
+        sizeWant.origin.y = frame.origin.y + frame.size.height - sizeWant.height
         
-        if !(self.window?.frame.equalTo(self.defaultSize!) ?? false){
+        self.window?.setFrame(sizeWant, display: false, animate: false)
+    }
+    
 
-            self.window?.setFrame(self.defaultSize!, display: true, animate: true)
+    private func becomeSmallWindow(){
+        guard let frame = self.window?.frame else {
+            return
+        }
+        var sizeWant = NSRect(x: 0, y: 0, width: 401, height: 254)
+        sizeWant.origin.x = frame.origin.x + frame.size.width - sizeWant.width
+        sizeWant.origin.y = frame.origin.y + frame.size.height - sizeWant.height
+        self.window?.setFrame(sizeWant, display: true, animate: true)
+        
 
-            
-        }
-        else{
-            print("resize")
-            print("\(frame.origin), \(frame.size)")
-            var sizeWant = NSRect(x: 0, y: 0, width: 800, height: 800)
-            sizeWant.origin.x = frame.origin.x + frame.size.width - sizeWant.width
-            sizeWant.origin.y = frame.origin.y + frame.size.height - sizeWant.height
-//            frame.origin.y += frame.size.height
-//            frame.origin.y -= sizeWant.height
-            
-//            frame.size = CGSize(width: sizeWant.width, height: sizeWant.height)
-            
-            self.window?.setFrame(sizeWant, display: false, animate: false)
-        }
+    }
+    
+
+
+    
+    func windowWillClose(_ notification: Notification) {
+        self.window?.level = .normal
     }
 
 }
