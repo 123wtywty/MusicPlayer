@@ -41,8 +41,6 @@ func GetMusicFromFolder(path: String) -> [Music] {
         
         let m = AppManager.default.musicMaker.make(name: musicRawName, url: completeUrl)
         
-        //            print(completePath)
-        //            print(completeUrl)
         musicList.append(m)
         
         

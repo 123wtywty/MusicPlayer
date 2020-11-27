@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 import Cocoa
 
+// read data from database
 class MusicDataBaseManager{
     
     private let entityName = "MusicData"

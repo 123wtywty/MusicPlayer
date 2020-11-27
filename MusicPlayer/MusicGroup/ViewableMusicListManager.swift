@@ -98,7 +98,6 @@ class ViewableMusicListManager: ObservableObject{
     func playThisList(){
         print("play : \(self.Mlist.listName)")
         AppManager.default.appData.playingList = self.Mlist.listName
-//        AppManager.default.playingMusicListManager = PlayingMusicListManager(playableMusicList: PlayableMusicListManager(musicList: self.Mlist))
 
         AppManager.default.playingMusicListManager.playableMusicList = PlayableMusicListManager(musicList: self.Mlist)
     }

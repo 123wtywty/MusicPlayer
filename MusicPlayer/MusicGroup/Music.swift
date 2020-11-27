@@ -37,7 +37,10 @@ class Music: IMusic, Equatable, Hashable{
     var finishInit = false
     required init(name: String, url: URL) {
         self.name = name
-        self.displayeMusicName = name
+        
+        let i = name.lastIndex(of: "-") ?? name.lastIndex(of: ".") ?? name.endIndex
+        self.displayeMusicName = name[..<i].simplifiedchinese
+        
         self.pinyin = name.transformToPinyinWithoutBlank().lowercased()
         self.simplifiedchinese = name.simplifiedchinese
         self.url = url

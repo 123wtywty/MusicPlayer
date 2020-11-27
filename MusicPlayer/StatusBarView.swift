@@ -12,6 +12,7 @@ import SwiftUI
 import NotificationCenter
 
 
+// set up status bar icons
 class StatusBarView{
     
     static let shared = StatusBarView()
@@ -39,10 +40,7 @@ class StatusBarView{
         
         icon_StatusItem.button!.image = musicIcon
         icon_StatusItem.button!.action = #selector(openMainWindow)
-        
-        //        let ges = NSClickGestureRecognizer(target: self, action: #selector(self.tap(Tap:)))
-        //        ges.numberOfClicksRequired = 2
-        //        self.icon_StatusItem.button?.addGestureRecognizer(ges)
+
         
         play_pause_StatusItem.button?.target = self
         icon_StatusItem.button?.target = self
@@ -52,7 +50,7 @@ class StatusBarView{
     }
     
     public func update_like_StatusItem(){
-//        print(#function, AppManager.default.musicListManager.getCurrentMusic().isFavorite, AppManager.default.musicListManager.getCurrentMusic().name)
+
         DispatchQueue.main.async {
             self.like_StatusItem.button!.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().isFavorite ? "􀊵" : "􀊴"
             
@@ -70,8 +68,7 @@ class StatusBarView{
     }
     
     @objc func openMainWindow(){
-        //        NewWindowView.shared.close()
-        //        NotificationCenter.default.post(name: .togglePopover, object: nil)
+        
         if MainWindowViewWindowController.shared.window?.isVisible ?? false{
             MainWindowViewWindowController.shared.close()
         }

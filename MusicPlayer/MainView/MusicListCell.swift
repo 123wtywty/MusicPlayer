@@ -21,15 +21,6 @@ struct MusicListCell: View {
     var cellId = -1
     @State var onTap = false
     
-
-    
-    var displayeName : some StringProtocol{
-        get{
-            let i = self.music.name.lastIndex(of: "-") ?? self.music.name.lastIndex(of: ".") ?? self.music.name.endIndex
-            let displayeName = self.music.name[..<i]
-            return displayeName.simplifiedchinese
-        }
-    }
     
     var body: some View {
         
@@ -38,22 +29,16 @@ struct MusicListCell: View {
                 ZStack{
                     
                     HStack{
-//                        Image(nsImage: self.music.cover)
-//                            .resizable()
-//                            .frame(width: 100, height: 57) // old: 65, 57 = 100 * 9 /16
-//                            .cornerRadius(7)
-//
-//                            .hidden()
+
                         
                         GeometryReader{ g in
                             
                             HStack{
                                 
-                                Text(self.displayeName)
-//                                    .frame(minWidth: 80, idealWidth: .none, maxWidth: .none, minHeight: 57, idealHeight: 57, maxHeight: .none)
+                                Text(self.music.name)
                                     
                                     .foregroundColor(.black)
-                                    .padding(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                                    .padding(.leading)
                                 
                                 Spacer()
                                 if g.size.width > 150{
@@ -126,8 +111,7 @@ struct MusicListCell: View {
                 
                 
                 Divider()
-//                    .padding(.top, 2)
-//                    .foregroundColor(Color.white.opacity(0.5))
+
                     .foregroundColor(Color.black)
                     .colorScheme(.light)
         }

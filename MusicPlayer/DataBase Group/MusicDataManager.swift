@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+// data processing
 class MusicDataManager{
     static let shared = MusicDataManager()
     

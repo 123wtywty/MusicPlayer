@@ -14,7 +14,15 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
     
     static var shared = MainWindowViewWindowController()
     private var defaultSize : NSRect?
-    private var stayOnTop = false
+    private var stayOnTop = false{
+        didSet{
+            if stayOnTop{
+                self.window?.titleVisibility = .visible
+            }else{
+                self.window?.titleVisibility = .hidden
+            }
+        }
+    }
     
     private convenience init() {
         
@@ -22,7 +30,11 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
         
         window.setContentSize(NSSize(width:640, height: 493))
         
-        window.title = "MusicMac"
+//        window.title = "MusicPlayer"
+        
+        window.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().displayeMusicName
+        
+        
         window.minSize = NSSize(width: 640, height: 480)
         window.contentMinSize = NSSize(width: 640, height: 480)
         
@@ -50,6 +62,11 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
 
         
         self.defaultSize = window.frame
+        
+        
+        AppManager.default.playingMusicListManager.musicPlayer.musicPlayingStateDidChangeHandle["update window title"] = { [weak self] in
+            self?.window?.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().displayeMusicName
+        }
         
     }
     

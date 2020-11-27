@@ -40,7 +40,6 @@ struct MusicListView : NSViewControllerRepresentable{
 
 
 fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
-    //    static let shared = ListView()
     
     var data : [Music] = []
     
@@ -74,7 +73,6 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
             setupTableView()
             
             self.scrollView.hasHorizontalScroller = false
-//            self.scrollView.hasVerticalScroller = false
         }
     }
     
@@ -156,19 +154,6 @@ fileprivate class ListView: NSViewController, NSTableViewDelegate, NSTableViewDa
     
     func scrollToRow(number: Int){
         self.tableView.scrollRowToVisible(number)
-        //        let rowRect = tableView.rect(ofRow: number)
-        //        var scrollOrigin = rowRect.origin
-        //        let clipView = tableView.superview as? NSClipView
-        //
-        //        let tableHalfHeight = NSHeight(clipView!.frame)*0.5
-        //        let rowRectHalfHeight = NSHeight(rowRect)*0.5
-        //
-        //        scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
-        //        let scrollView = clipView!.superview as? NSScrollView
-        //        if(scrollView!.responds(to: #selector(NSScrollView.flashScrollers))){
-        //            scrollView!.flashScrollers()
-        //        }
-        //        clipView!.animator().setBoundsOrigin(scrollOrigin)
     }
     
 }

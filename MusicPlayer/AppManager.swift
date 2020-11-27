@@ -15,8 +15,6 @@ class AppManager{
     static let `default` = AppManager()
     
     private init(){
-
-        self.musicManager = MusicManager()
         
         self.playingMusicListManager = PlayingMusicListManager(playableMusicList: PlayableMusicListManager(musicList: MusicList()))
         
@@ -33,10 +31,10 @@ class AppManager{
         self.musicListOverViewData = MusicListOverViewData()
         
         let defaultList = MusicBlock(name: "defaultList")
-        let All_Music = SingleMusicList(name: "All Music") { () -> ViewableMusicListManager in
+        let All_Music = BaseMusicList(name: "All Music") { () -> ViewableMusicListManager in
             ViewableMusicListManager.makeSpecialList(listName: "All Music")
         }
-        let Favorite_Music = SingleMusicList(name: "Favorite Music") { () -> ViewableMusicListManager in
+        let Favorite_Music = BaseMusicList(name: "Favorite Music") { () -> ViewableMusicListManager in
             ViewableMusicListManager.makeSpecialList(listName: "Favorite Music")
         }
         defaultList.addSubList(list: All_Music)
@@ -46,7 +44,7 @@ class AppManager{
         let folder = MusicBlock(name: "folder")
         
         for path in self.appData.avaliblePath{
-            let tempList = SingleMusicList(name: "\(URL(fileURLWithPath: path).lastPathComponent)") { () -> ViewableMusicListManager in
+            let tempList = BaseMusicList(name: "\(URL(fileURLWithPath: path).lastPathComponent)") { () -> ViewableMusicListManager in
                 ViewableMusicListManager.makeFromPath(path: path)
             }
             folder.addSubList(list: tempList)
@@ -55,8 +53,6 @@ class AppManager{
         self.musicListOverViewData.addSubBlock(block: folder)
     }
     
-    
-    var musicManager : MusicManager
     let playingMusicListManager : PlayingMusicListManager
     var viewingMusicListManager : ViewableMusicListManager
     var musicMaker : MusicMaker

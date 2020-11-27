@@ -23,7 +23,7 @@ class MusicListOverViewData{
         self.subBlock.append(block)
     }
     
-    func getAllSingleMusicList() -> [SingleMusicList]{
+    func getAllSingleMusicList() -> [BaseMusicList]{
         self.subBlock.flatMap{$0.subList}
     }
     
@@ -34,20 +34,20 @@ class MusicBlock: Identifiable{
     var id = UUID()
     
     var name: String
-    var subList : [SingleMusicList] = []
+    var subList : [BaseMusicList] = []
     
     init(name: String) {
         self.name = name
     }
     
-    func addSubList(list: SingleMusicList){
+    func addSubList(list: BaseMusicList){
         self.subList.append(list)
     }
     
 }
 
-class SingleMusicList: Identifiable, Equatable{
-    static func == (lhs: SingleMusicList, rhs: SingleMusicList) -> Bool {
+class BaseMusicList: Identifiable, Equatable{
+    static func == (lhs: BaseMusicList, rhs: BaseMusicList) -> Bool {
         lhs.name == rhs.name
     }
     

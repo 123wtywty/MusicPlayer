@@ -53,36 +53,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let repeatShuffleStatus = (data["repeatShuffleStatus"] as? String) ?? ("" as? String)
         {
             
-            print(selectingPath, blockedPath, playingMusicName, playingList, folderPath, isSpecialList, repeatShuffleStatus)
+//            print(selectingPath, blockedPath, playingMusicName, playingList, folderPath, isSpecialList, repeatShuffleStatus)
             
             AppManager.default.appData.selectingPath = selectingPath
-            
-            
             AppManager.default.appData.blockedPath = blockedPath
             
             if isSpecialList{
                 let list = ViewableMusicListManager.makeSpecialList(listName: playingList)
                 list.playThisList()
-            }else if folderPath != ""{
+            }else if folderPath != "" && FileManager.default.fileExists(atPath: folderPath){
                 let list = ViewableMusicListManager.makeFromPath(path: folderPath)
                 list.playThisList()
             }else{
+//                some error
                 return
             }
 
             AppManager.default.playingMusicListManager.musicPlayer.playMusic(name: playingMusicName)
 
-            
             AppManager.default.appData.repeatShuffleStatus = Repeat_Shuffle_Status(rawValue: repeatShuffleStatus) ?? Repeat_Shuffle_Status.shuffle
-            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//
-//            }
+
         }
         
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             StatusBarView.shared.openMainWindow()
 
         }
