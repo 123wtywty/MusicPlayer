@@ -27,7 +27,7 @@ func GetMusicFromFolder(path: String) -> [Music] {
         
     }
     catch let error as NSError {
-        print("Ooops! Something went wrong: \(error)")
+        print("\(error)")
     }
     
     var musicList : [Music] = []

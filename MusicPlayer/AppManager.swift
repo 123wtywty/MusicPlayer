@@ -15,12 +15,11 @@ class AppManager{
     static let `default` = AppManager()
     
     private init(){
-        let mainPlayer = AVPlayer()
-        
-        self.musicPlayer = MusicPlayer(player: mainPlayer)
+
         self.musicManager = MusicManager()
         
-        self.musicListManager = MusicListManager(musicList: [])
+        self.playingMusicListManager = PlayingMusicListManager(playableMusicList: PlayableMusicListManager(musicList: MusicList()))
+        
         self.viewingMusicListManager = ViewableMusicListManager()
         
         self.musicMaker = MusicMaker()
@@ -35,29 +34,10 @@ class AppManager{
         
         let defaultList = MusicBlock(name: "defaultList")
         let All_Music = SingleMusicList(name: "All Music") { () -> ViewableMusicListManager in
-            let list = ViewableMusicListManager()
-            list.listName = "All Music"
-            for path in AppManager.default.appData.avaliblePath{
-                print(path)
-                list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
-            }
-            
-            list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
-            
-            return list
+            ViewableMusicListManager.makeSpecialList(listName: "All Music")
         }
         let Favorite_Music = SingleMusicList(name: "Favorite Music") { () -> ViewableMusicListManager in
-            let list = ViewableMusicListManager()
-            list.listName = "Favorite Music"
-            for path in AppManager.default.appData.avaliblePath{
-                list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
-            }
-            list.musicList = list.musicList.filter {music -> Bool in
-                music.isFavorite
-            }
-            
-            list.musicList.sort(by: AppManager.default.musicListManager.sortFunc)
-            return list
+            ViewableMusicListManager.makeSpecialList(listName: "Favorite Music")
         }
         defaultList.addSubList(list: All_Music)
         defaultList.addSubList(list: Favorite_Music)
@@ -67,10 +47,7 @@ class AppManager{
         
         for path in self.appData.avaliblePath{
             let tempList = SingleMusicList(name: "\(URL(fileURLWithPath: path).lastPathComponent)") { () -> ViewableMusicListManager in
-                let list = ViewableMusicListManager()
-                list.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
-                list.musicList = AppManager.default.getMusicFromFolder(path: path)
-                return list
+                ViewableMusicListManager.makeFromPath(path: path)
             }
             folder.addSubList(list: tempList)
         }
@@ -79,9 +56,8 @@ class AppManager{
     }
     
     
-    var musicPlayer : MusicPlayer
     var musicManager : MusicManager
-    var musicListManager : MusicListManager
+    let playingMusicListManager : PlayingMusicListManager
     var viewingMusicListManager : ViewableMusicListManager
     var musicMaker : MusicMaker
     var appData : AppData
@@ -92,8 +68,11 @@ class AppManager{
         dataNeedSave["selectingPath"] = self.appData.selectingPath
         dataNeedSave["blockedPath"] = self.appData.blockedPath
         
-        dataNeedSave["playingMusicName"] = self.appData.playingMusic.name
-        dataNeedSave["playingList"] = self.appData.playingList
+        dataNeedSave["playingMusicName"] = self.playingMusicListManager.playableMusicList.getCurrentMusic().name
+        dataNeedSave["playingListName"] = self.playingMusicListManager.playableMusicList.Mlist.listName
+        
+        dataNeedSave["folderPath"] = self.playingMusicListManager.playableMusicList.Mlist.folderPath ?? ""
+        dataNeedSave["isSpecialList"] = self.playingMusicListManager.playableMusicList.Mlist.isSpecialList
         
         dataNeedSave["repeatShuffleStatus"] = self.appData.repeatShuffleStatus.rawValue
         
@@ -127,50 +106,6 @@ class AppManager{
         self.savedataToUserDefaults()
         
         NSApplication.shared.terminate(nil)
-    }
-    
-    func getMusicFromFolder(path: String) -> [Music] {
-        let fileManager = FileManager.default
-        var musicListString : [String] = []
-        
-        if !fileManager.fileExists(atPath: path) {
-            print("path not exists: \(path)")
-            return [Music.placeHolder]
-            
-        }
-        
-        do {
-            musicListString = try fileManager.contentsOfDirectory(atPath: "\(path)")
-            
-            musicListString = musicListString.filter { (musicName) -> Bool in
-                let URLPathExtension = URL(fileURLWithPath: path + "/" + musicName).pathExtension
-                if MusicType.MusicTypeList.contains(URLPathExtension){
-                    return true
-                }
-                else{
-                    return false
-                }
-            }
-            
-        }
-        catch let error as NSError {
-            print("Ooops! Something went wrong: \(error)")
-        }
-        
-        var musicList : [Music] = []
-        for musicRawName in musicListString {
-            
-            let completePath = "\(path)/\(musicRawName)"
-            
-            let completeUrl = URL(fileURLWithPath: completePath)            
-            let m = AppManager.default.musicMaker.make(name: String(musicRawName), url: completeUrl)
-
-            musicList.append(m)
-            
-            
-        }
-        if musicList.isEmpty { return [Music.placeHolder] }
-        return musicList.sorted(by: AppManager.default.musicListManager.sortFunc)
     }
 
     

@@ -53,6 +53,12 @@ class MusicPlayedRecorder {
         }
     }
     
+    func addMusics(musicList : [Music]){
+        for i in musicList{
+            self.addMusic(name: i.name)
+        }
+    }
+    
     func removeMusic(name: String){
         if self.musicExist(name: name){
             self.totalPlayedTime -= self.musicPlayedDic[name]!

@@ -63,9 +63,9 @@ struct MusicListOverView: View {
                                 
                             }
                         Spacer()
-                        Text(AppManager.default.viewingMusicListManager.listName)
+                        Text(AppManager.default.viewingMusicListManager.Mlist.listName)
                             .font(.subheadline)
-                            .background(AppManager.default.viewingMusicListManager.listName == AppManager.default.appData.playingList ?
+                            .background(AppManager.default.viewingMusicListManager.Mlist.listName == AppManager.default.appData.playingList ?
                                             Color.blue.opacity(0.15).cornerRadius(5)
                                             : Color.white.cornerRadius(5))
                             .padding([.top, .trailing])

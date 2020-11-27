@@ -13,7 +13,7 @@ import Cocoa
 
 
 fileprivate protocol IMusicPlayer {
-    init(player: AVPlayer)
+    init(player : AVPlayer, playableMusicList : PlayableMusicListManager)
     
     var player: AVPlayer { get set }
     var musicPlayingStateDidChangeHandle : [String: () -> ()] { get set }
@@ -30,12 +30,16 @@ fileprivate protocol IMusicPlayer {
 
 class MusicPlayer: NSObject, IMusicPlayer{
     
+    
     var musicPlayingStateDidChangeHandle : [String: () -> ()] = [:]
     private var obPool : [String : Any] = [:]
     @objc dynamic var player: AVPlayer
+    var playableMusicList : PlayableMusicListManager
+
     
-    required init(player: AVPlayer) {
+    required init(player: AVPlayer, playableMusicList : PlayableMusicListManager) {
         self.player = player
+        self.playableMusicList = playableMusicList
         super.init()
         
         self.player.volume = 0.4
@@ -72,29 +76,28 @@ class MusicPlayer: NSObject, IMusicPlayer{
             self.playMusicAccordingToSetting()
             return
         }
-        
-        AppManager.default.musicListManager.setCurrentMusic(music: music)
+        self.playableMusicList.setCurrentMusic(music: music)
         self.player.replaceCurrentItem(with: AVPlayerItem(asset: AVAsset(url: music.url)))
         self.player.play()
     }
     
     func playMusic(name: String) {
-        let music = AppManager.default.musicListManager.getMusicByName(name: name)
+        let music = self.playableMusicList.getMusicByName(name: name)
         self.play(music: music)
     }
     
     func playMusic(music: Music) {
-        let music = AppManager.default.musicListManager.getMusicByName(name: music.name)
+        let music = self.playableMusicList.getMusicByName(name: music.name)
         self.play(music: music)
     }
     
     func playNextMusic() {
-        let music = AppManager.default.musicListManager.getNextMusic()
+        let music = self.playableMusicList.getNextMusic()
         self.play(music: music)
     }
     
     func playRandomMusic() {
-        let music = AppManager.default.musicListManager.getRandomMusic()
+        let music = self.playableMusicList.getRandomMusic()
         self.play(music: music)
     }
     
@@ -105,7 +108,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
         case .repeat:
             self.playNextMusic()
         case .repeat_1:
-            self.playMusic(music: AppManager.default.musicListManager.getCurrentMusic())
+            self.playMusic(music: self.playableMusicList.getCurrentMusic())
 
         }
     }
@@ -113,9 +116,9 @@ class MusicPlayer: NSObject, IMusicPlayer{
     
     private func musicPlayToEnd(){
         print(#function)
-        AppManager.default.musicListManager.currentMusicFinishPlay()
+        self.playableMusicList.currentMusicFinishPlay()
         
-        if AppManager.default.musicListManager.getCurrentMusic().name == "placeHolder" { return }
+        if self.playableMusicList.getCurrentMusic().name == "placeHolder" { return }
         
         switch AppManager.default.appData.repeatShuffleStatus{
         case .shuffle:
@@ -123,7 +126,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
         case .repeat:
             self.playNextMusic()
         case .repeat_1:
-            self.playMusic(music: AppManager.default.musicListManager.getCurrentMusic())
+            self.playMusic(music: self.playableMusicList.getCurrentMusic())
         }
         
         AppManager.default.savedataToUserDefaults()

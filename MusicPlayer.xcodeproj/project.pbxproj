@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		079C6EB22569C54400BA494D /* extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C6EB12569C54400BA494D /* extension_String.swift */; };
+		07BE781A2570BEAD00366688 /* PlayableMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE78192570BEAD00366688 /* PlayableMusicList.swift */; };
+		07BE781D2570BFE700366688 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE781C2570BFE700366688 /* MusicList.swift */; };
 		4E202A212458F6DD001377CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A202458F6DD001377CA /* AppDelegate.swift */; };
 		4E202A232458F6DD001377CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A222458F6DD001377CA /* ContentView.swift */; };
 		4E202A262458F6DD001377CA /* MusicPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A242458F6DD001377CA /* MusicPlayer.xcdatamodeld */; };
@@ -39,7 +41,7 @@
 		4E98C86C245A1CE50042857D /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C86B245A1CE50042857D /* MusicManager.swift */; };
 		4E98C86E245A1CFF0042857D /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C86D245A1CFF0042857D /* MusicPlayer.swift */; };
 		4E98C870245A1D530042857D /* MusicWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C86F245A1D530042857D /* MusicWrapper.swift */; };
-		4E98C872245A1F820042857D /* MusicListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C871245A1F820042857D /* MusicListManager.swift */; };
+		4E98C872245A1F820042857D /* PlayingMusicListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C871245A1F820042857D /* PlayingMusicListManager.swift */; };
 		4E98C874245A24170042857D /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C873245A24170042857D /* AppManager.swift */; };
 		4E98C876245A248C0042857D /* MusicMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C875245A248C0042857D /* MusicMaker.swift */; };
 		4E98C878245A26040042857D /* MusicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98C877245A26040042857D /* MusicType.swift */; };
@@ -50,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		079C6EB12569C54400BA494D /* extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_String.swift; sourceTree = "<group>"; };
+		07BE78192570BEAD00366688 /* PlayableMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableMusicList.swift; sourceTree = "<group>"; };
+		07BE781C2570BFE700366688 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
 		4E202A1D2458F6DD001377CA /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E202A202458F6DD001377CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E202A222458F6DD001377CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -84,7 +88,7 @@
 		4E98C86B245A1CE50042857D /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
 		4E98C86D245A1CFF0042857D /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		4E98C86F245A1D530042857D /* MusicWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicWrapper.swift; sourceTree = "<group>"; };
-		4E98C871245A1F820042857D /* MusicListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListManager.swift; sourceTree = "<group>"; };
+		4E98C871245A1F820042857D /* PlayingMusicListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingMusicListManager.swift; sourceTree = "<group>"; };
 		4E98C873245A24170042857D /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		4E98C875245A248C0042857D /* MusicMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicMaker.swift; sourceTree = "<group>"; };
 		4E98C877245A26040042857D /* MusicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicType.swift; sourceTree = "<group>"; };
@@ -181,8 +185,10 @@
 			isa = PBXGroup;
 			children = (
 				4E98C86B245A1CE50042857D /* MusicManager.swift */,
-				4E98C871245A1F820042857D /* MusicListManager.swift */,
+				4E98C871245A1F820042857D /* PlayingMusicListManager.swift */,
+				07BE78192570BEAD00366688 /* PlayableMusicList.swift */,
 				4E7F8D97245B7951006B7143 /* ViewableMusicListManager.swift */,
+				07BE781C2570BFE700366688 /* MusicList.swift */,
 				4E98C875245A248C0042857D /* MusicMaker.swift */,
 				4E98C869245A1CCC0042857D /* Music.swift */,
 				4E98C86F245A1D530042857D /* MusicWrapper.swift */,
@@ -290,7 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E202A232458F6DD001377CA /* ContentView.swift in Sources */,
-				4E98C872245A1F820042857D /* MusicListManager.swift in Sources */,
+				4E98C872245A1F820042857D /* PlayingMusicListManager.swift in Sources */,
 				079C6EB22569C54400BA494D /* extension_String.swift in Sources */,
 				4E98C876245A248C0042857D /* MusicMaker.swift in Sources */,
 				4E580A7C245BDCC400E48783 /* MainWindowView.swift in Sources */,
@@ -309,12 +315,14 @@
 				4E98C874245A24170042857D /* AppManager.swift in Sources */,
 				4E98C86A245A1CCC0042857D /* Music.swift in Sources */,
 				4E217114246B4224009C4A71 /* MusicDataBaseManager.swift in Sources */,
+				07BE781A2570BEAD00366688 /* PlayableMusicList.swift in Sources */,
 				4E7F8D8E245B71BC006B7143 /* PlayerUIView.swift in Sources */,
 				4E7F8D96245B770E006B7143 /* MusicListOverView.swift in Sources */,
 				4E7F8D88245B6997006B7143 /* MusicListCell.swift in Sources */,
 				4E98C86C245A1CE50042857D /* MusicManager.swift in Sources */,
 				4E7F8D98245B7951006B7143 /* ViewableMusicListManager.swift in Sources */,
 				4E7F8D8C245B716E006B7143 /* PlayerNSView.swift in Sources */,
+				07BE781D2570BFE700366688 /* MusicList.swift in Sources */,
 				4E7F8D8A245B7141006B7143 /* extension_AVPlayer.swift in Sources */,
 				4E98C87C245A2E890042857D /* GetMusicFromFolder.swift in Sources */,
 				4E217116246B42A2009C4A71 /* MusicDataManager.swift in Sources */,

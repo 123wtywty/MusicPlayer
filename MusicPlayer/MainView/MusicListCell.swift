@@ -88,7 +88,7 @@ struct MusicListCell: View {
                     
                     // background
                     VStack{
-                        AppManager.default.musicListManager.getCurrentMusic() == self.music ?
+                        AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic() == self.music ?
                             LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.15)]), startPoint: .top, endPoint: .bottom)
                                 .opacity(0.5)
                                 .cornerRadius(8)
@@ -109,9 +109,14 @@ struct MusicListCell: View {
                         if self.cellId >= 1{
                             self.onTap.toggle()
                         }else{
-                            AppManager.default.viewingMusicListManager.playThisList()
                             
-                            AppManager.default.musicPlayer.playMusic(music: self.music)
+                            if AppManager.default.playingMusicListManager.playableMusicList.Mlist.listName != AppManager.default.viewingMusicListManager.Mlist.listName{
+                                AppManager.default.viewingMusicListManager.playThisList()
+
+                            }
+                            
+                            AppManager.default.playingMusicListManager.musicPlayer.playMusic(music: self.music)
+                            
                         }
                         print("\(self.music.name) tap, cellId: \(self.cellId), tap: \(self.onTap)")
                 }

@@ -11,51 +11,49 @@ import Foundation
 
 class ViewableMusicListManager: ObservableObject{
     
-    static func makeFrom(listName: String) -> ViewableMusicListManager{
+    static func makeSpecialList(listName: String) -> ViewableMusicListManager{
         if listName == "All Music"{
-            let list = ViewableMusicListManager()
-            list.listName = "All Music"
-            list.isSpecialList = true
+            let Vlist = ViewableMusicListManager()
+            Vlist.Mlist.listName = "All Music"
+            Vlist.Mlist.isSpecialList = true
             for path in AppManager.default.appData.avaliblePath{
-                list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                Vlist.Mlist.list += GetMusicFromFolder(path: path)
             }
-            return list
+            return Vlist
             
         }else if listName == "Favorite Music"{
-            let list = ViewableMusicListManager()
-            list.listName = "Favorite Music"
-            list.isSpecialList = true
+            let Vlist = ViewableMusicListManager()
+            Vlist.Mlist.listName = "Favorite Music"
+            Vlist.Mlist.isSpecialList = true
             for path in AppManager.default.appData.avaliblePath{
-                list.musicList.append(contentsOf: AppManager.default.getMusicFromFolder(path: path))
+                Vlist.Mlist.list += GetMusicFromFolder(path: path)
             }
-            list.musicList = list.musicList.filter {music -> Bool in
+            Vlist.Mlist.list = Vlist.Mlist.list.filter {music -> Bool in
                 music.isFavorite
             }
             
-            return list
+            return Vlist
         }else{
-                        
-            let list = ViewableMusicListManager()
-            list.listName = "\(listName)"
-            let path = AppManager.default.appData.selectingPath.first { str -> Bool in
-                URL(fileURLWithPath: str).lastPathComponent == listName
-            } ?? ""
-            print("path: \(path)")
-            list.folderPath = path
-            
-            list.musicList = AppManager.default.getMusicFromFolder(path: path)
-            
-            return list
-            
+            return ViewableMusicListManager()
         }
-        
-        
-//        return nil
+
     }
     
-    var listName : String = ""
-    var folderPath : String? = nil
-    var isSpecialList : Bool = false
+    static func makeFromPath(path: String) -> ViewableMusicListManager{
+        
+        
+        
+        let Vlist = ViewableMusicListManager()
+        Vlist.Mlist.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
+ 
+        Vlist.Mlist.folderPath = path
+        Vlist.Mlist.list = GetMusicFromFolder(path: path)
+        
+        return Vlist
+    }
+    
+    var Mlist : MusicList = MusicList()
+
     
     var needUpdateList : Bool = true
     
@@ -64,12 +62,7 @@ class ViewableMusicListManager: ObservableObject{
             self.update()
         }
     }
-    
-    private var originalMusicList : [Music] = []{
-        didSet{
-            self.update()
-        }
-    }
+
     
     
     private func update(){
@@ -85,11 +78,11 @@ class ViewableMusicListManager: ObservableObject{
     var musicList : [Music]{
         get{
             if self.filterString == ""{
-                return self.originalMusicList
+                return self.Mlist.list
             }else{
                 if self.needUpdateList{
                     self.tempMusicList =
-                        self.originalMusicList.filter
+                        self.Mlist.list.filter
                         {$0.simplifiedchinese.REContains(str: filterString.replacingOccurrences(of: " ", with: ""))}
                     
                 }
@@ -97,20 +90,18 @@ class ViewableMusicListManager: ObservableObject{
 
             }
         }
-        set{
-            self.originalMusicList = newValue
-        }
     }
     
 
     
     
     func playThisList(){
-        print("play : \(self.listName)")
-        AppManager.default.appData.playingList = self.listName
-        AppManager.default.musicListManager.setMusicList(newList: self.musicList)
+        print("play : \(self.Mlist.listName)")
+        AppManager.default.appData.playingList = self.Mlist.listName
+//        AppManager.default.playingMusicListManager = PlayingMusicListManager(playableMusicList: PlayableMusicListManager(musicList: self.Mlist))
+
+        AppManager.default.playingMusicListManager.playableMusicList = PlayableMusicListManager(musicList: self.Mlist)
     }
-    
     @Published var needJumpTo : Int? = nil
     
     
@@ -124,7 +115,7 @@ class ViewableMusicListManager: ObservableObject{
     
     func jumpToCurrentMusic(){
 
-        self.jumpToMusic(name: AppManager.default.musicListManager.getCurrentMusic().name)
+        self.jumpToMusic(name: AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().name)
         
         
     }

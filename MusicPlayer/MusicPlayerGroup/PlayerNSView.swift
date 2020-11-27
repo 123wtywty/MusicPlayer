@@ -14,7 +14,7 @@ class PlayerNSView: NSViewController {
     static var firstInit_loadView = false
     
     var continuePlay : Bool = false
-    let player = AppManager.default.musicPlayer.player
+    let player = AppManager.default.playingMusicListManager.musicPlayer.player
     var playerView = AVPlayerView()
 
     var doNotCountMusicPlayedTime = false

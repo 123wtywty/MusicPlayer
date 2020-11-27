@@ -14,7 +14,7 @@ extension ContentView{
     func PlayButton()  -> some View {
         
         Button(action:{
-            AppManager.default.musicPlayer.player.play()
+            AppManager.default.playingMusicListManager.musicPlayer.player.play()
         }){
             Text("Play")
             
@@ -25,7 +25,7 @@ extension ContentView{
     func PauseButton()  -> some View {
         
         Button(action:{
-            AppManager.default.musicPlayer.player.pause()
+            AppManager.default.playingMusicListManager.musicPlayer.player.pause()
         }){
             Text("pause")
         }
@@ -65,7 +65,7 @@ extension ContentView{
     func NextButton()  -> some View {
         
         Button(action: {
-            AppManager.default.musicPlayer.playMusicAccordingToSetting()
+            AppManager.default.playingMusicListManager.musicPlayer.playMusicAccordingToSetting()
         }){
             Text("Next")
             

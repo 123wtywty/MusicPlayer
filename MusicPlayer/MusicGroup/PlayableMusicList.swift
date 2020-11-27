@@ -1,10 +1,11 @@
 //
-//  MusicListManager.swift
+//  PlayableMusicList.swift
 //  MusicPlayer
 //
-//  Created by Gary Wu on 2020-04-29.
+//  Created by Gary Wu on 2020-11-26.
 //  Copyright © 2020 Gary Wu. All rights reserved.
 //
+
 
 import Foundation
 
@@ -12,7 +13,7 @@ fileprivate protocol IMusicListManager {
     var sortFunc : (Music, Music) -> Bool { get set }
     var listName : String { get set }
     
-    init(musicList: [Music])
+    init(musicList: MusicList)
     
     func getCurrentMusic() -> Music
     func setCurrentMusic(music: Music)
@@ -23,25 +24,14 @@ fileprivate protocol IMusicListManager {
     func getMusicByName(name: String) -> Music
     
     func getMusicList() -> [Music]
-    func setMusicList(newList: [Music])
-    
-    func addMusic(music: Music)
-    func removeMusic(music: Music)
     
     func currentMusicFinishPlay()
 }
 
 
-class MusicListManager: IMusicListManager, ObservableObject{
+class PlayableMusicListManager: IMusicListManager, ObservableObject{
     
-    private var musicList : [Music]{
-        didSet{
-            DispatchQueue.main.async {
-                self.objectWillChange.send()
-                
-            }
-        }
-    }
+    var Mlist : MusicList
     
     var listName: String = ""
     
@@ -61,12 +51,15 @@ class MusicListManager: IMusicListManager, ObservableObject{
     
     var sortFunc : (Music, Music) -> Bool = { $0.name < $1.name }
     
-    required init(musicList: [Music]) {
-        if musicList.isEmpty{
-            self.musicList = [Music.placeHolder]
+    required init(musicList: MusicList) {
+        if musicList.list.isEmpty{
+            let tempL = MusicList()
+            tempL.listName = "temp"
+            tempL.list = [Music.placeHolder]
+            self.Mlist = tempL
         }
         else{
-            self.musicList = musicList
+            self.Mlist = musicList
         }
         
         
@@ -74,9 +67,8 @@ class MusicListManager: IMusicListManager, ObservableObject{
         self.currentMusic = self.getRandomMusic()
         
         
-        for i in self.musicList{
-            self.recorder.addMusic(name: i.name)
-        }
+        self.recorder.addMusics(musicList: self.Mlist.list)
+        
     }
     
     func getCurrentMusic() -> Music{
@@ -88,22 +80,22 @@ class MusicListManager: IMusicListManager, ObservableObject{
     }
     
     func getNextMusic() -> Music{
-        var i = self.musicList.firstIndex { music -> Bool in
+        var i = self.Mlist.list.firstIndex { music -> Bool in
             music == self.currentMusic
             } ?? -1
         i += 1
         
-        if !(i < self.musicList.count){
+        if !(i < self.Mlist.list.count){
             i = 0
         }
         
-        return self.musicList[i]
+        return self.Mlist.list[i]
     }
     
     func getRandomMusic() -> Music {
-        if self.musicList.count < 3 { return self.musicList.randomElement()! }
+        if self.Mlist.list.count < 3 { return self.Mlist.list.randomElement()! }
         
-        let chooseList = self.musicList.flatMap { (item) -> [Music] in
+        let chooseList = self.Mlist.list.flatMap { (item) -> [Music] in
             var times = 0.0
             if !self.recorder.recentPlayed.contains(item.name){
                 times = self.recorder.maxPlayTime() - self.recorder.timesPlayedForMusic(name: item.name)
@@ -116,59 +108,33 @@ class MusicListManager: IMusicListManager, ObservableObject{
         }
         
         guard let randomMusic = chooseList.randomElement() else {
-            return self.musicList.randomElement()!
+            return self.Mlist.list.randomElement()!
         }
         
         return randomMusic
     }
     
     func getMusicAfter(name: String) -> Music {
-        var i = self.musicList.firstIndex { $0.name == name } ?? -1
+        var i = self.Mlist.list.firstIndex { $0.name == name } ?? -1
         i += 1
         
-        if !(i < self.musicList.count){
+        if !(i < self.Mlist.list.count){
             i = 0
         }
         
-        return self.musicList[i]
+        return self.Mlist.list[i]
     }
     
     func getMusicByName(name: String) -> Music {
-        let i = self.musicList.firstIndex { $0.name == name } ?? 0
-        return self.musicList[i]
+        let i = self.Mlist.list.firstIndex { $0.name == name } ?? 0
+        return self.Mlist.list[i]
     }
     
     func getMusicList() -> [Music]{
-        self.musicList
+        self.Mlist.list
     }
     
-    func setMusicList(newList: [Music]){
-        
-        let removedMusics = Set(self.musicList).subtracting(newList)
-        for i in removedMusics{
-            self.recorder.removeMusic(name: i.name)
-        }
-        
-        let newMusics = Set(newList).subtracting(self.musicList)
-        for i in newMusics{
-            self.recorder.addMusic(name: i.name)
-        }
-        
-        self.musicList = newList
-        
-        if !self.musicList.contains(self.currentMusic){
-            AppManager.default.musicPlayer.playRandomMusic()
-        }
-    }
-    
-    func addMusic(music: Music){
-        self.recorder.addMusic(name: music.name)
-        self.musicList.append(music)
-    }
-    
-    func removeMusic(music: Music){
-        
-    }
+
     
     func currentMusicFinishPlay(){
         self.recorder.musicAddPlayTime(name: self.currentMusic.name, isFavorite: self.currentMusic.isFavorite)

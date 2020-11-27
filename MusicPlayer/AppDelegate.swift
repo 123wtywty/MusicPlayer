@@ -47,24 +47,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let selectingPath = data["selectingPath"] as? [String],
             let blockedPath = data["blockedPath"] as? [String],
             let playingMusicName = data["playingMusicName"] as? String,
-            let playingList = data["playingList"] as? String,
+            let playingList = data["playingListName"] as? String,
+            let folderPath = data["folderPath"] as? String,
+            let isSpecialList = data["isSpecialList"] as? Bool,
             let repeatShuffleStatus = (data["repeatShuffleStatus"] as? String) ?? ("" as? String)
         {
             
-            print(selectingPath, blockedPath, playingMusicName, playingList, repeatShuffleStatus)
+            print(selectingPath, blockedPath, playingMusicName, playingList, folderPath, isSpecialList, repeatShuffleStatus)
             
             AppManager.default.appData.selectingPath = selectingPath
             
             
             AppManager.default.appData.blockedPath = blockedPath
             
-            
-            let list = ViewableMusicListManager.makeFrom(listName: playingList)
-            list.playThisList()
+            if isSpecialList{
+                let list = ViewableMusicListManager.makeSpecialList(listName: playingList)
+                list.playThisList()
+            }else if folderPath != ""{
+                let list = ViewableMusicListManager.makeFromPath(path: folderPath)
+                list.playThisList()
+            }else{
+                return
+            }
+
+            AppManager.default.playingMusicListManager.musicPlayer.playMusic(name: playingMusicName)
+
             
             AppManager.default.appData.repeatShuffleStatus = Repeat_Shuffle_Status(rawValue: repeatShuffleStatus) ?? Repeat_Shuffle_Status.shuffle
             
-            AppManager.default.musicPlayer.playMusic(name: playingMusicName)
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 //
 //            }
