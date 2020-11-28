@@ -1,11 +1,11 @@
 # MusicPlayer
 
 
-### Introduction (37 second)
+### Introduction (35 second)
 
 ![](https://github.com/123wtywty/MusicPlayer/blob/master/introduction.gif)
 
-watch on youtube: [link](https://www.youtube.com/watch?v=lhgNa8lqKUc&feature=youtu.be)
+watch on youtube: [link](https://www.youtube.com/watch?v=IuVuT4C6m58&feature=youtu.be)
 
 
 ### Key features:
