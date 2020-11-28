@@ -19,7 +19,7 @@ When playing a playlist mix of ```liked songs``` and regular songs in random ord
 
 Sometimes, one song is played several times, but many songs have not been played.
 I solved this problem by using a counter.
-In this player, there will be no song plays much more than other songs except liked songs.
+In this player, there will be no song plays much more than other songs except ```liked songs```.
 
 #### Search
 
