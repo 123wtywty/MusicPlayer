@@ -45,7 +45,7 @@ func GetMusicFromFolder(path: String) -> [Music] {
         
         
     }
-    
+    musicList.sort(by: AppManager.default.playingMusicListManager.playableMusicList.sortFunc)
     return musicList
 }
 
