@@ -15,6 +15,8 @@ struct ContentView: View {
     
     @ObservedObject var data = AppManager.default.appData
     
+    @State var textStyle = 0
+    
     var body: some View {
         
         return GeometryReader{ g in
@@ -35,11 +37,17 @@ struct ContentView: View {
                                 .cornerRadius(8)
                                 .padding()
                             
-                            
-                            Text(self.data.playingMusic.displayeMusicName)
-                                .frame(width: 400, height: .none)
-                                .padding()
-                            
+                            if self.textStyle == 0{
+                                Text(self.data.playingMusic.displayeMusicName)
+                                    .frame(width: 400, height: 20)
+                                    .padding()
+                                
+                            }else if self.textStyle == 1{
+                                
+                                TextField("", text: .constant(self.data.playingMusic.displayeMusicName))
+                                    .frame(width: 400, height: 20)
+                                    .padding()
+                            }
                             VStack(alignment: .center, spacing: 20){
                                 HStack(spacing: 20){
                                     
@@ -60,6 +68,7 @@ struct ContentView: View {
                                     
                                 }
                                 HStack(spacing: 20){
+                                    self.changeTextStyle()
                                     self.AddPathButton()
                                     
                                 }

@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             StatusBarView.shared.openMainWindow()
 
         }

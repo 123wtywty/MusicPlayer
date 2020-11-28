@@ -113,5 +113,22 @@ extension ContentView{
         
     }
     
+    func changeTextStyle() -> some View{
+        Button(action:{
+            if self.textStyle == 0{
+                self.textStyle = 1
+            }else{
+                self.textStyle = 0
+            }
+        }){
+            if self.textStyle == 0{
+                Text("change to copyable")
+            }else{
+                Text("change to nomal")
+            }
+            
+        }.frame(width: 150)
+    }
+    
     
 }

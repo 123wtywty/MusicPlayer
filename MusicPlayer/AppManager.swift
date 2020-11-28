@@ -60,6 +60,10 @@ class AppManager{
     var musicListOverViewData : MusicListOverViewData
     
     func savedataToUserDefaults(){
+        
+//        UserDefaults.standard.removeObject(forKey: "lastTimeData")
+//        return
+
         var dataNeedSave : [String : Any] = [:]
         dataNeedSave["selectingPath"] = self.appData.selectingPath
         dataNeedSave["blockedPath"] = self.appData.blockedPath
