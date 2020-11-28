@@ -35,7 +35,7 @@ struct MusicListCell: View {
                             
                             HStack{
                                 
-                                Text(self.music.name)
+                                Text(self.music.displayeMusicName)
                                     
                                     .foregroundColor(.black)
                                     .padding(.leading)
@@ -88,8 +88,6 @@ struct MusicListCell: View {
 
                 }
 
-                    
-                    
                     .onTapGesture {
                         if self.cellId >= 1{
                             self.onTap.toggle()
@@ -106,10 +104,7 @@ struct MusicListCell: View {
                         print("\(self.music.name) tap, cellId: \(self.cellId), tap: \(self.onTap)")
                 }
                     
-                    
-                    
-                
-                
+
                 Divider()
 
                     .foregroundColor(Color.black)
