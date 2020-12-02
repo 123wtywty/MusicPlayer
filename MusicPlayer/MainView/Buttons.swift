@@ -131,4 +131,13 @@ extension ContentView{
     }
     
     
+    func playerFullWindow() -> some View{
+        Button(action:{
+            AppManager.default.appData.playerFullWindow = true
+        }){
+            Text("Full")
+        }
+    }
+    
+    
 }

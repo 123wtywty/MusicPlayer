@@ -16,6 +16,8 @@ class AppData: ObservableObject{
     
     @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
     
+    @Published var playerFullWindow : Bool = false
+    
     var selectingPath : [String] = []{
         didSet{
             AppManager.default.setUpMusicListOverViewData()

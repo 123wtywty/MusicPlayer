@@ -21,9 +21,9 @@ struct ContentView: View {
         
         return GeometryReader{ g in
             
-            if g.size.width <= 401 && g.size.height <= 226{ // small window
+            if self.data.playerFullWindow{ // small window
                 PlayerUIView()
-                    .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+                    .frame(width: g.size.width, height: g.size.height, alignment: .center)
                     .cornerRadius(8)
             }else{
                 HStack{
@@ -69,6 +69,7 @@ struct ContentView: View {
                                 }
                                 HStack(spacing: 20){
                                     self.changeTextStyle()
+                                    self.playerFullWindow()
                                     self.AddPathButton()
                                     
                                 }
