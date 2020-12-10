@@ -38,11 +38,14 @@ class Music: IMusic, Equatable, Hashable{
     required init(name: String, url: URL) {
         self.name = name
         
-        let i = name.lastIndex(of: "-") ?? name.lastIndex(of: ".") ?? name.endIndex
-        self.displayeMusicName = name[..<i].simplifiedchinese
-        
         self.pinyin = name.transformToPinyinWithoutBlank().lowercased()
-        self.simplifiedchinese = name.simplifiedchinese
+                
+        let sChinese = name.simplifiedchinese
+        self.simplifiedchinese = sChinese
+        
+        let i = sChinese.lastIndex(of: "-") ?? sChinese.lastIndex(of: ".") ?? sChinese.endIndex
+        self.displayeMusicName = String(sChinese[..<i])
+        
         self.url = url
         
         self.playCount = 0

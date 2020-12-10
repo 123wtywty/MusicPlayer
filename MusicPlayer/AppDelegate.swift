@@ -21,9 +21,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         
         
-        
+        let t0 = CFAbsoluteTimeGetCurrent()
         self.appInit()
-        
+        print("init time: ", CFAbsoluteTimeGetCurrent() - t0)
         
         
     }
@@ -40,6 +40,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         
         StatusBarView.shared.makeView()
+        
+
+        self.resumeLastMusic()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            StatusBarView.shared.openMainWindow()
+        }
+        
+    }
+      
+    private func resumeLastMusic(){
         
         if let str = UserDefaults.standard.value(forKey: "lastTimeData") as? String,
             let data = try? JSONSerialization.jsonObject(with: Data(str.utf8), options: []) as? [String: Any],
@@ -76,21 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-            StatusBarView.shared.openMainWindow()
-
-        }
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
