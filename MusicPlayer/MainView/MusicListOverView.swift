@@ -63,12 +63,15 @@ struct MusicListOverView: View {
                                 
                             }
                         Spacer()
-                        Text(AppManager.default.viewingMusicListManager.Mlist.listName)
+                        Text("\(AppManager.default.viewingMusicListManager.Mlist.listName) \(AppManager.default.viewingMusicListManager.Mlist.count)")
                             .font(.subheadline)
                             .background(AppManager.default.viewingMusicListManager.Mlist.listName == AppManager.default.appData.playingList ?
                                             Color.blue.opacity(0.15).cornerRadius(5)
                                             : Color.white.cornerRadius(5))
                             .padding([.top, .trailing])
+                        
+                        
+                        
                         Spacer()
                     }
                     HStack{

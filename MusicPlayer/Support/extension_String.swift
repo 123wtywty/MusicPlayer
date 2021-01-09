@@ -69,6 +69,7 @@ fileprivate class GBig {
     private static func makeDict() -> (){
         for i in 0..<GBig.big5.count{
             GBig._dict[GBig.big5[i]] = GBig.gb[i]
+//            GBig._dict[GBig.gb[i]] = GBig.big5[i]
         }
     }
     private static var dict: [Character: Character]{

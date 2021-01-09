@@ -44,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.resumeLastMusic()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             StatusBarView.shared.openMainWindow()
         }
         
