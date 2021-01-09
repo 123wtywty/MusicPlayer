@@ -11,12 +11,25 @@ import SwiftUI
 
 class AppData: ObservableObject{
     
+    init() {
+        
+    }
+    func setUp(musicPlayer: MusicPlayer){        
+        musicPlayer.musicPlayingStateDidChangeHandle["AppData.isPlaying"] = { [weak self] in
+            self?.isPlaying = musicPlayer.player.isPlaying
+        }
+    }
+    
     @Published var playingList : String = ""
     @Published var playingMusic : Music = Music.placeHolder
     
     @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle
     
     @Published var playerFullWindow : Bool = false
+    
+    @Published var isPlaying : Bool = false
+    @Published var stayOnTop : Bool = false
+    
     
     var selectingPath : [String] = []{
         didSet{

@@ -22,6 +22,7 @@ class AppManager{
         
         self.musicMaker = MusicMaker()
         self.appData = AppData()
+        self.appData.setUp(musicPlayer: self.playingMusicListManager.musicPlayer)
         
         self.musicListOverViewData = MusicListOverViewData()
         self.setUpMusicListOverViewData()

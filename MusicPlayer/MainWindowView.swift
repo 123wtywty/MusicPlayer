@@ -15,8 +15,9 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
     static var shared = MainWindowViewWindowController()
     private var defaultSize : NSRect?
     
-    private var stayOnTop = false{
+    var stayOnTop = false{
         didSet{
+            AppManager.default.appData.stayOnTop = stayOnTop
             if stayOnTop{
                 self.window?.titleVisibility = .visible
                 self.window?.level = .floating

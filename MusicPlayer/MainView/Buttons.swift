@@ -32,6 +32,20 @@ extension ContentView{
         
     }
     
+    func PlayPauseButton() -> some View {
+        Button(action:{
+            if (self.data.isPlaying){
+                AppManager.default.playingMusicListManager.musicPlayer.player.pause()
+            }
+            else{
+                AppManager.default.playingMusicListManager.musicPlayer.player.play()
+            }
+        }){
+            Text("\(self.data.isPlaying ? "􀊅" : "􀊃")")
+                .frame(width: 20.0)
+        }
+    }
+    
     fileprivate func repeatShuffleStatusText() -> Text{
         switch AppManager.default.appData.repeatShuffleStatus {
         case .shuffle:
@@ -67,7 +81,8 @@ extension ContentView{
         Button(action: {
             AppManager.default.playingMusicListManager.musicPlayer.playMusicAccordingToSetting()
         }){
-            Text("Next")
+//            Text("Next")
+            Text("􀊋")
             
         }
         
@@ -121,22 +136,32 @@ extension ContentView{
                 self.textStyle = 0
             }
         }){
-            if self.textStyle == 0{
-                Text("change to copyable")
-            }else{
-                Text("change to nomal")
-            }
+            Text(self.textStyle == 0 ? "􀉁" : "not 􀉁")
+
             
-        }.frame(width: 150)
+        }
     }
     
     
     func playerFullWindow() -> some View{
         Button(action:{
-            AppManager.default.appData.playerFullWindow = true
+//            AppManager.default.appData.playerFullWindow = true
+            self.data.playerFullWindow = true
         }){
-            Text("Full")
+//            Text("Full")
+            Text("􀅊")
         }
+    }
+    
+    func StayOnTopButton() -> some View{
+        Button(action:{
+            MainWindowViewWindowController.shared.stayOnTop.toggle()
+        }){
+            Text("\(self.data.stayOnTop ? "􀱄" : "􀰿")")
+//            Text("stayOnTop")
+        }
+        
+        
     }
     
     

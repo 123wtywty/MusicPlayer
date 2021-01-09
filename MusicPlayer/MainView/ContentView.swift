@@ -16,6 +16,7 @@ struct ContentView: View {
     @ObservedObject var data = AppManager.default.appData
     
     @State var textStyle = 0
+
     
     var body: some View {
         
@@ -51,26 +52,27 @@ struct ContentView: View {
                             VStack(alignment: .center, spacing: 20){
                                 HStack(spacing: 20){
                                     
-                                    self.PlayButton()
-                                    
-                                    self.PauseButton()
+                                    self.PlayPauseButton()
                                     
                                     self.NextButton()
                                     
-                                    
-                                }
-                                HStack(spacing: 20){
                                     self.ChangeRepeatShuffleStatusButton()
-                                    
-                                    self.restartButton()
-                                    
-                                    self.QuitButton()
                                     
                                 }
                                 HStack(spacing: 20){
                                     self.changeTextStyle()
+
                                     self.playerFullWindow()
+
                                     self.AddPathButton()
+                                    
+                                }
+                                HStack(spacing: 20){
+                                    self.StayOnTopButton()
+
+                                    self.restartButton()
+                                    
+                                    self.QuitButton()
                                     
                                 }
                                 
