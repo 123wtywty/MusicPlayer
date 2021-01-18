@@ -64,7 +64,13 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
         
         
 //        self.currentMusic = Music.placeHolder
-        self.currentMusic = self.getRandomMusic()
+        
+//        if (AppManager.default.appData.repeatShuffleStatus == .shuffle){
+//            self.currentMusic = self.getRandomMusic()
+//        }
+//        else{
+        self.currentMusic = self.Mlist.list.first ?? self.getRandomMusic()
+//        }
         
         
         self.recorder.addMusics(musicList: self.Mlist.list)
@@ -134,10 +140,14 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
         self.Mlist.list
     }
     
-
+    private func useRecorder() -> Bool{
+        AppManager.default.appData.repeatShuffleStatus == .shuffle
+    }
     
     func currentMusicFinishPlay(){
-        self.recorder.musicAddPlayTime(name: self.currentMusic.name, isFavorite: self.currentMusic.isFavorite)
+        if self.useRecorder(){
+            self.recorder.musicAddPlayTime(name: self.currentMusic.name, isFavorite: self.currentMusic.isFavorite)
+        }
         self.currentMusic.playCount += 1
     }
     
