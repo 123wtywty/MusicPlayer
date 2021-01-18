@@ -92,13 +92,14 @@ struct MusicListOverView: View {
                         })
                         )
                         .padding(.trailing)
-
+                        
                     }
                     
                     ZStack(alignment: .bottomTrailing){
                         MusicListView()
-                        ScrollToRowButton()
-                        
+                        if (AppManager.default.viewingMusicListManager.currentMusicExistInThisList()){
+                            ScrollToRowButton()
+                        }
                     }
                 }
                 .animation(.default)
@@ -135,6 +136,7 @@ fileprivate struct ScrollToRowButton: View{
     @State var isOnHover = false
     
     var body: some View{
+        
         Text("􀐩")
             .frame(width: 40, height: 40)
             .padding()

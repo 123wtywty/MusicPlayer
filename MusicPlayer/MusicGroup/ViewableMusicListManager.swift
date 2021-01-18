@@ -41,8 +41,6 @@ class ViewableMusicListManager: ObservableObject{
     
     static func makeFromPath(path: String) -> ViewableMusicListManager{
         
-        
-        
         let Vlist = ViewableMusicListManager()
         Vlist.Mlist.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
  
@@ -79,6 +77,7 @@ class ViewableMusicListManager: ObservableObject{
         get{
             if self.filterString == ""{
                 return self.Mlist.list
+//                return Array(zip(self.Mlist.list, 0..<self.Mlist.list.count))
             }else{
                 if self.needUpdateList{
                     self.tempMusicList =
@@ -87,6 +86,7 @@ class ViewableMusicListManager: ObservableObject{
                     
                 }
                 return self.tempMusicList
+//                return Array(zip(self.tempMusicList, 0..<self.tempMusicList.count))
 
             }
         }
@@ -101,14 +101,27 @@ class ViewableMusicListManager: ObservableObject{
 
         AppManager.default.playingMusicListManager.playableMusicList = PlayableMusicListManager(musicList: self.Mlist)
     }
-    @Published var needJumpTo : Int? = nil
+    @Published var needJumpTo : String? = nil
     
+    func musicExistInThisList(name: String) -> Bool{
+        self.musicList.contains(where: { $0.name == name })
+    }
     
     func jumpToMusic(name: String){
         
-        guard let index = self.musicList.firstIndex(where: { $0.name == name }) else { return }
-        self.needJumpTo = index
+//        guard let index = self.musicList.firstIndex(where: { $0.name == name }) else { return }
+//        self.needJumpTo = index
+        if self.musicExistInThisList(name: name){
+            self.needJumpTo = name
+            
+        }else{
+            self.needJumpTo = nil
+        }
         
+    }
+    
+    func currentMusicExistInThisList() -> Bool{
+        self.musicExistInThisList(name: AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().name)
     }
     
     
