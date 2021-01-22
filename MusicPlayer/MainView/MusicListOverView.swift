@@ -49,65 +49,16 @@ struct MusicListOverView: View {
                     
                 }
             }
+            
             else if self.showState == 1{
-                VStack{
-                    
-                    
-                    HStack{
-                        Text("􀆉 back")
-                            .padding([.leading, .top])
-                            .onTapGesture {
-                                withAnimation{
-                                    self.showState = 0
-                                }
-                                
-                            }
-                        Spacer()
-                        Text("\(AppManager.default.viewingMusicListManager.Mlist.listName) \(AppManager.default.viewingMusicListManager.Mlist.count)")
-                            .font(.subheadline)
-                            .background(AppManager.default.viewingMusicListManager.Mlist.listName == AppManager.default.appData.playingList ?
-                                            Color.blue.opacity(0.15).cornerRadius(5)
-                                            : Color.white.cornerRadius(5))
-                            .padding([.top, .trailing])
-                        
-                        
-                        
-                        Spacer()
-                    }
-                    HStack{
-                        Button(action:{
-                            AppManager.default.viewingMusicListManager.playThisList()
-                        }){
-                            Text("play this list")
-                        }
-                        .padding(.trailing, 1.0)
-                        
-                        Spacer()
-                        
-                        TextField("", text: Binding<String>(get: {
-                            self.filterString
-                        }, set: {
-                            self.filterString = $0
-                            AppManager.default.viewingMusicListManager.filterString = self.filterString
-                        })
-                        )
-                        .padding(.trailing)
-                        
-                    }
-                    
-                    ZStack(alignment: .bottomTrailing){
-                        MusicListView()
-                        if (AppManager.default.viewingMusicListManager.currentMusicExistInThisList()){
-                            ScrollToRowButton()
-                        }
-                    }
-                }
-                .animation(.default)
+                MusicListView(showState: self.$showState)
+                    .background(Color.white)
             }
             
             
             
         }
+//        .padding(.trailing, 20)
     }
 }
 
@@ -131,25 +82,3 @@ fileprivate struct RowModifier: ViewModifier {
 }
 
 
-
-fileprivate struct ScrollToRowButton: View{
-    @State var isOnHover = false
-    
-    var body: some View{
-        
-        Text("􀐩")
-            .frame(width: 40, height: 40)
-            .padding()
-            .font(.system(size: 30))
-            .foregroundColor(.blue)
-            .opacity(self.isOnHover ? 0.7 : 0.1)
-            .animation(.easeInOut(duration: 0.5))
-            .onHover { (isHover) in
-                self.isOnHover = isHover
-                
-            }
-            .onTapGesture {
-                AppManager.default.viewingMusicListManager.jumpToCurrentMusic()
-            }
-    }
-}

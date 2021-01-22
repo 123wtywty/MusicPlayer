@@ -53,23 +53,17 @@ class ViewableMusicListManager: ObservableObject{
     var Mlist : MusicList = MusicList()
 
     
-    var needUpdateList : Bool = true
+    private var needUpdateList : Bool = true
     
     var filterString : String = ""{
         didSet{
-            self.update()
+            self.needUpdateList = true
+            DispatchQueue.main.async {
+                self.objectWillChange.send()
+            }
         }
     }
 
-    
-    
-    private func update(){
-        self.needUpdateList = true
-        DispatchQueue.main.async {
-            self.objectWillChange.send()
-            
-        }
-    }
     
     private var tempMusicList : [Music] = []
     
@@ -77,7 +71,6 @@ class ViewableMusicListManager: ObservableObject{
         get{
             if self.filterString == ""{
                 return self.Mlist.list
-//                return Array(zip(self.Mlist.list, 0..<self.Mlist.list.count))
             }else{
                 if self.needUpdateList{
                     self.tempMusicList =
@@ -86,7 +79,6 @@ class ViewableMusicListManager: ObservableObject{
                     
                 }
                 return self.tempMusicList
-//                return Array(zip(self.tempMusicList, 0..<self.tempMusicList.count))
 
             }
         }
@@ -101,6 +93,7 @@ class ViewableMusicListManager: ObservableObject{
 
         AppManager.default.playingMusicListManager.playableMusicList = PlayableMusicListManager(musicList: self.Mlist)
     }
+    
     @Published var needJumpTo : String? = nil
     
     func musicExistInThisList(name: String) -> Bool{
@@ -109,8 +102,6 @@ class ViewableMusicListManager: ObservableObject{
     
     func jumpToMusic(name: String){
         
-//        guard let index = self.musicList.firstIndex(where: { $0.name == name }) else { return }
-//        self.needJumpTo = index
         if self.musicExistInThisList(name: name){
             self.needJumpTo = name
             

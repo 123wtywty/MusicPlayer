@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		075AB98325B537C200FD1EB2 /* MusicListView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075AB98225B537C200FD1EB2 /* MusicListView2.swift */; };
 		079C6EB22569C54400BA494D /* extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C6EB12569C54400BA494D /* extension_String.swift */; };
 		07BE781A2570BEAD00366688 /* PlayableMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE78192570BEAD00366688 /* PlayableMusicList.swift */; };
 		07BE781D2570BFE700366688 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE781C2570BFE700366688 /* MusicList.swift */; };
@@ -51,7 +50,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		075AB98225B537C200FD1EB2 /* MusicListView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListView2.swift; sourceTree = "<group>"; };
 		079C6EB12569C54400BA494D /* extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_String.swift; sourceTree = "<group>"; };
 		07BE78192570BEAD00366688 /* PlayableMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableMusicList.swift; sourceTree = "<group>"; };
 		07BE781C2570BFE700366688 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 			children = (
 				4E202A222458F6DD001377CA /* ContentView.swift */,
 				4E7F8D85245B68E8006B7143 /* MusicListView.swift */,
-				075AB98225B537C200FD1EB2 /* MusicListView2.swift */,
 				4E7F8D87245B6997006B7143 /* MusicListCell.swift */,
 				4E7F8D95245B770E006B7143 /* MusicListOverView.swift */,
 				4E7F8D8F245B73BE006B7143 /* PathsView.swift */,
@@ -258,7 +255,7 @@
 				};
 			};
 			buildConfigurationList = 4E202A182458F6DD001377CA /* Build configuration list for PBXProject "MusicPlayer" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -312,7 +309,6 @@
 				4E202A212458F6DD001377CA /* AppDelegate.swift in Sources */,
 				4E71314F2496D542003503F6 /* MusicListOverViewData.swift in Sources */,
 				4E580A7A245BDA3F00E48783 /* StatusBarView.swift in Sources */,
-				075AB98325B537C200FD1EB2 /* MusicListView2.swift in Sources */,
 				4E98C874245A24170042857D /* AppManager.swift in Sources */,
 				4E98C86A245A1CCC0042857D /* Music.swift in Sources */,
 				4E217114246B4224009C4A71 /* MusicDataBaseManager.swift in Sources */,
