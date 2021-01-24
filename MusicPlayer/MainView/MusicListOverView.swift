@@ -32,7 +32,7 @@ struct MusicListOverView: View {
                                         Text(list.name)
                                             .font(.subheadline)
                                             .foregroundColor(.black)
-                                    }.modifier(RowModifier(selected: list.name == AppManager.default.appData.playingList))
+                                    }.modifier(RowModifier(selected: list.name == AppManager.default.appData.playingList.listName))
                                     .onTapGesture {
                                         
                                         AppManager.default.viewingMusicListManager = list.getMusicList()

@@ -10,6 +10,52 @@ import Foundation
 
 
 class MusicList{
+    private static var defaultSortFunc : (Music, Music) -> Bool = { $0.name < $1.name }
+
+    
+    static func makeSpecialList(listName: String) -> MusicList{
+        if listName == "All Music"{
+            let Mlist = MusicList()
+            Mlist.listName = "All Music"
+            Mlist.isSpecialList = true
+            for path in AppManager.default.appData.avaliblePath{
+                Mlist.list += GetMusicFromFolder(path: path)
+            }
+            Mlist.list.sort(by: MusicList.defaultSortFunc)
+            return Mlist
+            
+        }else if listName == "Favorite Music"{
+            let Mlist = MusicList()
+            Mlist.listName = "Favorite Music"
+            Mlist.isSpecialList = true
+            for path in AppManager.default.appData.avaliblePath{
+                Mlist.list += GetMusicFromFolder(path: path)
+            }
+            Mlist.list = Mlist.list.filter {music -> Bool in
+                music.isFavorite
+            }
+            Mlist.list.sort(by: MusicList.defaultSortFunc)
+            return Mlist
+        }else{
+            return MusicList()
+        }
+
+    }
+    
+    static func makeFromPath(path: String) -> MusicList{
+        
+        let Mlist = MusicList()
+        Mlist.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
+ 
+        Mlist.folderPath = path
+        Mlist.list = GetMusicFromFolder(path: path)
+        Mlist.list.sort(by: MusicList.defaultSortFunc)
+        return Mlist
+    }
+    
+    
+    
+    
     var listName : String = ""
     var folderPath : String? = nil
     var isSpecialList : Bool = false

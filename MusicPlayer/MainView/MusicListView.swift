@@ -13,6 +13,7 @@ import SwiftUI
 
 struct MusicListView : View{
     @ObservedObject var data = AppManager.default.viewingMusicListManager
+    @ObservedObject var data2 = AppManager.default.appData
     @State private var filterString : String = ""
     
     @Binding var showState : Int
@@ -34,7 +35,7 @@ struct MusicListView : View{
                 Spacer()
                 Text("\(AppManager.default.viewingMusicListManager.Mlist.listName)  #\(AppManager.default.viewingMusicListManager.Mlist.count)")
                     .font(.subheadline)
-                    .background(AppManager.default.viewingMusicListManager.Mlist.listName == AppManager.default.appData.playingList ?
+                    .background(AppManager.default.viewingMusicListManager.Mlist.listName == AppManager.default.appData.playingList.listName ?
                                     Color.blue.opacity(0.15).cornerRadius(5)
                                     : Color.white.cornerRadius(5))
                     .padding([.top, .trailing])
@@ -47,10 +48,10 @@ struct MusicListView : View{
                 Button(action:{
                     AppManager.default.viewingMusicListManager.playThisList()
                 }){
-                    Text("play this list")
+                    Text("􀊃")
                 }
+                .padding(.leading, 10.0)
                 .padding(.trailing, 1.0)
-                
                 Spacer()
                 
                 TextField("", text: Binding<String>(get: {

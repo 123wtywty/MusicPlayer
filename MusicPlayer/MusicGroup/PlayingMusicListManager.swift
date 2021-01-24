@@ -10,15 +10,17 @@ import Foundation
 import AVKit
 
 class PlayingMusicListManager{
-    var playableMusicList : PlayableMusicListManager{
-        didSet{
-            self.musicPlayer.playableMusicList = self.playableMusicList
-        }
-    }
+    private var playableMusicList : PlayableMusicListManager
+    
     var musicPlayer : MusicPlayer
     
     init(playableMusicList : PlayableMusicListManager) {
         self.playableMusicList = playableMusicList
         self.musicPlayer = MusicPlayer(player: AVPlayer(), playableMusicList: self.playableMusicList)
+    }
+    
+    func changeMusicListTo(musicList: PlayableMusicListManager){
+        self.playableMusicList = musicList
+        self.musicPlayer.changeMusicList(musicList: musicList)
     }
 }

@@ -36,7 +36,7 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
         
         //        window.title = "MusicPlayer"
         
-        window.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().displayeMusicName
+        window.title = AppManager.default.appData.playingMusic.displayeMusicName
         
         
         window.minSize = NSSize(width: 640, height: 480)
@@ -69,7 +69,7 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
         
         
         AppManager.default.playingMusicListManager.musicPlayer.musicPlayingStateDidChangeHandle["update window title"] = { [weak self] in
-            self?.window?.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().displayeMusicName
+            self?.window?.title = AppManager.default.appData.playingMusic.displayeMusicName
         }
         
     }

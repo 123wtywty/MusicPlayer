@@ -20,7 +20,7 @@ class AppData: ObservableObject{
         }
     }
     
-    @Published var playingList : String = ""
+    @Published var playingList : MusicList = MusicList()
     @Published var playingMusic : Music = Music.placeHolder
     
     @Published var repeatShuffleStatus : Repeat_Shuffle_Status = .shuffle

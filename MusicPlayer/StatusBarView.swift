@@ -31,7 +31,7 @@ class StatusBarView{
         
         
         self.like_StatusItem.button!.action = #selector(toggleIsFavorite)
-        self.like_StatusItem.button!.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().isFavorite ? "􀊵" : "􀊴"
+        self.like_StatusItem.button!.title = AppManager.default.appData.playingMusic.isFavorite ? "􀊵" : "􀊴"
         
         
         AppManager.default.playingMusicListManager.musicPlayer.musicPlayingStateDidChangeHandle["play_pause_StatusItem.button"] = { [weak self] in
@@ -52,7 +52,7 @@ class StatusBarView{
     public func update_like_StatusItem(){
 
         DispatchQueue.main.async {
-            self.like_StatusItem.button!.title = AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().isFavorite ? "􀊵" : "􀊴"
+            self.like_StatusItem.button!.title = AppManager.default.appData.playingMusic.isFavorite ? "􀊵" : "􀊴"
             
         }
     }
@@ -79,8 +79,8 @@ class StatusBarView{
     
     @objc private func toggleIsFavorite(){
         print(#function)
-        AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().isFavorite.toggle()
-        print("\(AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().isFavorite)")
+        AppManager.default.appData.playingMusic.isFavorite.toggle()
+        print("\(AppManager.default.appData.playingMusic.isFavorite)")
     }
     
     

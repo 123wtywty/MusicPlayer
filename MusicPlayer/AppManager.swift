@@ -69,11 +69,11 @@ class AppManager{
         dataNeedSave["selectingPath"] = self.appData.selectingPath
         dataNeedSave["blockedPath"] = self.appData.blockedPath
         
-        dataNeedSave["playingMusicName"] = self.playingMusicListManager.playableMusicList.getCurrentMusic().name
-        dataNeedSave["playingListName"] = self.playingMusicListManager.playableMusicList.Mlist.listName
+        dataNeedSave["playingMusicName"] = self.appData.playingMusic.name
+        dataNeedSave["playingListName"] = self.appData.playingList.listName
         
-        dataNeedSave["folderPath"] = self.playingMusicListManager.playableMusicList.Mlist.folderPath ?? ""
-        dataNeedSave["isSpecialList"] = self.playingMusicListManager.playableMusicList.Mlist.isSpecialList
+        dataNeedSave["folderPath"] = self.appData.playingList.folderPath ?? ""
+        dataNeedSave["isSpecialList"] = self.appData.playingList.isSpecialList
         
         dataNeedSave["repeatShuffleStatus"] = self.appData.repeatShuffleStatus.rawValue
         

@@ -10,7 +10,6 @@
 import Foundation
 
 fileprivate protocol IMusicListManager {
-    var sortFunc : (Music, Music) -> Bool { get set }
     var listName : String { get set }
     
     init(musicList: MusicList)
@@ -48,9 +47,7 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
     
     
     private var recorder = MusicPlayedRecorder()
-    
-    var sortFunc : (Music, Music) -> Bool = { $0.name < $1.name }
-    
+        
     required init(musicList: MusicList) {
         if musicList.list.isEmpty{
             let tempL = MusicList()
@@ -83,6 +80,10 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
     
     func setCurrentMusic(music: Music){
         self.currentMusic = music
+    }
+    
+    func getFirstMusic() -> Music{
+        self.Mlist.list.first ?? Music.placeHolder
     }
     
     func getNextMusic() -> Music{

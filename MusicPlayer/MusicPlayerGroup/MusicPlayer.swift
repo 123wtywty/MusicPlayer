@@ -21,6 +21,7 @@ fileprivate protocol IMusicPlayer {
     func playMusic(name: String)
     func playMusic(music: Music)
     
+    func playFirstMusic()
     func playNextMusic()
     func playRandomMusic()
     
@@ -34,7 +35,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
     var musicPlayingStateDidChangeHandle : [String: () -> ()] = [:]
     private var obPool : [String : Any] = [:]
     @objc dynamic var player: AVPlayer
-    var playableMusicList : PlayableMusicListManager
+    private var playableMusicList : PlayableMusicListManager
 
     
     required init(player: AVPlayer, playableMusicList : PlayableMusicListManager) {
@@ -62,10 +63,12 @@ class MusicPlayer: NSObject, IMusicPlayer{
         
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
+    func changeMusicList(musicList: PlayableMusicListManager){
+        self.playableMusicList = musicList
     }
-    
     
     private func play(music: Music){
         print(music.url.path)
@@ -86,6 +89,12 @@ class MusicPlayer: NSObject, IMusicPlayer{
     func playMusic(music: Music) {
         let music = self.playableMusicList.getMusicByName(name: music.name)
         self.play(music: music)
+        
+        AppManager.default.savedataToUserDefaults()
+    }
+    
+    func playFirstMusic() {
+        self.play(music: self.playableMusicList.getFirstMusic())
     }
     
     func playNextMusic() {
@@ -117,16 +126,9 @@ class MusicPlayer: NSObject, IMusicPlayer{
         
         if self.playableMusicList.getCurrentMusic().name == "placeHolder" { return }
         
-        switch AppManager.default.appData.repeatShuffleStatus{
-        case .shuffle:
-            self.playRandomMusic()
-        case .repeat:
-            self.playNextMusic()
-        case .repeat_1:
-            self.playMusic(music: self.playableMusicList.getCurrentMusic())
-        }
+        self.playMusicAccordingToSetting()
         
-        AppManager.default.savedataToUserDefaults()
+        
     }
     
     

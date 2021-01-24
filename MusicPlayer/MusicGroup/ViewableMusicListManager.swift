@@ -12,41 +12,17 @@ import Foundation
 class ViewableMusicListManager: ObservableObject{
     
     static func makeSpecialList(listName: String) -> ViewableMusicListManager{
-        if listName == "All Music"{
-            let Vlist = ViewableMusicListManager()
-            Vlist.Mlist.listName = "All Music"
-            Vlist.Mlist.isSpecialList = true
-            for path in AppManager.default.appData.avaliblePath{
-                Vlist.Mlist.list += GetMusicFromFolder(path: path)
-            }
-            return Vlist
-            
-        }else if listName == "Favorite Music"{
-            let Vlist = ViewableMusicListManager()
-            Vlist.Mlist.listName = "Favorite Music"
-            Vlist.Mlist.isSpecialList = true
-            for path in AppManager.default.appData.avaliblePath{
-                Vlist.Mlist.list += GetMusicFromFolder(path: path)
-            }
-            Vlist.Mlist.list = Vlist.Mlist.list.filter {music -> Bool in
-                music.isFavorite
-            }
-            
-            return Vlist
-        }else{
-            return ViewableMusicListManager()
-        }
+
+        let Vlist = ViewableMusicListManager()
+        Vlist.Mlist = MusicList.makeSpecialList(listName: listName)
+        return Vlist
 
     }
     
     static func makeFromPath(path: String) -> ViewableMusicListManager{
         
         let Vlist = ViewableMusicListManager()
-        Vlist.Mlist.listName = "\(URL(fileURLWithPath: path).lastPathComponent)"
- 
-        Vlist.Mlist.folderPath = path
-        Vlist.Mlist.list = GetMusicFromFolder(path: path)
-        
+        Vlist.Mlist = MusicList.makeFromPath(path: path)
         return Vlist
     }
     
@@ -89,9 +65,13 @@ class ViewableMusicListManager: ObservableObject{
     
     func playThisList(){
         print("play : \(self.Mlist.listName)")
-        AppManager.default.appData.playingList = self.Mlist.listName
+        AppManager.default.appData.playingList = self.Mlist
 
-        AppManager.default.playingMusicListManager.playableMusicList = PlayableMusicListManager(musicList: self.Mlist)
+        AppManager.default.playingMusicListManager.changeMusicListTo(musicList: PlayableMusicListManager(musicList: self.Mlist))
+        
+        if !currentMusicExistInThisList(){
+            AppManager.default.playingMusicListManager.musicPlayer.playMusicAccordingToSetting()
+        }
     }
     
     @Published var needJumpTo : String? = nil
@@ -112,13 +92,14 @@ class ViewableMusicListManager: ObservableObject{
     }
     
     func currentMusicExistInThisList() -> Bool{
-        self.musicExistInThisList(name: AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().name)
+        self.musicExistInThisList(name: AppManager.default.appData.playingMusic.name)
+        
     }
     
     
     func jumpToCurrentMusic(){
 
-        self.jumpToMusic(name: AppManager.default.playingMusicListManager.playableMusicList.getCurrentMusic().name)
+        self.jumpToMusic(name: AppManager.default.appData.playingMusic.name)
         
         
     }
