@@ -78,7 +78,9 @@ class MusicPlayer: NSObject, IMusicPlayer{
         }
         self.playableMusicList.setCurrentMusic(music: music)
         self.player.replaceCurrentItem(with: AVPlayerItem(asset: AVAsset(url: music.url)))
-        self.player.play()
+        
+        if AppManager.default.appData.playerPlayMusicWhenReady{ self.player.play() }
+        
     }
     
     func playMusic(name: String) {

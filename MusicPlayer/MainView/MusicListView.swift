@@ -78,19 +78,31 @@ struct MusicListView : View{
                                 
                             }
                             
-//                            .border(Color.gray, width: 2)
+                            //                            .border(Color.gray, width: 2)
                             .listRowInsets(.init())
                             
                         }
-//                        .border(Color.blue, width: 3)
+                        //                        .border(Color.blue, width: 3)
                         
                         .onChange(of: self.data.needJumpTo) { (_) in
                             if let index = self.data.needJumpTo{
-                                withAnimation{
-                                    proxy.scrollTo(index)
-                                    
+                                
+                                for i in 0...2{
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * Double(i)) {
+                                        proxy.scrollTo(index)
+                                    }
                                 }
+                                
+
+                                //                                for i in 0...5{
+                                //                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 * Double(i)) {
+                                //                                        withAnimation{
+                                //                                            proxy.scrollTo(index)
+                                //                                        }
+                                //                                    }
+                                //                                }
                                 self.data.needJumpTo = nil
+                                
                             }
                         }
                         

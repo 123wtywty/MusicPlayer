@@ -64,12 +64,19 @@ class ViewableMusicListManager: ObservableObject{
     
     
     func playThisList(){
+        self.playThisListWithMusicName(musicName: nil)
+    }
+    
+    func playThisListWithMusicName(musicName: String?){
         print("play : \(self.Mlist.listName)")
         AppManager.default.appData.playingList = self.Mlist
 
         AppManager.default.playingMusicListManager.changeMusicListTo(musicList: PlayableMusicListManager(musicList: self.Mlist))
         
-        if !currentMusicExistInThisList(){
+        if let mName = musicName, musicExistInThisList(name: mName){
+            AppManager.default.playingMusicListManager.musicPlayer.playMusic(name: mName)
+        }
+        else if !currentMusicExistInThisList(){
             AppManager.default.playingMusicListManager.musicPlayer.playMusicAccordingToSetting()
         }
     }

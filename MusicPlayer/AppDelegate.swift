@@ -9,6 +9,7 @@
 import Foundation
 import Cocoa
 import SwiftUI
+import AVFoundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -41,49 +42,55 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         StatusBarView.shared.makeView()
         
-
+        
         self.resumeLastMusic()
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             StatusBarView.shared.openMainWindow()
+            AppManager.default.playingMusicListManager.musicPlayer.player.play()
+            AppManager.default.appData.playerPlayMusicWhenReady = true
         }
         
     }
-      
+    
     private func resumeLastMusic(){
         
         if let str = UserDefaults.standard.value(forKey: "lastTimeData") as? String,
-            let data = try? JSONSerialization.jsonObject(with: Data(str.utf8), options: []) as? [String: Any],
-            
-            let selectingPath = data["selectingPath"] as? [String],
-            let blockedPath = data["blockedPath"] as? [String],
-            let playingMusicName = data["playingMusicName"] as? String,
-            let playingList = data["playingListName"] as? String,
-            let folderPath = data["folderPath"] as? String,
-            let isSpecialList = data["isSpecialList"] as? Bool,
-            let repeatShuffleStatus = (data["repeatShuffleStatus"] as? String) ?? ("" as? String)
+           let data = try? JSONSerialization.jsonObject(with: Data(str.utf8), options: []) as? [String: Any],
+           
+           let selectingPath = data["selectingPath"] as? [String],
+           let blockedPath = data["blockedPath"] as? [String],
+           let playingMusicName = data["playingMusicName"] as? String,
+           let playingList = data["playingListName"] as? String,
+           let folderPath = data["folderPath"] as? String,
+           let isSpecialList = data["isSpecialList"] as? Bool,
+           let repeatShuffleStatus = (data["repeatShuffleStatus"] as? String) ?? ("" as? String)
+        
         {
             
-//            print(selectingPath, blockedPath, playingMusicName, playingList, folderPath, isSpecialList, repeatShuffleStatus)
+            //            print(selectingPath, blockedPath, playingMusicName, playingList, folderPath, isSpecialList, repeatShuffleStatus)
             
             AppManager.default.appData.selectingPath = selectingPath
             AppManager.default.appData.blockedPath = blockedPath
             
+            var list : ViewableMusicListManager!
             if isSpecialList{
-                let list = ViewableMusicListManager.makeSpecialList(listName: playingList)
-                list.playThisList()
+                list = ViewableMusicListManager.makeSpecialList(listName: playingList)
             }else if folderPath != "" && FileManager.default.fileExists(atPath: folderPath){
-                let list = ViewableMusicListManager.makeFromPath(path: folderPath)
-                list.playThisList()
+                list = ViewableMusicListManager.makeFromPath(path: folderPath)
             }else{
-//                some error
+                //                some error
                 return
             }
-
-            AppManager.default.playingMusicListManager.musicPlayer.playMusic(name: playingMusicName)
-
             AppManager.default.appData.repeatShuffleStatus = Repeat_Shuffle_Status(rawValue: repeatShuffleStatus) ?? Repeat_Shuffle_Status.shuffle
-
+            
+            list.playThisListWithMusicName(musicName: playingMusicName)
+            if let currentTime = data["currentTime"] as? Double, currentTime > 5{
+                AppManager.default.playingMusicListManager.musicPlayer.player.seek(to: CMTime(seconds: currentTime, preferredTimescale: 1))
+            }
+            
+            
+            
         }
         
         

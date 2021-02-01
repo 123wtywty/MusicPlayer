@@ -30,6 +30,8 @@ class AppData: ObservableObject{
     @Published var isPlaying : Bool = false
     @Published var stayOnTop : Bool = false
     
+    var playerPlayMusicWhenReady : Bool = false
+    
     
     var selectingPath : [String] = []{
         didSet{

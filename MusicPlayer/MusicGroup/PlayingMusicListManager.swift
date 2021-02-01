@@ -12,11 +12,15 @@ import AVKit
 class PlayingMusicListManager{
     private var playableMusicList : PlayableMusicListManager
     
-    var musicPlayer : MusicPlayer
+    private var _musicPlayer : MusicPlayer
+    
+    var musicPlayer : MusicPlayer{
+        _musicPlayer
+    }
     
     init(playableMusicList : PlayableMusicListManager) {
         self.playableMusicList = playableMusicList
-        self.musicPlayer = MusicPlayer(player: AVPlayer(), playableMusicList: self.playableMusicList)
+        self._musicPlayer = MusicPlayer(player: AVPlayer(), playableMusicList: self.playableMusicList)
     }
     
     func changeMusicListTo(musicList: PlayableMusicListManager){

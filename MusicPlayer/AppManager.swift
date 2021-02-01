@@ -77,6 +77,8 @@ class AppManager{
         
         dataNeedSave["repeatShuffleStatus"] = self.appData.repeatShuffleStatus.rawValue
         
+        dataNeedSave["currentTime"] = self.playingMusicListManager.musicPlayer.player.currentTime().seconds
+        
         if let data = try? JSONSerialization.data(withJSONObject: dataNeedSave, options: []){
             UserDefaults.standard.set(String(data: data, encoding: String.Encoding.utf8), forKey: "lastTimeData")
         }
