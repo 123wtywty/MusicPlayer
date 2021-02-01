@@ -66,9 +66,9 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
 //            self.currentMusic = self.getRandomMusic()
 //        }
 //        else{
-        self.currentMusic = self.Mlist.list.first ?? self.getRandomMusic()
+//        self.currentMusic = self.Mlist.list.first ?? self.getRandomMusic()
 //        }
-        
+        self.currentMusic = Music.placeHolder
         
         self.recorder.addMusics(musicList: self.Mlist.list)
         
@@ -92,7 +92,7 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
             } ?? -1
         i += 1
         
-        if !(i < self.Mlist.list.count){
+        if (i >= self.Mlist.list.count){
             i = 0
         }
         
