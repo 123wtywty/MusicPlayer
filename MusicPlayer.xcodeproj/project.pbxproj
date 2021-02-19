@@ -10,6 +10,7 @@
 		079C6EB22569C54400BA494D /* extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C6EB12569C54400BA494D /* extension_String.swift */; };
 		07BE781A2570BEAD00366688 /* PlayableMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE78192570BEAD00366688 /* PlayableMusicList.swift */; };
 		07BE781D2570BFE700366688 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE781C2570BFE700366688 /* MusicList.swift */; };
+		07E7766B25DF2920003D9C24 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E7766A25DF2920003D9C24 /* Configuration.swift */; };
 		4E202A212458F6DD001377CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A202458F6DD001377CA /* AppDelegate.swift */; };
 		4E202A232458F6DD001377CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A222458F6DD001377CA /* ContentView.swift */; };
 		4E202A262458F6DD001377CA /* MusicPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A242458F6DD001377CA /* MusicPlayer.xcdatamodeld */; };
@@ -53,6 +54,7 @@
 		079C6EB12569C54400BA494D /* extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_String.swift; sourceTree = "<group>"; };
 		07BE78192570BEAD00366688 /* PlayableMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableMusicList.swift; sourceTree = "<group>"; };
 		07BE781C2570BFE700366688 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
+		07E7766A25DF2920003D9C24 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		4E202A1D2458F6DD001377CA /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E202A202458F6DD001377CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E202A222458F6DD001377CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 		4E98C868245A1CAB0042857D /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				07E7766A25DF2920003D9C24 /* Configuration.swift */,
 				4E98C87B245A2E890042857D /* GetMusicFromFolder.swift */,
 				4E98C877245A26040042857D /* MusicType.swift */,
 				4E98C879245A28E80042857D /* Repeat_Shuffle_Status.swift */,
@@ -322,6 +325,7 @@
 				4E7F8D8A245B7141006B7143 /* extension_AVPlayer.swift in Sources */,
 				4E98C87C245A2E890042857D /* GetMusicFromFolder.swift in Sources */,
 				4E217116246B42A2009C4A71 /* MusicDataManager.swift in Sources */,
+				07E7766B25DF2920003D9C24 /* Configuration.swift in Sources */,
 				4E7F8D5E245A3CE8006B7143 /* MusicPlayedRecorder.swift in Sources */,
 				4E98C878245A26040042857D /* MusicType.swift in Sources */,
 				4E7F8D63245A4E28006B7143 /* AppData.swift in Sources */,

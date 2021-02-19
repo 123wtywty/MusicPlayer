@@ -32,7 +32,7 @@ class MusicList{
                 Mlist.list += GetMusicFromFolder(path: path)
             }
             Mlist.list = Mlist.list.filter {music -> Bool in
-                music.isFavorite
+                music.likeDegree > 0
             }
             Mlist.list.sort(by: MusicList.defaultSortFunc)
             return Mlist

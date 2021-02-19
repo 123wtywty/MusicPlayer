@@ -9,14 +9,14 @@
 import Foundation
 import Cocoa
 
-fileprivate protocol IMusic {
+protocol IMusic {
     init(name: String, url: URL)
     var name : String { get }
     var displayeMusicName: String { get }
     var pinyin : String { get }
     var url : URL { get }
     var playCount : Int { get set}
-    var isFavorite : Bool { get set }
+    var likeDegree : Int { get set }
     var type : MusicType { get }
 
     var wrapper : MusicWrapper { get }
@@ -49,7 +49,7 @@ class Music: IMusic, Equatable, Hashable{
         self.url = url
         
         self.playCount = 0
-        self.isFavorite = false
+        self.likeDegree = 0
         
         self.wrapper = MusicWrapper(id: self.name + self.url.path)
         self.wrapper.music = self
@@ -76,17 +76,32 @@ class Music: IMusic, Equatable, Hashable{
         }
     }
     
-    var isFavorite: Bool
+    var likeDegree: Int
         {
         didSet{
             if !self.finishInit { return }
-            print("isFavorite change, \(self.name)")
+            print("likeDegree change, \(self.name)")
             self.wrapper.update()
             StatusBarView.shared.update_like_StatusItem()
-            
             self.save()
         }
     }
+    
+    var likeDegreeSymbol: String{
+        Configuration.likeDegreeSymbol(self.likeDegree, sf: false)
+    }
+    var likeDegreeSymbol_SF: String{
+        Configuration.likeDegreeSymbol(self.likeDegree, sf: true)
+    }
+    
+    func likeDegreeAddOne(){
+        self.likeDegree += 1
+        if self.likeDegree == 3 {self.likeDegree = 0}
+    }
+    
+    var isInPlayingList : Bool = false
+    var currentPlayCount : Double = 0.0
+    var realCurrentPlayCount : Int = 0
     
     var type: MusicType{
         get{
@@ -117,7 +132,7 @@ class Music: IMusic, Equatable, Hashable{
     func save(){
         if !self.finishInit { return }
         
-        MusicDataManager.shared.addMusicData(data: MusicDataStruct(name: self.name, isFavorite: self.isFavorite, playCount: Double(self.playCount)))
+        MusicDataManager.shared.addMusicData(data: MusicDataStruct(name: self.name, likeDegree: self.likeDegree, playCount: Double(self.playCount)))
     }
     
     func update(data: MusicDataStruct?){
@@ -127,8 +142,8 @@ class Music: IMusic, Equatable, Hashable{
         
         self.finishInit = false
         
-        if self.isFavorite != d.isFavorite{
-            self.isFavorite = d.isFavorite
+        if self.likeDegree != d.likeDegree{
+            self.likeDegree = d.likeDegree
         }
         if self.playCount != Int(d.playCount){
             self.playCount = Int(d.playCount)

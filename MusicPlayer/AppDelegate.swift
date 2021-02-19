@@ -49,7 +49,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             StatusBarView.shared.openMainWindow()
             AppManager.default.playingMusicListManager.musicPlayer.player.play()
             AppManager.default.appData.playerPlayMusicWhenReady = true
-        }
+            
+            }
         
     }
     

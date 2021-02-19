@@ -11,6 +11,6 @@ import Foundation
 
 struct MusicDataStruct {
     var name : String
-    var isFavorite : Bool
+    var likeDegree : Int
     var playCount : Double
 }

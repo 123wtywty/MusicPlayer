@@ -50,14 +50,14 @@ class MusicDataBaseManager{
         for item in datas{
             
             let dic = item.dictionaryWithValues(
-                forKeys: ["name", "isFavorite", "playCount"])
+                forKeys: ["name", "likeDegree", "playCount"])
             
             let name = dic["name"] as? String ?? ""
             let playCount = dic["playCount"] as? Double ?? 0.0
-            let isFavorite = dic["isFavorite"] as? Bool ?? false
+            let likeDegree = dic["likeDegree"] as? Int ?? 0
 
             
-            let musicData = MusicDataStruct(name: name, isFavorite: isFavorite, playCount: playCount)
+            let musicData = MusicDataStruct(name: name, likeDegree: likeDegree, playCount: playCount)
             res[musicData.name] = (musicData, item)
         }
         
@@ -72,7 +72,7 @@ class MusicDataBaseManager{
                                  insertInto: dataBase)
         //                print(item.title)
         d1.setValue(data.name, forKey: "name")
-        d1.setValue(data.isFavorite, forKey: "isFavorite")
+        d1.setValue(data.likeDegree, forKey: "likeDegree")
         d1.setValue(data.playCount, forKey: "playCount")
 
         dataCachedIsValid = false

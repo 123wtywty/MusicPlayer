@@ -58,16 +58,6 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
         else{
             self.Mlist = musicList
         }
-        
-        
-//        self.currentMusic = Music.placeHolder
-        
-//        if (AppManager.default.appData.repeatShuffleStatus == .shuffle){
-//            self.currentMusic = self.getRandomMusic()
-//        }
-//        else{
-//        self.currentMusic = self.Mlist.list.first ?? self.getRandomMusic()
-//        }
         self.currentMusic = Music.placeHolder
         
         self.recorder.addMusics(musicList: self.Mlist.list)
@@ -102,16 +92,17 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
     func getRandomMusic() -> Music {
         if self.Mlist.list.count < 3 { return self.Mlist.list.randomElement()! }
         
+        let min = self.recorder.musicPlayedDic.values.map({$0.currentPlayCount}).min() ?? 0.0
+        let _ = self.recorder.musicPlayedDic.values.map({$0.currentPlayCount -= min})
+        
         let chooseList = self.Mlist.list.flatMap { (item) -> [Music] in
-            var times = 0.0
+            var times : Int = 0
             if !self.recorder.recentPlayed.contains(item.name){
-                times = self.recorder.maxPlayTime() - self.recorder.timesPlayedForMusic(name: item.name)
-                if times < 0{
-                    times = 0
-                }
+                times = Int(Double(item.likeDegree) - item.currentPlayCount) + 2 // 2 is changable
+                if times < 0 { times = 0 }
                 
             }
-            return Array(repeating: item, count: Int(times * 2 + 0.5))
+            return Array(repeating: item, count: times)
         }
         
         guard let randomMusic = chooseList.randomElement() else {
@@ -147,7 +138,7 @@ class PlayableMusicListManager: IMusicListManager, ObservableObject{
     
     func currentMusicFinishPlay(){
         if self.useRecorder(){
-            self.recorder.musicAddPlayTime(name: self.currentMusic.name, isFavorite: self.currentMusic.isFavorite)
+            self.recorder.musicAddPlayTime(name: self.currentMusic.name, likeDegree:  self.currentMusic.likeDegree)
         }
         self.currentMusic.playCount += 1
     }

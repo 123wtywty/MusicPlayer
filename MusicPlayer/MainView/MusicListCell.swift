@@ -45,15 +45,15 @@ struct MusicListCell: View {
                                     
                                     VStack{
                                         
-                                        Text("\(self.music.playCount)")
+                                        Text("\(self.music.playCount)" + (self.music.isInPlayingList ? "|\(self.music.realCurrentPlayCount)" : ""))
                                             .foregroundColor(.black)
                                         Button(action:{
                                             withAnimation{
-                                                self.music.isFavorite.toggle()
+                                                self.music.likeDegreeAddOne()
                                             }
                                             
                                         }){
-                                            Text(self.music.isFavorite ? "􀊵" : "􀊴")
+                                            Text(self.music.likeDegreeSymbol)
                                                 .foregroundColor(.gray)
                                         }
                                     }

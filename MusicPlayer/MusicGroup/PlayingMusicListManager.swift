@@ -24,7 +24,14 @@ class PlayingMusicListManager{
     }
     
     func changeMusicListTo(musicList: PlayableMusicListManager){
+        self.playableMusicList.Mlist.list.map({$0.isInPlayingList = false})
+        
+        for m in musicList.Mlist.list{
+            m.isInPlayingList = true
+            m.currentPlayCount = 0.0
+        }
         self.playableMusicList = musicList
+        
         self.musicPlayer.changeMusicList(musicList: musicList)
     }
 }

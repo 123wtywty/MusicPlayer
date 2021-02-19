@@ -9,61 +9,21 @@
 import Foundation
 
 class MusicPlayedRecorder {
-    private var totalPlayedTime = 0.0{
-        didSet{
-            self.check()
-        }
-    }
 
-    private var musicPlayedDic : [String : Double] = [:]
+    var musicPlayedDic : [String : Music] = [:]
     
     var recentPlayed = ["",""]
-    
-    private func check(){
-        if let min = self.musicPlayedDic.values.min(), min > 0{
-            for keys in self.musicPlayedDic.keys{
-                self.musicPlayedDic[keys] = musicPlayedDic[keys]! - min
-                self.totalPlayedTime -= min
-                
-            }
-        }
-    }
-    
-    func getTotalPlayedTime() -> Double{
-        return self.totalPlayedTime
-    }
-    
-    func timesPlayedForMusic(name: String) -> Double{
-        return self.musicPlayedDic[name] ?? -1
-    }
-    
-    func maxPlayTime() -> Double{
-        if musicPlayedDic.count == 0{
-            return 1
-        }else{
-            return (totalPlayedTime / Double(musicPlayedDic.count)) + 1
-        }
-    }
-    
-    
-    func addMusic(name: String){
-        if !self.musicExist(name: name){
-            self.musicPlayedDic[name] = totalPlayedTime / Double(musicPlayedDic.count + 1)
-            self.check()
+        
+    func addMusic(music: Music){
+        if !self.musicExist(name: music.name){
+            music.currentPlayCount = 0.0
+            self.musicPlayedDic[music.name] = music
         }
     }
     
     func addMusics(musicList : [Music]){
         for i in musicList{
-            self.addMusic(name: i.name)
-        }
-    }
-    
-    func removeMusic(name: String){
-        if self.musicExist(name: name){
-            self.totalPlayedTime -= self.musicPlayedDic[name]!
-            self.musicPlayedDic.remove(at: self.musicPlayedDic.index(forKey: name)!)
-            self.check()
+            self.addMusic(music: i)
         }
     }
     
@@ -72,37 +32,20 @@ class MusicPlayedRecorder {
         return self.musicPlayedDic[name] != nil
     }
     
-    func musicAddPlayTime(name: String, isFavorite : Bool){
-        let amount = isFavorite ? 0.7 : 1
-        self.totalPlayedTime += amount
-        
+    func musicAddPlayTime(name: String, likeDegree : Int){
+        let amount = 1 - Double(likeDegree) * 0.1
+              
         self.recentPlayed.removeFirst()
         self.recentPlayed.append(name)
         
-        if self.musicExist(name: name){
-            self.musicPlayedDic[name]! += amount
-        }else{
-            self.addMusic(name: name)
-            self.musicPlayedDic[name]! += amount
-        }
+        self.musicPlayedDic[name]?.currentPlayCount += amount
+        self.musicPlayedDic[name]?.realCurrentPlayCount += 1
     }
     
-    func musicReduceOnePlayTime(name: String, amount : Double){
-        if self.musicExist(name: name) && self.musicPlayedDic[name]! > 0{
-            self.musicPlayedDic[name]! -= amount
-            self.totalPlayedTime -= amount
-            
-        }
-    }
-    
-    
-    func averagePlayedTime() -> Double{
-        self.totalPlayedTime / Double(self.musicPlayedDic.count)
-    }
-    
+  
     
     func setPlayedTimeFor(name: String, to: Double){
-        self.musicPlayedDic[name] = to
+        self.musicPlayedDic[name]?.currentPlayCount = to
     }
 }
 

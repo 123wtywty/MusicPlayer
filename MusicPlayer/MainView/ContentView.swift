@@ -49,7 +49,11 @@ struct ContentView: View {
                                     .frame(width: 400, height: 20)
                                     .padding()
                             }
-                            VStack(alignment: .center, spacing: 20){
+                            
+                            HStack{
+                                Spacer()
+                                
+                                VStack(alignment: .center, spacing: 20){
                                 HStack(spacing: 20){
                                     
                                     self.PlayPauseButton()
@@ -76,6 +80,15 @@ struct ContentView: View {
                                     
                                 }
                                 
+                            }
+                                
+                                Spacer()
+
+                                SubView1(music: self.data.playingMusic)
+                                    .environmentObject(self.data.playingMusic.wrapper)
+                                
+                                Spacer()
+
                             }
                             
                         }.frame(width: 400, height: .none)
@@ -123,5 +136,35 @@ struct ContentView: View {
             
             
         }
+        
     }
+}
+
+
+struct SubView1: View {
+    var music: Music
+
+    @EnvironmentObject var warpper : MusicWrapper
+    var body: some View{
+        VStack(alignment: .center, spacing: 20){
+            Text("\(Int(music.realCurrentPlayCount))")
+                .foregroundColor(.black)
+            
+//            Text("\(Int(music.currentPlayCount))")
+//                .foregroundColor(.black)
+            
+            Button(action:{
+                withAnimation{
+                    music.likeDegreeAddOne()
+//                                            self.needUpdate.toggle()
+                }
+                
+            }){
+                Text(music.likeDegreeSymbol)
+                    .foregroundColor(.gray)
+            }
+
+        }
+    }
+    
 }
