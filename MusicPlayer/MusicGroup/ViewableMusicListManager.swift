@@ -51,7 +51,7 @@ class ViewableMusicListManager: ObservableObject{
                 if self.needUpdateList{
                     self.tempMusicList =
                         self.Mlist.list.filter
-                        {$0.simplifiedchinese.REContains(str: filterString.replacingOccurrences(of: " ", with: ""))}
+                        {$0.displayeMusicName.REContains(str: filterString.simplifiedchinese.replacingOccurrences(of: " ", with: ""))}
                     
                 }
                 return self.tempMusicList

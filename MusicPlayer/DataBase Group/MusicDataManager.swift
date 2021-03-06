@@ -46,6 +46,12 @@ class MusicDataManager{
         self.runHandles()
     }
     
+    func clear(){
+        musicDataBaseManager.clear()
+        
+        self.runHandles()
+    }
+    
     
     
 }

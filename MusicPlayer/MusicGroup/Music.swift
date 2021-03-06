@@ -13,7 +13,6 @@ protocol IMusic {
     init(name: String, url: URL)
     var name : String { get }
     var displayeMusicName: String { get }
-    var pinyin : String { get }
     var url : URL { get }
     var playCount : Int { get set}
     var likeDegree : Int { get set }
@@ -27,7 +26,13 @@ protocol IMusic {
 fileprivate let loadingImage = NSImage(named: NSImage.Name("loading"))!
 
 
-class Music: IMusic, Equatable, Hashable{
+class Music: IMusic, Equatable, Hashable, CustomStringConvertible{
+    var description: String {
+        "\(self.name) | \(self.realCurrentPlayCount)"
+    }
+
+    
+    
     static func == (lhs: Music, rhs: Music) -> Bool {
         lhs.name == rhs.name && lhs.url == rhs.url
     }
@@ -37,14 +42,8 @@ class Music: IMusic, Equatable, Hashable{
     var finishInit = false
     required init(name: String, url: URL) {
         self.name = name
-        
-        self.pinyin = name.transformToPinyinWithoutBlank().lowercased()
-                
-        let sChinese = name.simplifiedchinese
-        self.simplifiedchinese = sChinese
-        
-        let i = sChinese.lastIndex(of: "-") ?? sChinese.lastIndex(of: ".") ?? sChinese.endIndex
-        self.displayeMusicName = String(sChinese[..<i])
+
+        self.displayeMusicName = name
         
         self.url = url
         
@@ -64,8 +63,6 @@ class Music: IMusic, Equatable, Hashable{
     
     var name: String
     var displayeMusicName: String
-    var pinyin : String
-    var simplifiedchinese : String
     var url: URL
     
     var playCount: Int{
@@ -99,9 +96,17 @@ class Music: IMusic, Equatable, Hashable{
         if self.likeDegree == 3 {self.likeDegree = 0}
     }
     
-    var isInPlayingList : Bool = false
+    var isInPlayingList : Bool = false{
+        didSet{
+            self.wrapper.update()
+        }
+    }
     var currentPlayCount : Double = 0.0
-    var realCurrentPlayCount : Int = 0
+    var realCurrentPlayCount : Int = 0{
+        didSet{
+            self.wrapper.update()
+        }
+    }
     
     var type: MusicType{
         get{

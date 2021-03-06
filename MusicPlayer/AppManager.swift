@@ -111,8 +111,5 @@ class AppManager{
         NSApplication.shared.terminate(nil)
     }
 
-    func exportMusicData(to: String){
-//        try? MusicDataManager.shared.getAllMusicData().map({ "\($0.name)-||-\($0.isFavorite)-||-\($0.playCount)" }).joined(separator: "\n").write(toFile: to, atomically: true, encoding: .utf8)
-    }
     
 }
