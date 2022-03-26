@@ -24,9 +24,6 @@ struct ContentView: View {
         return GeometryReader{ g in
             
             if self.data.playerFullWindow{ // small window
-//                PlayerUIView()
-//                    .frame(width: g.size.width, height: g.size.height, alignment: .center)
-//                    .cornerRadius(8)
                 VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
                     .frame(width: g.size.width, height: g.size.height, alignment: .center)
                     .cornerRadius(8)
@@ -37,12 +34,8 @@ struct ContentView: View {
                     VStack{
                         
                         VStack(alignment: .center, spacing: 20){
-//                            PlayerUIView()
-//                                .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
-//                                .cornerRadius(8)
-//                                .padding()
                             VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
-                                .frame(width: 400, height: 225, alignment: .center)
+                                .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
                                 .cornerRadius(8)
                                 .padding()
                             if self.textStyle == 0{
@@ -119,20 +112,14 @@ struct ContentView: View {
                     
                     VStack{
                         
-                        
                         MusicListOverView()
 //                            .animation(Animation.default, value: nil)
                             .cornerRadius(8)
-                            
                             .frame(width: g.size.width > 430 ? g.size.width - 430 : 0
                                    , height: .none)
                         
-                        
-                        
-                        
-                        
+
                     }
-                    
                     .frame(width: g.size.width > 430 ? g.size.width - 430 : 0
                            , height: .none)
                     
