@@ -74,7 +74,7 @@ struct MusicListView : View{
                                 
                                 MusicListCell().environmentObject(i.wrapper)
                                     .id(i.name)
-                                    .animation(.none)
+//                                    .animation(.none)
                                 
                             }
                             
@@ -113,7 +113,7 @@ struct MusicListView : View{
                 }
             }
         }
-        .animation(.default)
+//        .animation(.default)
     }
 }
 
@@ -128,7 +128,7 @@ fileprivate struct ScrollToRowButton: View{
             .font(.system(size: 30))
             .foregroundColor(.blue)
             .opacity(self.isOnHover ? 0.7 : 0.1)
-            .animation(.easeInOut(duration: 0.5))
+//            .animation(.easeInOut(duration: 0.5))
             .onHover { (isHover) in
                 self.isOnHover = isHover
                 

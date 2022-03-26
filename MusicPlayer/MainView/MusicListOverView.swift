@@ -45,7 +45,7 @@ struct MusicListOverView: View {
                         
                     }
                     
-                    .animation(nil)
+//                    .animation(nil)
                     
                 }
             }

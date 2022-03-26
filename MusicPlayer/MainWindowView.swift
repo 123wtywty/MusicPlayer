@@ -31,6 +31,7 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
     private convenience init() {
         
         let window = NSWindow(contentViewController: NSHostingController(rootView: ContentView()))
+//        let window = NSWindow(contentViewController: NSHostingController(rootView: EmptyTestView()))
         
         window.setContentSize(NSSize(width:640, height: 493))
         
@@ -50,7 +51,7 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
         self.init(window: window)
         self.window?.delegate = self
         
-        let x = (NSScreen.main?.visibleFrame.origin.x ?? CGFloat(0.0)) + (NSScreen.main?.visibleFrame.size.width)! - window.frame.width - 10
+        let x = (NSScreen.main?.visibleFrame.origin.x ?? CGFloat(0.0)) + (NSScreen.main?.visibleFrame.size.width)! - window.frame.width - 30
         let y = (NSScreen.main?.visibleFrame.origin.y)! + (NSScreen.main?.visibleFrame.height)! - window.frame.height
         self.window?.setFrameOrigin(NSPoint(x: x, y: y))
         
@@ -80,8 +81,6 @@ class MainWindowViewWindowController: NSWindowController, NSWindowDelegate, Auto
     
     override func showWindow(_ sender: Any?) {
         super.showWindow(sender)
-
-        
         NSApp.activate(ignoringOtherApps: true)
     }
     

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import AVKit
 
 let defaultWidth = CGFloat(640)
 let defaultHeight = CGFloat(530)
@@ -23,7 +24,10 @@ struct ContentView: View {
         return GeometryReader{ g in
             
             if self.data.playerFullWindow{ // small window
-                PlayerUIView()
+//                PlayerUIView()
+//                    .frame(width: g.size.width, height: g.size.height, alignment: .center)
+//                    .cornerRadius(8)
+                VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
                     .frame(width: g.size.width, height: g.size.height, alignment: .center)
                     .cornerRadius(8)
             }else{
@@ -33,11 +37,14 @@ struct ContentView: View {
                     VStack{
                         
                         VStack(alignment: .center, spacing: 20){
-                            PlayerUIView()
-                                .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+//                            PlayerUIView()
+//                                .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+//                                .cornerRadius(8)
+//                                .padding()
+                            VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
+                                .frame(width: 400, height: 225, alignment: .center)
                                 .cornerRadius(8)
                                 .padding()
-                            
                             if self.textStyle == 0{
                                 Text(self.data.playingMusic.displayeMusicName)
                                     .frame(width: 400, height: 20)
@@ -114,7 +121,7 @@ struct ContentView: View {
                         
                         
                         MusicListOverView()
-                            .animation(.default)
+//                            .animation(Animation.default, value: nil)
                             .cornerRadius(8)
                             
                             .frame(width: g.size.width > 430 ? g.size.width - 430 : 0
@@ -129,9 +136,9 @@ struct ContentView: View {
                     .frame(width: g.size.width > 430 ? g.size.width - 430 : 0
                            , height: .none)
                     
-                    .animation(nil)
+//                    .animation(nil, value: nil)
                 }
-                .animation(nil)
+//                .animation(nil)
             }
             
             

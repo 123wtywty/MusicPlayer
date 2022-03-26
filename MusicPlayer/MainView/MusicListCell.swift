@@ -58,7 +58,7 @@ struct MusicListCell: View {
                                         }
                                     }
                                     .colorScheme(.light)
-                                    .animation(.default)
+//                                    .animation(.default)
                                     
                                 }
                                 

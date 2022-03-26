@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		075A40CD27EF915B004224EB /* EmptyTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075A40CC27EF915B004224EB /* EmptyTestView.swift */; };
 		079C6EB22569C54400BA494D /* extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C6EB12569C54400BA494D /* extension_String.swift */; };
 		07BE781A2570BEAD00366688 /* PlayableMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE78192570BEAD00366688 /* PlayableMusicList.swift */; };
 		07BE781D2570BFE700366688 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE781C2570BFE700366688 /* MusicList.swift */; };
+		07E6165E27EF94BF007540A6 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E6165D27EF94BF007540A6 /* AVKit.framework */; };
 		07E7766B25DF2920003D9C24 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E7766A25DF2920003D9C24 /* Configuration.swift */; };
 		4E202A212458F6DD001377CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A202458F6DD001377CA /* AppDelegate.swift */; };
 		4E202A232458F6DD001377CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A222458F6DD001377CA /* ContentView.swift */; };
@@ -51,9 +53,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		075A40CC27EF915B004224EB /* EmptyTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTestView.swift; sourceTree = "<group>"; };
 		079C6EB12569C54400BA494D /* extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_String.swift; sourceTree = "<group>"; };
 		07BE78192570BEAD00366688 /* PlayableMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableMusicList.swift; sourceTree = "<group>"; };
 		07BE781C2570BFE700366688 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
+		07E6165D27EF94BF007540A6 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		07E7766A25DF2920003D9C24 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		4E202A1D2458F6DD001377CA /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E202A202458F6DD001377CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,17 +106,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E6165E27EF94BF007540A6 /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07E6165C27EF94BF007540A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				07E6165D27EF94BF007540A6 /* AVKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4E202A142458F6DD001377CA = {
 			isa = PBXGroup;
 			children = (
 				4E202A1F2458F6DD001377CA /* MusicPlayer */,
 				4E202A1E2458F6DD001377CA /* Products */,
+				07E6165C27EF94BF007540A6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +191,7 @@
 				4E7F8D8F245B73BE006B7143 /* PathsView.swift */,
 				4E7F8D91245B7447006B7143 /* PathsViewCell.swift */,
 				4E580A77245BD61C00E48783 /* Buttons.swift */,
+				075A40CC27EF915B004224EB /* EmptyTestView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -300,6 +315,7 @@
 				079C6EB22569C54400BA494D /* extension_String.swift in Sources */,
 				4E98C876245A248C0042857D /* MusicMaker.swift in Sources */,
 				4E580A7C245BDCC400E48783 /* MainWindowView.swift in Sources */,
+				075A40CD27EF915B004224EB /* EmptyTestView.swift in Sources */,
 				4E580A78245BD61C00E48783 /* Buttons.swift in Sources */,
 				4E217118246B42E1009C4A71 /* MusicDataStruct.swift in Sources */,
 				4E202A262458F6DD001377CA /* MusicPlayer.xcdatamodeld in Sources */,

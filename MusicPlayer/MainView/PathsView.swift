@@ -20,7 +20,7 @@ struct PathsView: View{
                 PathsViewCell(path: path, isAvailable: !AppManager.default.appData.blockedPath.contains(path))
                 
             }
-            .animation(.easeInOut)
+//            .animation(.easeInOut)
             .colorMultiply(Color.init(.sRGB, white: 1 - 0.03, opacity: 1))
             .cornerRadius(10)
             
