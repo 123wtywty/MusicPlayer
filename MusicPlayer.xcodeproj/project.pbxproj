@@ -13,6 +13,7 @@
 		07BE781D2570BFE700366688 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BE781C2570BFE700366688 /* MusicList.swift */; };
 		07E6165E27EF94BF007540A6 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E6165D27EF94BF007540A6 /* AVKit.framework */; };
 		07E7766B25DF2920003D9C24 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E7766A25DF2920003D9C24 /* Configuration.swift */; };
+		07ED49DB280CDBB00044CE65 /* CurrentMusicInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ED49DA280CDBB00044CE65 /* CurrentMusicInfo.swift */; };
 		4E202A212458F6DD001377CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A202458F6DD001377CA /* AppDelegate.swift */; };
 		4E202A232458F6DD001377CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A222458F6DD001377CA /* ContentView.swift */; };
 		4E202A262458F6DD001377CA /* MusicPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E202A242458F6DD001377CA /* MusicPlayer.xcdatamodeld */; };
@@ -59,6 +60,7 @@
 		07BE781C2570BFE700366688 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
 		07E6165D27EF94BF007540A6 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		07E7766A25DF2920003D9C24 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		07ED49DA280CDBB00044CE65 /* CurrentMusicInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMusicInfo.swift; sourceTree = "<group>"; };
 		4E202A1D2458F6DD001377CA /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E202A202458F6DD001377CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E202A222458F6DD001377CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				4E7F8D8D245B71BC006B7143 /* PlayerUIView.swift */,
 				4E98C86D245A1CFF0042857D /* MusicPlayer.swift */,
 				4E7F8D8B245B716E006B7143 /* PlayerNSView.swift */,
+				07ED49DA280CDBB00044CE65 /* CurrentMusicInfo.swift */,
 			);
 			path = MusicPlayerGroup;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				4E7F8D5E245A3CE8006B7143 /* MusicPlayedRecorder.swift in Sources */,
 				4E98C878245A26040042857D /* MusicType.swift in Sources */,
 				4E7F8D63245A4E28006B7143 /* AppData.swift in Sources */,
+				07ED49DB280CDBB00044CE65 /* CurrentMusicInfo.swift in Sources */,
 				4E7F8D94245B7585006B7143 /* OpenPanelCustomize.swift in Sources */,
 				4E580A7E245BDCFE00E48783 /* AutoCloseWindow.swift in Sources */,
 			);

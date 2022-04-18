@@ -24,9 +24,27 @@ struct ContentView: View {
         return GeometryReader{ g in
             
             if self.data.playerFullWindow{ // small window
-                VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
-                    .frame(width: g.size.width, height: g.size.height, alignment: .center)
-                    .cornerRadius(8)
+                
+                if AppManager.default.playingMusicListManager.musicPlayer.currentMusicIsMp3(),
+                   let img = AppManager.default.playingMusicListManager.musicPlayer.currentMusicInfo.Artwork{
+                    VStack{
+                        Image(nsImage: img)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: g.size.width, height: g.size.height * 0.7, alignment: .center)
+                        
+                        VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
+                            .frame(width: g.size.width, height: g.size.height * 0.3, alignment: .center)
+                            .cornerRadius(8)
+                    }
+                    
+                }else{
+                    
+                    VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
+                        .frame(width: g.size.width, height: g.size.height, alignment: .center)
+                        .cornerRadius(8)
+                }
+
             }else{
                 HStack{
                     
@@ -34,10 +52,29 @@ struct ContentView: View {
                     VStack{
                         
                         VStack(alignment: .center, spacing: 20){
-                            VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
-                                .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
-                                .cornerRadius(8)
-                                .padding()
+
+                            if AppManager.default.playingMusicListManager.musicPlayer.currentMusicIsMp3(),
+                               let img = AppManager.default.playingMusicListManager.musicPlayer.currentMusicInfo.Artwork{
+                                VStack{
+                                    Image(nsImage: img)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 400, height: 225 * 0.8, alignment: .center)
+                                    
+                                    VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
+                                        .frame(width: 400, height: 225 * 0.2, alignment: .center)
+                                        .cornerRadius(8)
+                                }.padding()
+                                
+                            }else{
+
+                                VideoPlayer(player: AppManager.default.playingMusicListManager.musicPlayer.player)
+                                    .frame(width: 400, height: 225, alignment: .center) // 225 = 400 * 9 /16
+                                    .cornerRadius(8)
+                                    .padding()
+                                
+                            }
+                            
                             if self.textStyle == 0{
                                 Text(self.data.playingMusic.displayeMusicName)
                                     .frame(width: 400, height: 20)

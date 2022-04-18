@@ -10,12 +10,14 @@ import Foundation
 import AVKit
 import NotificationCenter
 import Cocoa
+import MediaPlayer
 
 
 fileprivate protocol IMusicPlayer {
     init(player : AVPlayer, playableMusicList : PlayableMusicListManager)
     
     var player: AVPlayer { get set }
+    var currentMusicInfo : CurrentMusicInfo { get }
     var musicPlayingStateDidChangeHandle : [String: () -> ()] { get set }
 
     func playMusic(name: String)
@@ -35,12 +37,14 @@ class MusicPlayer: NSObject, IMusicPlayer{
     var musicPlayingStateDidChangeHandle : [String: () -> ()] = [:]
     private var obPool : [String : Any] = [:]
     @objc dynamic var player: AVPlayer
+    var currentMusicInfo : CurrentMusicInfo
     private var playableMusicList : PlayableMusicListManager
 
 
     required init(player: AVPlayer, playableMusicList : PlayableMusicListManager) {
         self.player = player
         self.playableMusicList = playableMusicList
+        self.currentMusicInfo = CurrentMusicInfo(Title: "", AlbumTitle: "", Artist: "", Artwork: nil)
         super.init()
 
         self.player.volume = 0.4
@@ -78,7 +82,7 @@ class MusicPlayer: NSObject, IMusicPlayer{
         }
         self.playableMusicList.setCurrentMusic(music: music)
         self.player.replaceCurrentItem(with: AVPlayerItem(asset: AVAsset(url: music.url)))
-
+        self.updateCurrentMusicInfo()
         if AppManager.default.appData.playerPlayMusicWhenReady{ self.player.play() }
 
     }
@@ -131,6 +135,33 @@ class MusicPlayer: NSObject, IMusicPlayer{
         self.playMusicAccordingToSetting()
 
 
+    }
+    
+    func currentMusicIsMp3() -> Bool{
+        return self.playableMusicList.getCurrentMusic().type == .mp3
+    }
+    
+    func updateCurrentMusicInfo(){
+        var info = CurrentMusicInfo(Title: "", AlbumTitle: "", Artist: "")
+        guard let metadataList = self.player.currentItem?.asset.metadata else {return}
+        for item in metadataList {
+            switch item.commonKey {
+            case .commonKeyTitle?:
+                info.Title = item.stringValue ?? ""
+            case .commonKeyAlbumName?:
+                info.AlbumTitle = item.stringValue ?? ""
+            case .commonKeyArtist?:
+                info.Artist = item.stringValue ?? ""
+            case .commonKeyArtwork?:
+                if let data = item.dataValue,
+                    let image = NSImage(data: data) {
+                    info.Artwork = image
+                }
+            case .none: break
+            default: break
+            }
+        }
+        self.currentMusicInfo = info
     }
 
 
