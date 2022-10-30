@@ -30,7 +30,8 @@ class MusicDataManager{
     
     func getDataFor(musicName: String) -> MusicDataStruct?{
         
-        self.getAllMusicData().first { $0.name == musicName }
+//        self.getAllMusicData().first { $0.name == musicName }
+        self.getAllMusicData().first { ($0.name as NSString).deletingPathExtension == (musicName as NSString).deletingPathExtension }
     }
     
     func addMusicData(data: MusicDataStruct){
